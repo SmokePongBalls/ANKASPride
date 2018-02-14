@@ -19,8 +19,8 @@ namespace te16mono
         public Vector2 position, velocity;
         float acceleration = (float)0.5;
         public float gravity = (float)0.5;
-        public Keys up, down, left, right, attack;
-
+        public Keys up, down, left, right;
+        KeyboardState pressedKeys;
 
         public Rectangle Hitbox
         {
@@ -44,7 +44,7 @@ namespace te16mono
             velocity = velocity * (float)0.95;
             velocity.Y += gravity;
             //Spellogik
-            KeyboardState pressedKeys = Keyboard.GetState();
+            pressedKeys = Keyboard.GetState();
 
             
             if (pressedKeys.IsKeyDown(left))

@@ -17,7 +17,7 @@ namespace te16mono
         Song music;
         double countdown = 0;
         Block testblock;
-        
+
 
         public Game1()
         {
@@ -52,8 +52,7 @@ namespace te16mono
             player.down = Keys.S;
             player.left = Keys.A;
             player.right = Keys.D;
-            player.attack = Keys.LeftControl;
-
+            
             base.Initialize();
         }
 
@@ -65,16 +64,16 @@ namespace te16mono
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            player.texture = Content.Load<Texture2D>("square");
-            
 
-            testblock.texture= Content.Load<Texture2D>("square");
+            testblock.texture = Content.Load<Texture2D>("square");
+
+            player.texture = Content.Load<Texture2D>("square");
 
             font = Content.Load<SpriteFont>("Font");
 
             music = Content.Load<Song>("megaman2");
             MediaPlayer.Play(music);
-            
+
             // TODO: use this.Content to load your game content here
         }
 
@@ -100,39 +99,41 @@ namespace te16mono
             {
                 graphics.ToggleFullScreen();
             }
+
+
             if (player.Hitbox.Intersects(testblock.Hitbox))
             {
-                if (player.Hitbox.X <= testblock.position.X && player.Hitbox.Y>testblock.position.Y)
+                if (player.Hitbox.X <= testblock.position.X && player.Hitbox.Y > testblock.position.Y)
                 {
                     player.velocity.X = -player.velocity.X;
                     player.position.X -= 1;
                 }
-
-               player.velocity.Y = -player.velocity.Y;
-               player.position.Y -= (float)0.5;
                 
-                //if (testblock.type == TypeOfBlock.teleporter)
+                player.velocity.Y = -player.velocity.Y;
+                player.position.Y -= (float)0.5;
+
+                // if (testblock.type == TypeOfBlock.teleporter)
                 //    player.position = Vector2.Zero;
             }
 
             else
                 player.gravity = (float)0.5;
-          
-            
-           
-           
+
+
+
+
             countdown -= gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (Keyboard.GetState().IsKeyDown(Keys.W)|| Keyboard.GetState().IsKeyDown(Keys.Space))
+            if (Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Space))
             {
-                
+
                 if (countdown <= 0)
                 {
                     player.velocity.Y -= 30;
                     countdown = 2000;
                 }
 
-        }
-        player.Update();
+            }
+            player.Update();
           
             // TODO: Add your update logic here
 
@@ -149,13 +150,14 @@ namespace te16mono
 
             spriteBatch.Begin();
 
-            
-            player.Draw(spriteBatch);
-          
-
             testblock.Draw(spriteBatch);
 
-           spriteBatch.DrawString(font, "Time: " + gameTime.TotalGameTime.Seconds +","+ gameTime.TotalGameTime.Milliseconds, Vector2.Zero, Color.White);
+            player.Draw(spriteBatch);
+
+
+
+            spriteBatch.DrawString(font, "Time: " + gameTime.TotalGameTime.Seconds + "," + gameTime.TotalGameTime.Milliseconds, Vector2.Zero, Color.White);
+
             spriteBatch.End();
 
             // TODO: Add your drawing code here
