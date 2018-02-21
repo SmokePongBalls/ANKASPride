@@ -10,28 +10,16 @@ using System.Threading.Tasks;
 
 namespace te16mono
 {
-    class Player
+    class Player : MovingObjects
     {
-        Random rng = new Random();
-        //om vi vill ha poäng spara denna.
         public int points;
-        public Texture2D texture;
-        public Vector2 position, velocity;
         float acceleration = (float)0.5;
-        public float gravity = (float)0.5;
         public Keys up, down, left, right;
         KeyboardState pressedKeys;
 
-        public Rectangle Hitbox
-        {
-            get
-            {
-                Rectangle hitbox = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
-                return hitbox;
-            }
-        }
+        
 
-        public void Initialize()
+        public Player(int seed, Texture2D texture)
         {
             position = new Vector2();
             velocity = new Vector2();

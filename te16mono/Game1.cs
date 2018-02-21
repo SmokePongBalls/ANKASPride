@@ -8,8 +8,14 @@ namespace te16mono
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
+    /// 
+    
+    
+
     public class Game1 : Game
     {
+        protected float gravity = (float)0.5;
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Player player;
