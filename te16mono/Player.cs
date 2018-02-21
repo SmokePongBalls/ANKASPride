@@ -71,11 +71,8 @@ namespace te16mono
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(texture, position, Color.Yellow);
-            //Rita på skärmen med spriteBatch
-        }
+       
     }
+    
 
 }

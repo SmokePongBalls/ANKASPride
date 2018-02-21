@@ -23,7 +23,7 @@ namespace te16mono
         Song music;
         double countdown = 0;
         Block testblock;
-
+        
 
         public Game1()
         {
@@ -53,7 +53,7 @@ namespace te16mono
             testblock.type = TypeOfBlock.plattform;
 
             // TODO: Add your initialization logic here
-            player = new Player();
+            player = new Player(1, Content.Load<Texture2D>("square"));
             player.up = Keys.W;
             player.down = Keys.S;
             player.left = Keys.A;
@@ -73,7 +73,7 @@ namespace te16mono
 
             testblock.texture = Content.Load<Texture2D>("square");
 
-            player.texture = Content.Load<Texture2D>("square");
+           
 
             font = Content.Load<SpriteFont>("Font");
 
@@ -99,6 +99,7 @@ namespace te16mono
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             if (Keyboard.GetState().IsKeyDown(Keys.T))
