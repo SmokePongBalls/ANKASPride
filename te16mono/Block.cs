@@ -26,7 +26,7 @@ namespace te16mono
                 return hitbox;
             }
         }
-        
+       
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, position, Color.Chocolate);

@@ -99,8 +99,6 @@ namespace te16mono
             {
                 graphics.ToggleFullScreen();
             }
-
-
             if (player.Hitbox.Intersects(testblock.Hitbox))
             {
                 if (player.Hitbox.X <= testblock.position.X && player.Hitbox.Y > testblock.position.Y)
@@ -108,7 +106,7 @@ namespace te16mono
                     player.velocity.X = -player.velocity.X;
                     player.position.X -= 1;
                 }
-                
+
                 player.velocity.Y = -player.velocity.Y;
                 player.position.Y -= (float)0.5;
 
@@ -118,9 +116,6 @@ namespace te16mono
 
             else
                 player.gravity = (float)0.5;
-
-
-
 
             countdown -= gameTime.ElapsedGameTime.TotalMilliseconds;
             if (Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Space))
