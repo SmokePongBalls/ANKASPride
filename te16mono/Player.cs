@@ -71,6 +71,13 @@ namespace te16mono
                 velocity.Y = -velocity.Y;
             }
         }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(texture, position, Color.Yellow);
+            //Rita på skärmen med spriteBatch
+        }
     }
+    
 
 }
