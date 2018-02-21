@@ -24,6 +24,7 @@ namespace te16mono
             position = new Vector2();
             velocity = new Vector2();
             //Initiera värden
+
         }
 
         public void Update()
@@ -69,12 +70,6 @@ namespace te16mono
                 position.Y = 1080- texture.Height;
                 velocity.Y = -velocity.Y;
             }
-        }
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(texture, position, Color.Yellow);
-            //Rita på skärmen med spriteBatch
         }
     }
 

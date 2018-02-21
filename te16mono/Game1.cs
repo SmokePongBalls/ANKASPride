@@ -24,6 +24,8 @@ namespace te16mono
         double countdown = 0;
         Block testblock;
 
+        public float test = 1;
+
 
         public Game1()
         {

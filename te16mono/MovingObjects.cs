@@ -13,8 +13,12 @@ namespace te16mono
 
         protected Random rng;
         protected int health;
-        protected Vector2 velocity, position;
+        public Vector2 velocity, position;
         protected Texture2D texture;
+        public float gravity = (float)0.5;
+
+        
+
 
         public void Draw(SpriteBatch spriteBatch)
         {
