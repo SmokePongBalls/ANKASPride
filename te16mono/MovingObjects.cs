@@ -35,7 +35,6 @@ namespace te16mono
                 return hitbox;
             }
         }
-
     }
 
 
