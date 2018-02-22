@@ -17,7 +17,7 @@ namespace te16mono
 
         bool walkLeft;
         float maxSpeed;
-        float acceleration = 0;
+        public float acceleration = 0;
         private float maxX, minX;
 
 
@@ -39,7 +39,7 @@ namespace te16mono
         {
 
             // Om den inte har uppnåt maxfart
-            if (acceleration < maxSpeed)
+            if (acceleration < maxSpeed && acceleration > -maxSpeed)
             {
                 //Om den ska gå åt vänster
                 if (!walkLeft)

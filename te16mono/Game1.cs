@@ -177,7 +177,7 @@ namespace te16mono
 
 
 
-            spriteBatch.DrawString(font, "Time: " + gameTime.TotalGameTime.Seconds + "," + gameTime.TotalGameTime.Milliseconds, Vector2.Zero, Color.White);
+            spriteBatch.DrawString(font, "Time: " + testKatt.acceleration + "," + gameTime.TotalGameTime.Milliseconds, Vector2.Zero, Color.White);
 
             spriteBatch.End();
 
