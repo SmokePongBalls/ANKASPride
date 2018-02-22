@@ -12,9 +12,11 @@ namespace te16mono
 
     class Draw
     {
-        GraphicsDeviceManager graphics;
+        
+        
         public void Initialize()
-        {             
+        {
+
             //Fullscreen --
             graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
             graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
@@ -35,7 +37,7 @@ namespace te16mono
             player.left = Keys.A;
             player.right = Keys.D;
 
-            base.Initialize();
+           
         }
     }
 }
