@@ -79,7 +79,7 @@ namespace te16mono
             testblock.texture = Content.Load<Texture2D>("square");
 
             //Testkatten
-            testKatt = new Katt(1, Content.Load<Texture2D>("kattModel"), new Vector2(100, 100), false, (float)0.5, 1920, 0);
+            testKatt = new Katt(1, Content.Load<Texture2D>("kattModel"), new Vector2(100, 100), false, (float)0.5, 1700, 400);
 
             font = Content.Load<SpriteFont>("Font");
 

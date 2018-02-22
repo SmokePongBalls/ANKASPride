@@ -44,35 +44,45 @@ namespace te16mono
                 //Om den ska gå åt vänster
                 if (!walkLeft)
                 {
-                        acceleration -= (float)0.01;
+                        acceleration += (float)0.01;
                 }
             //Om den ska åka höger
                 else
                 {
-                    acceleration += (float)0.01;
+                    acceleration -= (float)0.01;
                 }
 
                 velocity.X += acceleration;
             }
             velocity.Y += gravity;
-            velocity.X += acceleration;
 
             position.Y += velocity.Y;
             position.X += velocity.X;
 
 
-            if (position.X + texture.Width > maxX)
-            {
-                position.X = 1920 - texture.Width;
-                walkLeft = false;
-            }
+            //Om den har nått sin maxposition på X
 
-            if (position.X < minX)
+            if (position.X + texture.Width >= maxX && walkLeft == false)
             {
-                position.X = 0;
+                position.X = maxX - texture.Width;
                 walkLeft = true;
+                acceleration = 0;
+                velocity.X = acceleration;
             }
 
+            //Om den har nått minposition utav X
+
+            if (position.X < minX && walkLeft == true)
+            {
+                position.X = minX;
+                walkLeft = false;
+                acceleration = 0;
+                velocity.X = acceleration;
+            }
+
+
+            //Längst ner på skärmen
+            //DETTA MÅSTE BORT NÄR VI HAR FUNGERADE PLATTFORMAR
             if (position.Y + texture.Height > 1080)
             {
                 position.Y = 1080 - texture.Height;
