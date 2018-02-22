@@ -14,7 +14,7 @@ namespace te16mono
     {
         //Ha kvar "points" ifall vi använder det senare.
         public int points;
-        float acceleration = (float)0.5;
+
 
         //kontroller
         public Keys up, down, left, right;
@@ -79,7 +79,52 @@ namespace te16mono
             }
         }
 
-       
+        public override void Intersect(Rectangle collided,  Vector2 collidedVelocity)
+        {
+            //Ser till så att den inte krockat med sig själv
+            //Är mest ett failsafe ifall alla movingObjects ligger i samma lista
+            if (Hitbox != collided)
+            {
+                Oriantation oriantation = CheckCollision(collided);
+
+
+               if (oriantation == Oriantation.Up)
+                {
+                    //Får samma y velocity som objektet det krockar med
+                    //Vi kanske kan göra fungerande hissar med det här
+                    velocity.Y = collidedVelocity.Y;
+                    //Ser till så att objekten inte längre är innuti varandra
+                    position.Y = collided.Y - texture.Height;
+                }
+                else if (oriantation == Oriantation.Down)
+                {
+                    //Får samma y velocity som objektet det krockar med
+                    //Vi kanske kan göra fungerande hissar med det här
+                    velocity.Y = collidedVelocity.Y;
+                    //Ser till så att objekten inte längre är innuti varandra
+                    position.Y = collided.Y + texture.Height;
+                }
+                else if (oriantation == Oriantation.Right)
+                {
+                    //Ser till så att objekten inte längre är innuti varandra
+                    position.X = collided.X + collided.Width - velocity.X;
+                    //Återställer velocity så den inte fortsätter in i objektet
+                    velocity.X = 0;
+
+                }
+                else if (oriantation == Oriantation.Left)
+                {
+                    //Ser till så att objekten inte längre är innuti varandra
+                    position.X = collided.X - velocity.X - texture.Width;
+                    //Återställer velocity så den inte fortsätter in i objektet
+                    velocity.X = 0;
+                }
+
+                
+            }
+        }
+
+
     }
     
 

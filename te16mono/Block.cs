@@ -12,11 +12,18 @@ namespace te16mono
 
     class Block
     {
-        public Vector2 position;
+        public Vector2 position, velocity;
         public Texture2D texture;
         public bool isAlive;
         public TypeOfBlock type;
+
+
         
+        public Block()
+        {
+            //Behövs för Intersect metoden
+            velocity = new Vector2(0);
+        }
 
         public Rectangle Hitbox
         {
@@ -26,7 +33,7 @@ namespace te16mono
                 return hitbox;
             }
         }
-       
+
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, position, Color.Chocolate);

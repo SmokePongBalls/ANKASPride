@@ -52,7 +52,7 @@ namespace te16mono
             //--
 
             testblock = new Block();
-            testblock.position.X = 200;
+            testblock.position.X = 500;
             testblock.position.Y = 900;
             testblock.isAlive = true;
             testblock.type = TypeOfBlock.plattform;
@@ -118,6 +118,12 @@ namespace te16mono
             }
             if (player.Hitbox.Intersects(testblock.Hitbox))
             {
+                
+                player.Intersect(testblock.Hitbox, testblock.velocity);
+                
+                /*
+                 *  IRRELEVANT KOD 
+                 *
                 if (player.Hitbox.X <= testblock.position.X && player.Hitbox.Y > testblock.position.Y)
                 {
                     player.velocity.X = -player.velocity.X;
@@ -129,16 +135,26 @@ namespace te16mono
 
                 // if (testblock.type == TypeOfBlock.teleporter)
                 //    player.position = Vector2.Zero;
+                */
             }
 
             else
                 player.gravity = (float)0.5;
+            if (player.Hitbox.Intersects(testKatt.Hitbox))
+            {
+                player.Intersect(testKatt.Hitbox, testKatt.velocity);
+            }
 
             //Om katten rör hitboxen
             if (testKatt.Hitbox.Intersects(testblock.Hitbox))
             {
-                testKatt.Intersect(testblock.Hitbox);
+                testKatt.Intersect(testblock.Hitbox , testblock.velocity);
             }
+            if (testKatt.Hitbox.Intersects(player.Hitbox))
+            {
+                testKatt.Intersect(player.Hitbox, player.velocity);
+            }
+            
 
             countdown -= gameTime.ElapsedGameTime.TotalMilliseconds;
             if (Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Space))
@@ -177,7 +193,7 @@ namespace te16mono
 
 
 
-            spriteBatch.DrawString(font, "Time: " + testKatt.acceleration + "," + gameTime.TotalGameTime.Milliseconds, Vector2.Zero, Color.White);
+            spriteBatch.DrawString(font, "Time: " + gameTime.TotalGameTime.TotalSeconds + "," + gameTime.TotalGameTime.Milliseconds, Vector2.Zero, Color.White);
 
             spriteBatch.End();
 

@@ -15,9 +15,7 @@ namespace te16mono
     class Katt : MovingObjects
     {
 
-        bool walkLeft;
         float maxSpeed;
-        public float acceleration = 0;
         private float maxX, minX;
 
 
@@ -29,6 +27,7 @@ namespace te16mono
             this.walkLeft = walkLeft;
             this.maxSpeed = maxSpeed;
             velocity = new Vector2(0);
+            acceleration = 0;
 
             //Bestämmer hur långt den får gå
             this.maxX = maxX;
@@ -91,23 +90,8 @@ namespace te16mono
 
         }
 
-        public void Intersect(Rectangle collided)
-        {
-
-            if (collided.X + collided.Width >= position.X - (float)1)
-            {
-                velocity.X = 0;
-                walkLeft = false;
-            }
-            else if (collided.X <= position.X + texture.Width)
-            {
-                velocity.X = 0;
-                walkLeft = true;
-            }
-
-            velocity.Y = (float)0;
-            position.Y -= (float)0.5;
-        }
+        
+            
 
     }
 }
