@@ -93,6 +93,18 @@ namespace te16mono
 
         public void Intersect(Rectangle collided)
         {
+
+            if (collided.X + collided.Width >= position.X - (float)1)
+            {
+                velocity.X = 0;
+                walkLeft = false;
+            }
+            else if (collided.X <= position.X + texture.Width)
+            {
+                velocity.X = 0;
+                walkLeft = true;
+            }
+
             velocity.Y = (float)0;
             position.Y -= (float)0.5;
         }
