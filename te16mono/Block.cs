@@ -16,6 +16,7 @@ namespace te16mono
         public Texture2D texture;
         public bool isAlive;
         public TypeOfBlock type;
+        
 
         public Rectangle Hitbox
         {
