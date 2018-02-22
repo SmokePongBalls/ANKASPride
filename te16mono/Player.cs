@@ -52,6 +52,8 @@ namespace te16mono
 
             position += velocity;
 
+            //Ser till så att karaktären inte kan åka ur skärmen.
+            //Får tas bort senare för att det är lättare att testa om vi har det så här.
             if(position.X<0)
             {
                 position.X = 0;
