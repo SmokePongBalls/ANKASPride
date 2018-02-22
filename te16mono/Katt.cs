@@ -27,19 +27,42 @@ namespace te16mono
             rng = new Random(seed);
             this.walkLeft = walkLeft;
             this.maxSpeed = maxSpeed;
+            velocity = new Vector2(0);
         }
 
         public void Update()
         {
 
-            if (walkLeft)
+            // Om den inte har uppnåt maxfart
+            if (acceleration < maxSpeed)
             {
-                if (acceleration == maxSpeed)
+                //Om den ska gå åt vänster
+                if (walkLeft)
                 {
-
+                    if (acceleration == maxSpeed)
+                    {
+                        acceleration -= (float)0.01;
+                    }
                 }
-            }
+            //Om den ska åka höger
+                else
+                {
+                    acceleration += (float)0.01;
+                }
 
+                velocity.X += acceleration;
+            }
+            velocity.Y += gravity;
+
+
+            position += velocity;
+
+        }
+
+        public void Intersect(Rectangle collided)
+        {
+            velocity.Y = (float)0;
+            position.Y -= (float)0.5;
         }
 
     }

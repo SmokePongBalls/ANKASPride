@@ -18,7 +18,7 @@ namespace te16mono
         public float gravity = (float)0.5;
 
         
-
+        //Måla ut allting
 
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -27,6 +27,8 @@ namespace te16mono
         }
 
 
+
+        //Få objektets hitbox
         public Rectangle Hitbox
         {
             get

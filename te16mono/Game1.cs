@@ -23,7 +23,12 @@ namespace te16mono
         Song music;
         double countdown = 0;
         Block testblock;
-        
+
+        //TestKatten
+        Katt testKatt;
+
+
+
 
         public Game1()
         {
@@ -73,7 +78,8 @@ namespace te16mono
 
             testblock.texture = Content.Load<Texture2D>("square");
 
-           
+            //Testkatten
+            testKatt = new Katt(1, Content.Load<Texture2D>("kattModel"), new Vector2(100, 100), true, 1);
 
             font = Content.Load<SpriteFont>("Font");
 
@@ -100,6 +106,10 @@ namespace te16mono
         protected override void Update(GameTime gameTime)
         {
 
+
+            //Testkatten
+            testKatt.Update();
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             if (Keyboard.GetState().IsKeyDown(Keys.T))
@@ -123,6 +133,12 @@ namespace te16mono
 
             else
                 player.gravity = (float)0.5;
+
+            //Om katten rör hitboxen
+            if (testKatt.Hitbox.Intersects(testblock.Hitbox))
+            {
+                testKatt.Intersect(testblock.Hitbox);
+            }
 
             countdown -= gameTime.ElapsedGameTime.TotalMilliseconds;
             if (Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Space))
@@ -151,6 +167,9 @@ namespace te16mono
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
+
+            //Testkatten
+            testKatt.Draw(spriteBatch);
 
             testblock.Draw(spriteBatch);
 

@@ -23,6 +23,7 @@ namespace te16mono
         {
             position = new Vector2();
             velocity = new Vector2();
+            this.texture = texture;
             //Initiera värden
 
         }
