@@ -18,9 +18,10 @@ namespace te16mono
         bool walkLeft;
         float maxSpeed;
         float acceleration = 0;
+        private float maxX, minX;
 
 
-        public Katt(int seed, Texture2D texture, Vector2 position, bool walkLeft, float maxSpeed)
+        public Katt(int seed, Texture2D texture, Vector2 position, bool walkLeft, float maxSpeed, float maxX, float minX)
         {
             this.texture = texture;
             this.position = position;
@@ -28,6 +29,10 @@ namespace te16mono
             this.walkLeft = walkLeft;
             this.maxSpeed = maxSpeed;
             velocity = new Vector2(0);
+
+            //Bestämmer hur långt den får gå
+            this.maxX = maxX;
+            this.minX = minX;
         }
 
         public void Update()
@@ -37,12 +42,9 @@ namespace te16mono
             if (acceleration < maxSpeed)
             {
                 //Om den ska gå åt vänster
-                if (walkLeft)
+                if (!walkLeft)
                 {
-                    if (acceleration == maxSpeed)
-                    {
                         acceleration -= (float)0.01;
-                    }
                 }
             //Om den ska åka höger
                 else
@@ -53,9 +55,29 @@ namespace te16mono
                 velocity.X += acceleration;
             }
             velocity.Y += gravity;
+            velocity.X += acceleration;
+
+            position.Y += velocity.Y;
+            position.X += velocity.X;
 
 
-            position += velocity;
+            if (position.X + texture.Width > maxX)
+            {
+                position.X = 1920 - texture.Width;
+                walkLeft = false;
+            }
+
+            if (position.X < minX)
+            {
+                position.X = 0;
+                walkLeft = true;
+            }
+
+            if (position.Y + texture.Height > 1080)
+            {
+                position.Y = 1080 - texture.Height;
+                velocity.Y = -velocity.Y * (float)0.5 ;
+            }
 
         }
 
