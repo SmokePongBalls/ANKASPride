@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace te16mono
 {
 
-    
+
 
 
     class Katt : MovingObjects
@@ -44,3 +44,4 @@ namespace te16mono
 
     }
 }
+

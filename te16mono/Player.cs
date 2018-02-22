@@ -12,17 +12,22 @@ namespace te16mono
 {
     class Player : MovingObjects
     {
+        //Ha kvar "points" ifall vi använder det senare.
         public int points;
         float acceleration = (float)0.5;
+
+        //kontroller
         public Keys up, down, left, right;
         KeyboardState pressedKeys;
 
-        
 
+        // "Seed" är tillför att se till så att alla object som -->
+        // --> vill ha ett random värde får olika värde. Olika seeds olika random värden.
         public Player(int seed, Texture2D texture)
         {
             position = new Vector2();
             velocity = new Vector2();
+            this.texture = texture;
             //Initiera värden
 
         }
