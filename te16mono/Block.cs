@@ -21,7 +21,7 @@ namespace te16mono
         
         public Block()
         {
-            //Behövs för Intersect metoden
+            //Behövs fö Intersect metoden
             velocity = new Vector2(0);
         }
 
