@@ -14,6 +14,7 @@ namespace te16mono
     {
         //Ha kvar "points" ifall vi använder det senare.
         public int points;
+        private bool canJump;
 
 
         //kontroller
@@ -28,6 +29,7 @@ namespace te16mono
             position = new Vector2();
             velocity = new Vector2();
             this.texture = texture;
+            canJump = true;
             //Initiera värden
 
         }
@@ -47,7 +49,17 @@ namespace te16mono
                 velocity.Y += acceleration;
             if (pressedKeys.IsKeyDown(right))
                 velocity.X += acceleration;
-           
+            if (Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Space))
+            {
+                if (canJump == true)
+                {
+                    velocity.Y -= 30;
+                    canJump = false;
+                }
+                
+            }
+
+
             //Själva: Ordna styrning för a, s, d också
 
             position += velocity;
@@ -94,7 +106,9 @@ namespace te16mono
                     //Vi kanske kan göra fungerande hissar med det här
                     velocity.Y = collidedVelocity.Y;
                     //Ser till så att objekten inte längre är innuti varandra
-                    position.Y = collided.Y - texture.Height;
+                    position.Y = collided.Y - Hitbox.Height;
+                    //Står på solid mark så man får hoppa igen
+                    canJump = true;
                 }
                 else if (oriantation == Oriantation.Down)
                 {
@@ -102,7 +116,7 @@ namespace te16mono
                     //Vi kanske kan göra fungerande hissar med det här
                     velocity.Y = collidedVelocity.Y;
                     //Ser till så att objekten inte längre är innuti varandra
-                    position.Y = collided.Y + texture.Height;
+                    position.Y = collided.Y + collided.Height;
                 }
                 else if (oriantation == Oriantation.Right)
                 {

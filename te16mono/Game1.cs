@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System.Collections.Generic;
 
 namespace te16mono
 {
@@ -22,10 +23,10 @@ namespace te16mono
         SpriteFont font;
         Song music;
         double countdown = 0;
-        Block testblock;
+        List<Block> testblocks;
 
         //TestKatten
-        Katt testKatt;
+        List<Katt> testKatt;
 
 
 
@@ -50,12 +51,8 @@ namespace te16mono
             graphics.IsFullScreen = false;
             graphics.ApplyChanges();
             //--
-
-            testblock = new Block();
-            testblock.position.X = 500;
-            testblock.position.Y = 900;
-            testblock.isAlive = true;
-            testblock.type = TypeOfBlock.plattform;
+            testblocks = new List<Block>();
+            testKatt = new List<Katt>();
 
             // TODO: Add your initialization logic here
             player = new Player(1, Content.Load<Texture2D>("square"));
@@ -75,11 +72,13 @@ namespace te16mono
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            testblock.texture = Content.Load<Texture2D>("square");
+            testblocks.Add(new Block(new Vector2(500, 450), 500, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
+            testblocks.Add(new Block(new Vector2(0, 900), 19200, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
 
             //Testkatten
-            testKatt = new Katt(1, Content.Load<Texture2D>("kattModel"), new Vector2(100, 100), false, (float)0.5, 1700, 0);
+            testKatt.Add(new Katt(1, Content.Load<Texture2D>("kattModel"), new Vector2(100, 100), false, (float)0.5, 1700, 0));
+
+            
 
             font = Content.Load<SpriteFont>("Font");
 
@@ -108,7 +107,7 @@ namespace te16mono
 
 
             //Testkatten
-            testKatt.Update();
+            
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
@@ -116,57 +115,60 @@ namespace te16mono
             {
                 graphics.ToggleFullScreen();
             }
-            if (player.Hitbox.Intersects(testblock.Hitbox))
+
+            foreach (Block testblock in testblocks)
             {
-                
-                player.Intersect(testblock.Hitbox, testblock.velocity);
-                
-                /*
-                 *  IRRELEVANT KOD 
-                 *
-                if (player.Hitbox.X <= testblock.position.X && player.Hitbox.Y > testblock.position.Y)
+                if (player.Hitbox.Intersects(testblock.Hitbox))
                 {
-                    player.velocity.X = -player.velocity.X;
-                    player.position.X -= 1;
+
+                    player.Intersect(testblock.Hitbox, testblock.velocity);
+
+                    /*
+                     *  IRRELEVANT KOD 
+                     *
+                    if (player.Hitbox.X <= testblock.position.X && player.Hitbox.Y > testblock.position.Y)
+                    {
+                        player.velocity.X = -player.velocity.X;
+                        player.position.X -= 1;
+                    }
+
+                    player.velocity.Y = -player.velocity.Y;
+                    player.position.Y -= (float)0.5;
+
+                    // if (testblock.type == TypeOfBlock.teleporter)
+                    //    player.position = Vector2.Zero;
+                    */
                 }
 
-                player.velocity.Y = -player.velocity.Y;
-                player.position.Y -= (float)0.5;
-
-                // if (testblock.type == TypeOfBlock.teleporter)
-                //    player.position = Vector2.Zero;
-                */
-            }
-
-            else
-                player.gravity = (float)0.5;
-            if (player.Hitbox.Intersects(testKatt.Hitbox))
-            {
-                player.Intersect(testKatt.Hitbox, testKatt.velocity);
-            }
-
-            //Om katten rör hitboxen
-            if (testKatt.Hitbox.Intersects(testblock.Hitbox))
-            {
-                testKatt.Intersect(testblock.Hitbox , testblock.velocity);
-            }
-            if (testKatt.Hitbox.Intersects(player.Hitbox))
-            {
-                testKatt.Intersect(player.Hitbox, player.velocity);
+                else
+                    player.gravity = (float)0.5;
             }
             
 
-            countdown -= gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Space))
+            //Om katten rör hitboxen
+            foreach (Katt testKatt in testKatt)
             {
-
-                if (countdown <= 0)
+                if (player.Hitbox.Intersects(testKatt.Hitbox))
                 {
-                    player.velocity.Y -= 30;
-                    countdown = 2000;
+                    player.Intersect(testKatt.Hitbox, testKatt.velocity);
+                }
+                foreach (Block testblock in testblocks)
+                    if (testKatt.Hitbox.Intersects(testblock.Hitbox))
+                    {
+                        testKatt.Intersect(testblock.Hitbox, testblock.velocity);
+                    }
+                if (testKatt.Hitbox.Intersects(player.Hitbox))
+                {
+                    testKatt.Intersect(player.Hitbox, player.velocity);
                 }
 
+                testKatt.Update();
             }
+
+            
+            
+
+            countdown -= gameTime.ElapsedGameTime.TotalMilliseconds;
             player.Update();
           
             // TODO: Add your update logic here
@@ -182,12 +184,14 @@ namespace te16mono
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, null, SamplerState.LinearWrap, DepthStencilState.None, null, null, null);
 
             //Testkatten
-            testKatt.Draw(spriteBatch);
+            foreach (Katt testKatt in testKatt)
+                testKatt.Draw(spriteBatch);
 
-            testblock.Draw(spriteBatch);
+            foreach (Block testblock in testblocks)
+                testblock.Draw(spriteBatch);
 
             player.Draw(spriteBatch);
 

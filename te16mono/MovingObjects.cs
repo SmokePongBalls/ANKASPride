@@ -57,7 +57,7 @@ namespace te16mono
                     //Vi kanske kan göra fungerande hissar med det här
                     velocity.Y = collidedVelocity.Y;
                     //Ser till så att objekten inte längre är innuti varandra
-                    position.Y = collided.Y - texture.Height;
+                    position.Y = collided.Y - Hitbox.Height;
                 }
                 else if (oriantation == Oriantation.Down)
                 {
@@ -65,7 +65,7 @@ namespace te16mono
                     //Vi kanske kan göra fungerande hissar med det här
                     velocity.Y = collidedVelocity.Y;
                     //Ser till så att objekten inte längre är innuti varandra
-                    position.Y = collided.Y + texture.Height;
+                    position.Y = collided.Y + collided.Height;
                 }
                 else if (oriantation == Oriantation.Right)
                 {
