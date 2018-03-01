@@ -26,7 +26,7 @@ namespace te16mono
         List<Block> testblocks;
 
         //TestKatten
-        List<Katt> testKatt;
+        List<MovingObjects> testObjekts;
 
 
 
@@ -52,7 +52,7 @@ namespace te16mono
             graphics.ApplyChanges();
             //--
             testblocks = new List<Block>();
-            testKatt = new List<Katt>();
+            testObjekts = new List<MovingObjects>();
 
             // TODO: Add your initialization logic here
             player = new Player(1, Content.Load<Texture2D>("square"));
@@ -72,13 +72,14 @@ namespace te16mono
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            testblocks.Add(new Block(new Vector2(500, 450), 500, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
+            //testblocks.Add(new Block(new Vector2(500, 450), 500, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
             testblocks.Add(new Block(new Vector2(0, 900), 19200, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
 
             //Testkatten
-            testKatt.Add(new Katt(1, Content.Load<Texture2D>("kattModel"), new Vector2(100, 100), false, (float)0.5, 1700, 0));
+            testObjekts.Add(new Katt(1, Content.Load<Texture2D>("kattModel"), new Vector2(100, 100), false, (float)0.5, 1700, 0));
+            testObjekts.Add(new Frog(1, Content.Load<Texture2D>("frog"), new Vector2(100, 100), false, (float)0.5, 1700, 0));
 
-            
+
 
             font = Content.Load<SpriteFont>("Font");
 
@@ -146,23 +147,32 @@ namespace te16mono
             
 
             //Om katten rör hitboxen
-            foreach (Katt testKatt in testKatt)
+            foreach (MovingObjects testObjekt in testObjekts)
             {
-                if (player.Hitbox.Intersects(testKatt.Hitbox))
+                if (player.Hitbox.Intersects(testObjekt.Hitbox))
                 {
-                    player.Intersect(testKatt.Hitbox, testKatt.velocity);
+                    player.Intersect(testObjekt.Hitbox, testObjekt.velocity);
+                    
                 }
                 foreach (Block testblock in testblocks)
-                    if (testKatt.Hitbox.Intersects(testblock.Hitbox))
+                    if (testObjekt.Hitbox.Intersects(testblock.Hitbox))
                     {
-                        testKatt.Intersect(testblock.Hitbox, testblock.velocity);
+                        testObjekt.Intersect(testblock.Hitbox, testblock.velocity);
                     }
-                if (testKatt.Hitbox.Intersects(player.Hitbox))
+                if (testObjekt.Hitbox.Intersects(player.Hitbox))
                 {
-                    testKatt.Intersect(player.Hitbox, player.velocity);
+                    
+                }
+                foreach (MovingObjects obj in testObjekts)
+                {
+                    if (testObjekt.Hitbox.Intersects(obj.Hitbox))
+                    {
+                        testObjekt.Intersect(obj.Hitbox, obj.velocity);
+                    }
                 }
 
-                testKatt.Update();
+
+                testObjekt.Update();
             }
 
             
@@ -187,8 +197,8 @@ namespace te16mono
             spriteBatch.Begin(SpriteSortMode.FrontToBack, null, SamplerState.LinearWrap, DepthStencilState.None, null, null, null);
 
             //Testkatten
-            foreach (Katt testKatt in testKatt)
-                testKatt.Draw(spriteBatch);
+            foreach (MovingObjects testObjekt in testObjekts)
+                testObjekt.Draw(spriteBatch);
 
             foreach (Block testblock in testblocks)
                 testblock.Draw(spriteBatch);

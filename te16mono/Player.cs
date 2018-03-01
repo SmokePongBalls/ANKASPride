@@ -64,6 +64,10 @@ namespace te16mono
 
             position += velocity;
 
+            
+            /*
+             * PLATTFORMAR FUNGERAR NU
+             * 
             //Ser till så att karaktären inte kan åka ur skärmen.
             //Får tas bort senare för att det är lättare att testa om vi har det så här.
             if(position.X<0)
@@ -89,6 +93,7 @@ namespace te16mono
                 position.Y = 1080- texture.Height;
                 velocity.Y = -velocity.Y;
             }
+            */
         }
 
         public override void Intersect(Rectangle collided,  Vector2 collidedVelocity)

@@ -15,7 +15,7 @@ namespace te16mono
     class Katt : MovingObjects
     {
 
-        float maxSpeed;
+        private  float maxSpeed;
         private float maxX, minX;
 
 
@@ -34,7 +34,7 @@ namespace te16mono
             this.minX = minX;
         }
 
-        public void Update()
+        public override void Update()
         {
 
             // Om den inte har uppnåt maxfart
@@ -79,7 +79,9 @@ namespace te16mono
                 velocity.X = acceleration;
             }
 
-
+            /*
+             * PLATTFORMAR FUNGERAR NU GGWP
+             * 
             //Längst ner på skärmen
             //DETTA MÅSTE BORT NÄR VI HAR FUNGERADE PLATTFORMAR
             if (position.Y + texture.Height > 1080)
@@ -87,7 +89,7 @@ namespace te16mono
                 position.Y = 1080 - texture.Height;
                 velocity.Y = -velocity.Y * (float)0.5 ;
             }
-
+            */
         }
 
         

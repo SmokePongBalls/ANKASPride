@@ -90,18 +90,21 @@ namespace te16mono
             }
         }
 
+        public virtual void Update()
+        { }
+
         //Tar reda på vilken sida utav objektet som hitboxen befinner sig
         //Fungerar hyfsat bra men kollisionen underifrån kan göras bättre
         protected Oriantation CheckCollision(Rectangle collided)
         {
             //Om den är till vänster
-            if (Hitbox.Intersects(new Rectangle(collided.X - collided.Width, collided.Y + (int)velocity.Y + 1, collided.Width, collided.Height + ((int)velocity.Y - 1) * 2)))
+            if (Hitbox.Intersects(new Rectangle(collided.X - collided.Width, collided.Y + (int)velocity.Y + 1, collided.Width, collided.Height)))
                 return Oriantation.Left;
             //Om den är till höger
-            else if (Hitbox.Intersects(new Rectangle(collided.X + collided.Width, collided.Y + (int)velocity.Y + 1, collided.Width, collided.Height + ((int)velocity.Y - 1)*2)))
+            else if (Hitbox.Intersects(new Rectangle(collided.X + collided.Width, collided.Y + (int)velocity.Y + 1, collided.Width, collided.Height)))
                 return Oriantation.Right;
             //Om den är över
-            else if (Hitbox.Intersects(new Rectangle(collided.X + (int)velocity.X, collided.Y - collided.Height, collided.Width + (int)velocity.X, collided.Height)))
+            else if (Hitbox.Intersects(new Rectangle(collided.X, collided.Y - collided.Height, collided.Width, collided.Height)))
                 return Oriantation.Up;
             //Om den är under
             else
