@@ -26,7 +26,7 @@ namespace te16mono
         List<Block> testblocks;
 
         //TestKatten
-        List<MovingObjects> testObjekts;
+        List<MovingObjects> testObjects;
 
 
 
@@ -52,7 +52,7 @@ namespace te16mono
             graphics.ApplyChanges();
             //--
             testblocks = new List<Block>();
-            testObjekts = new List<MovingObjects>();
+            testObjects = new List<MovingObjects>();
 
             // TODO: Add your initialization logic here
             player = new Player(1, Content.Load<Texture2D>("square"));
@@ -76,8 +76,8 @@ namespace te16mono
             testblocks.Add(new Block(new Vector2(0, 900), 19200, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
 
             //Testkatten
-            testObjekts.Add(new Katt(1, Content.Load<Texture2D>("kattModel"), new Vector2(100, 100), false, (float)0.5, 1700, 0));
-            testObjekts.Add(new Frog(1, Content.Load<Texture2D>("frog"), new Vector2(100, 100), false, (float)0.5, 1700, 0));
+            testObjects.Add(new Katt(1, Content.Load<Texture2D>("kattModel"), new Vector2(100, 100), false, (float)0.5, 1700, 0));
+            testObjects.Add(new Frog(1, Content.Load<Texture2D>("frog"), new Vector2(100, 100), false, (float)0.5, 1700, 0));
 
 
 
@@ -117,12 +117,12 @@ namespace te16mono
                 graphics.ToggleFullScreen();
             }
 
-            foreach (Block testblock in testblocks)
+            foreach (Block testBlock in testblocks)
             {
-                if (player.Hitbox.Intersects(testblock.Hitbox))
+                if (player.Hitbox.Intersects(testBlock.Hitbox))
                 {
 
-                    player.Intersect(testblock.Hitbox, testblock.velocity);
+                    player.Intersect(testBlock.Hitbox, testBlock.velocity, testBlock.damage, testBlock.canStandOn);
 
                     /*
                      *  IRRELEVANT KOD 
@@ -147,32 +147,32 @@ namespace te16mono
             
 
             //Om katten rör hitboxen
-            foreach (MovingObjects testObjekt in testObjekts)
+            foreach (MovingObjects testObject in testObjects)
             {
-                if (player.Hitbox.Intersects(testObjekt.Hitbox))
+                if (player.Hitbox.Intersects(testObject.Hitbox))
                 {
-                    player.Intersect(testObjekt.Hitbox, testObjekt.velocity);
+                    player.Intersect(testObject.Hitbox, testObject.velocity, testObject.damage, testObject.canStandOn);
                     
                 }
                 foreach (Block testblock in testblocks)
-                    if (testObjekt.Hitbox.Intersects(testblock.Hitbox))
+                    if (testObject.Hitbox.Intersects(testblock.Hitbox))
                     {
-                        testObjekt.Intersect(testblock.Hitbox, testblock.velocity);
+                        testObject.Intersect(testblock.Hitbox, testblock.velocity, testblock.damage ,testblock.canStandOn);
                     }
-                if (testObjekt.Hitbox.Intersects(player.Hitbox))
+                if (testObject.Hitbox.Intersects(player.Hitbox))
                 {
                     
                 }
-                foreach (MovingObjects obj in testObjekts)
+                foreach (MovingObjects obj in testObjects)
                 {
-                    if (testObjekt.Hitbox.Intersects(obj.Hitbox))
+                    if (testObject.Hitbox.Intersects(obj.Hitbox))
                     {
-                        testObjekt.Intersect(obj.Hitbox, obj.velocity);
+                        testObject.Intersect(obj.Hitbox, obj.velocity, obj.damage,obj.canStandOn);
                     }
                 }
 
 
-                testObjekt.Update();
+                testObject.Update();
             }
 
             
@@ -197,7 +197,7 @@ namespace te16mono
             spriteBatch.Begin(SpriteSortMode.FrontToBack, null, SamplerState.LinearWrap, DepthStencilState.None, null, null, null);
 
             //Testkatten
-            foreach (MovingObjects testObjekt in testObjekts)
+            foreach (MovingObjects testObjekt in testObjects)
                 testObjekt.Draw(spriteBatch);
 
             foreach (Block testblock in testblocks)
@@ -207,7 +207,7 @@ namespace te16mono
 
 
 
-            spriteBatch.DrawString(font, "Time: " + gameTime.TotalGameTime.TotalSeconds + "," + gameTime.TotalGameTime.Milliseconds, Vector2.Zero, Color.White);
+            spriteBatch.DrawString(font, "Time: " + player.health + "," + gameTime.TotalGameTime.Milliseconds, Vector2.Zero, Color.White);
 
             spriteBatch.End();
 

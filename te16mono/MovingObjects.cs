@@ -14,12 +14,14 @@ namespace te16mono
     {
 
         protected Random rng;
-        protected int health;
+        public int health;
         public Vector2 velocity, position;
         protected Texture2D texture;
         public float gravity = (float)0.5;
         protected float acceleration = (float)0.5;
         protected bool walkLeft;
+        public int damage;
+        public bool canStandOn;
 
 
         //Måla ut allting
@@ -43,7 +45,7 @@ namespace te16mono
         }
 
 
-        public virtual void Intersect(Rectangle collided, Vector2 collidedVelocity)
+        public virtual void Intersect(Rectangle collided, Vector2 collidedVelocity, int damage, bool collidedCanStandOn)
         {
             //Ser till så att den inte krockat med sig själv
             //Är mest ett failsafe ifall alla movingObjects ligger i samma lista
@@ -61,11 +63,7 @@ namespace te16mono
                 }
                 else if (oriantation == Oriantation.Down)
                 {
-                    //Får samma y velocity som objektet det krockar med
-                    //Vi kanske kan göra fungerande hissar med det här
-                    velocity.Y = collidedVelocity.Y;
-                    //Ser till så att objekten inte längre är innuti varandra
-                    position.Y = collided.Y + collided.Height;
+                    health = 0;
                 }
                 else if (oriantation == Oriantation.Right)
                 {

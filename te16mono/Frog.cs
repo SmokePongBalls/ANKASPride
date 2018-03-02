@@ -23,7 +23,8 @@ namespace te16mono
             this.maxSpeed = maxSpeed;
             velocity = new Vector2(0);
             acceleration = 0;
-
+            damage = 1;
+            canStandOn = true;
             //Bestämmer hur långt den får gå
             this.maxX = maxX;
             this.minX = minX;
@@ -84,7 +85,7 @@ namespace te16mono
         }
 
 
-        public override void Intersect(Rectangle collided, Vector2 collidedVelocity)
+        public override void Intersect(Rectangle collided, Vector2 collidedVelocity, int damage, bool collidedCanStandOn)
         {
             //Ser till så att den inte krockat med sig själv
             //Är mest ett failsafe ifall alla movingObjects ligger i samma lista

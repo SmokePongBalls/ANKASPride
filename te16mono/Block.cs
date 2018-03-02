@@ -17,6 +17,8 @@ namespace te16mono
         public bool isAlive;
         public TypeOfBlock type;
         private int width, height;
+        public int damage = 0;
+        public bool canStandOn;
 
 
         
@@ -29,6 +31,7 @@ namespace te16mono
             this.height = height;
             this.texture = texture;
             this.type = type;
+            canStandOn = true;
         }
 
         public Rectangle Hitbox
