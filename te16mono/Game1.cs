@@ -23,6 +23,10 @@ namespace te16mono
         SpriteFont font;
         Song music;
         double countdown = 0;
+
+        //Kamera
+        Camera camera;
+
         List<Block> testblocks;
 
         //TestKatten
@@ -51,6 +55,8 @@ namespace te16mono
             graphics.IsFullScreen = false;
             graphics.ApplyChanges();
             //--
+            camera = new Camera();
+
             testblocks = new List<Block>();
             testObjects = new List<MovingObjects>();
 
@@ -73,7 +79,7 @@ namespace te16mono
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             //testblocks.Add(new Block(new Vector2(500, 450), 500, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
-            testblocks.Add(new Block(new Vector2(0, 900), 19200, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
+            testblocks.Add(new Block(new Vector2(0, 900), 1920, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
 
             //Testkatten
             testObjects.Add(new Katt(1, Content.Load<Texture2D>("kattModel"), new Vector2(100, 100), false, (float)0.5, 1700, 0));
@@ -143,6 +149,7 @@ namespace te16mono
 
                 else
                     player.gravity = (float)0.5;
+
             }
             
 
@@ -180,6 +187,7 @@ namespace te16mono
 
             countdown -= gameTime.ElapsedGameTime.TotalMilliseconds;
             player.Update();
+            camera.Update(player, GraphicsDevice.DisplayMode.Height, GraphicsDevice.DisplayMode.Width);
           
             // TODO: Add your update logic here
 
@@ -193,8 +201,10 @@ namespace te16mono
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            
 
-            spriteBatch.Begin(SpriteSortMode.FrontToBack, null, SamplerState.LinearWrap, DepthStencilState.None, null, null, null);
+            //Här i ska alla saker som kan hamna utanför skärmen vara
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, DepthStencilState.None, null, null, camera.transform);
 
             //Testkatten
             foreach (MovingObjects testObjekt in testObjects)
@@ -205,10 +215,12 @@ namespace te16mono
 
             player.Draw(spriteBatch);
 
+            spriteBatch.End();
 
-
+            //Här ska alla saker som stannar i skärmen vara
+            // (UI)
+            spriteBatch.Begin();
             spriteBatch.DrawString(font, "Time: " + player.health + "," + gameTime.TotalGameTime.Milliseconds, Vector2.Zero, Color.White);
-
             spriteBatch.End();
 
             // TODO: Add your drawing code here
