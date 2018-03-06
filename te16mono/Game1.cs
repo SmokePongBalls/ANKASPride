@@ -24,9 +24,6 @@ namespace te16mono
         Song music;
         double countdown = 0;
 
-        //Kamera
-        Camera camera;
-
         List<Block> testblocks;
 
         //TestKatten
@@ -55,7 +52,6 @@ namespace te16mono
             graphics.IsFullScreen = false;
             graphics.ApplyChanges();
             //--
-            camera = new Camera();
 
             testblocks = new List<Block>();
             testObjects = new List<MovingObjects>();
@@ -187,7 +183,6 @@ namespace te16mono
 
             countdown -= gameTime.ElapsedGameTime.TotalMilliseconds;
             player.Update();
-            camera.Update(player, GraphicsDevice.DisplayMode.Height, GraphicsDevice.DisplayMode.Width);
           
             // TODO: Add your update logic here
 
@@ -204,7 +199,7 @@ namespace te16mono
             
 
             //Här i ska alla saker som kan hamna utanför skärmen vara
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, DepthStencilState.None, null, null, camera.transform);
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, DepthStencilState.None, null, null, Camera.Position(player, GraphicsDevice.DisplayMode.Width, GraphicsDevice.DisplayMode.Height));
 
             //Testkatten
             foreach (MovingObjects testObjekt in testObjects)

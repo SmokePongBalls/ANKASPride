@@ -7,18 +7,16 @@ using System.Threading.Tasks;
 
 namespace te16mono
 {
-    class Camera
+    static class Camera
     {
-        public Matrix transform;
 
-
-        public void Update(Player player, int screenHeight, int screenWidth)
+        public static Matrix Position(Player player, int screenWidth, int screenHeight)
         {
             Matrix position = Matrix.CreateTranslation(-player.position.X  - (player.Hitbox.Width/ 2), -player.position.Y - (player.Hitbox.Height / 2), 0);
 
             Matrix screenSize = Matrix.CreateTranslation((float)screenWidth / 3, (float)screenHeight / (float)1.5, 0);
 
-            transform = position * screenSize;
+            return position * screenSize;
         }
     }
 }
