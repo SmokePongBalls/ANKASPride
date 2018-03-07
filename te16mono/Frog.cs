@@ -12,7 +12,6 @@ namespace te16mono
     {
         private float maxSpeed;
         private float maxX, minX;
-        private bool canJump;
 
         public Frog(int seed, Texture2D texture, Vector2 position, bool walkLeft, float maxSpeed, float maxX, float minX)
         {
@@ -57,7 +56,7 @@ namespace te16mono
                 canJump = false;
             }
 
-            velocity.Y += gravity;
+            velocity.Y += Program.Gravity;
 
             position.Y += velocity.Y;
             position.X += velocity.X;
@@ -83,8 +82,8 @@ namespace te16mono
                 velocity.X = acceleration;
             }
         }
-
-
+        //Gammal intersect
+        /*
         public override void Intersect(Rectangle collided, Vector2 collidedVelocity, int damage, bool collidedCanStandOn)
         {
             //Ser till så att den inte krockat med sig själv
@@ -130,5 +129,7 @@ namespace te16mono
                 }
             }
         }
+        */
     }
+
 }

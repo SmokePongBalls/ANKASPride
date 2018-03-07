@@ -54,7 +54,7 @@ namespace te16mono
 
                 velocity.X += acceleration;
             }
-            velocity.Y += gravity;
+            velocity.Y += Program.Gravity;
 
             position.Y += velocity.Y;
             position.X += velocity.X;

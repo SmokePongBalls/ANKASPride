@@ -17,11 +17,11 @@ namespace te16mono
         public int health;
         public Vector2 velocity, position;
         protected Texture2D texture;
-        public float gravity = (float)0.5;
         protected float acceleration = (float)0.5;
         protected bool walkLeft;
         public int damage;
         public bool canStandOn;
+        protected bool canJump;
 
 
         //Måla ut allting
@@ -44,6 +44,8 @@ namespace te16mono
             }
         }
 
+        //Gammal intersect
+        /*
 
         public virtual void Intersect(Rectangle collided, Vector2 collidedVelocity, int damage, bool collidedCanStandOn)
         {
@@ -57,9 +59,10 @@ namespace te16mono
                 {
                     //Får samma y velocity som objektet det krockar med
                     //Vi kanske kan göra fungerande hissar med det här
+                    position.Y -= velocity.Y;
                     velocity.Y = collidedVelocity.Y;
                     //Ser till så att objekten inte längre är innuti varandra
-                    position.Y = collided.Y - Hitbox.Height;
+                    
                 }
                 else if (oriantation == Oriantation.Down)
                 {
@@ -68,7 +71,12 @@ namespace te16mono
                 else if (oriantation == Oriantation.Right)
                 {
                     //Ser till så att objekten inte längre är innuti varandra
-                    position.X = collided.X + collided.Width - velocity.X;
+
+                    position.X -= velocity.X;
+
+                    //position.X = collided.X + collided.Width - velocity.X;
+
+
                     //Säger ut fienden att gå åt andra hållet
                     walkLeft = false;
                     //Återställer acceleration och velocity så den inte fortsätter in i objektet
@@ -78,7 +86,10 @@ namespace te16mono
                 else if (oriantation == Oriantation.Left)
                 {
                     //Ser till så att objekten inte längre är innuti varandra
-                    position.X = collided.X - velocity.X - texture.Width;
+                    position.X -= velocity.X;
+
+                    //position.X = collided.X + collided.Width - velocity.X;
+
                     //Säger ut fienden att gå åt andra hållet
                     walkLeft = true;
                     //Återställer acceleration och velocity så den inte fortsätter in i objektet
@@ -87,7 +98,67 @@ namespace te16mono
                 }
             }
         }
+        */
 
+
+
+        public virtual void Intersect(Rectangle collided, Vector2 collidedVelocity, int damage, bool collidedCanStandOn)
+        {
+            //Ser till så att den inte krockat med sig själv
+            //Är mest ett failsafe ifall alla movingObjects ligger i samma lista
+            if (Hitbox != collided)
+            {
+                Oriantation oriantation = CheckCollision(collided);
+
+                if (oriantation == Oriantation.Up)
+                {
+                    //Får samma y velocity som objektet det krockar med
+                    //Vi kanske kan göra fungerande hissar med det här
+                    position.Y -= velocity.Y;
+                    velocity.Y = collidedVelocity.Y;
+                    //Ser till så att objekten inte längre är innuti varandra
+                    canJump = true;
+
+                }
+                else if (oriantation == Oriantation.Down)
+                {
+                    //Ifall player åker upp i objektet
+                    if (velocity.Y < 0)
+                        position.Y -= velocity.Y;
+
+                    //Återstället velocity
+                    velocity.Y = 0;
+                }
+                else if (oriantation == Oriantation.Right)
+                {
+                    //Ser till så att objekten inte längre är innuti varandra
+
+                    position.X -= velocity.X;
+
+                    //position.X = collided.X + collided.Width - velocity.X;
+
+
+                    //Säger ut fienden att gå åt andra hållet
+                    walkLeft = false;
+                    //Återställer acceleration och velocity så den inte fortsätter in i objektet
+                    acceleration = 0;
+                    velocity.X = acceleration;
+                }
+                else if (oriantation == Oriantation.Left)
+                {
+                    //Ser till så att objekten inte längre är innuti varandra
+                    position.X -= velocity.X;
+
+                    //position.X = collided.X + collided.Width - velocity.X;
+
+                    //Säger ut fienden att gå åt andra hållet
+                    walkLeft = true;
+                    //Återställer acceleration och velocity så den inte fortsätter in i objektet
+                    acceleration = 0;
+                    velocity.X = acceleration;
+                }
+            }
+        }
         public virtual void Update()
         { }
 

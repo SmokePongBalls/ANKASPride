@@ -15,8 +15,6 @@ namespace te16mono
 
     public class Game1 : Game
     {
-        protected float gravity = (float)0.5;
-
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Player player;
@@ -24,13 +22,12 @@ namespace te16mono
         Song music;
         double countdown = 0;
 
+        
+
         List<Block> testblocks;
 
         //TestKatten
         List<MovingObjects> testObjects;
-
-
-
 
         public Game1()
         {
@@ -142,10 +139,6 @@ namespace te16mono
                     //    player.position = Vector2.Zero;
                     */
                 }
-
-                else
-                    player.gravity = (float)0.5;
-
             }
             
 
@@ -155,7 +148,7 @@ namespace te16mono
                 if (player.Hitbox.Intersects(testObject.Hitbox))
                 {
                     player.Intersect(testObject.Hitbox, testObject.velocity, testObject.damage, testObject.canStandOn);
-                    
+                    testObject.Intersect(player.Hitbox, player.velocity, player.damage, player.canStandOn);
                 }
                 foreach (Block testblock in testblocks)
                     if (testObject.Hitbox.Intersects(testblock.Hitbox))
@@ -222,5 +215,6 @@ namespace te16mono
 
             base.Draw(gameTime);
         }
+
     }
 }

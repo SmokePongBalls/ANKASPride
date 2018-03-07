@@ -8,6 +8,23 @@ namespace te16mono
     /// </summary>
     public static class Program
     {
+        //Våran gravity variable standard är 0.5
+        static private float gravity = (float)0.5;
+        static public float Gravity
+        {
+            get
+            {
+                return gravity;
+            }
+            set
+            {
+                gravity = value;
+            }
+
+        }
+
+
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>

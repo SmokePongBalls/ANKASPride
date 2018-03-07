@@ -38,7 +38,7 @@ namespace te16mono
         {
 
             velocity = velocity * (float)0.95;
-            velocity.Y += gravity;
+            velocity.Y += Program.Gravity;
             //Spellogik
             pressedKeys = Keyboard.GetState();
 
@@ -126,12 +126,16 @@ namespace te16mono
                     }
                     else if (oriantation == Oriantation.Down)
                     {
-                        //Får samma y velocity som objektet det krockar med
-                        //Vi kanske kan göra fungerande hissar med det här
-                        velocity.Y = collidedVelocity.Y;
+                        
+                        //Ifall player åker upp i objektet
+                        if (velocity.Y < 0)
+                            position.Y -= velocity.Y;
+
+                        //Återstället velocity
+                        velocity.Y = 0;
+
                         //Ser till så att objekten inte längre är innuti varandra
-                        position.Y = collided.Y + collided.Height;
-                        health -= damage;
+
                     }
                     else if (oriantation == Oriantation.Right)
                     {
@@ -168,16 +172,19 @@ namespace te16mono
                     }
                     else if (oriantation == Oriantation.Down)
                     {
-                        //Får samma y velocity som objektet det krockar med
-                        //Vi kanske kan göra fungerande hissar med det här
-                        velocity.Y = collidedVelocity.Y;
-                        //Ser till så att objekten inte längre är innuti varandra
-                        position.Y = collided.Y + collided.Height;
+                        //Ifall player åker upp i objektet
+                        if (velocity.Y < 0)
+                            position.Y -= velocity.Y;
+
+                        //Återstället velocity
+                        velocity.Y = 0;
                     }
                     else if (oriantation == Oriantation.Right)
                     {
                         //Ser till så att objekten inte längre är innuti varandra
-                        position.X = collided.X + collided.Width - velocity.X;
+                        position.X -= velocity.X;
+
+                        //position.X = collided.X + collided.Width - velocity.X;
                         //Återställer velocity så den inte fortsätter in i objektet
                         velocity.X = 0;
 
@@ -185,7 +192,9 @@ namespace te16mono
                     else if (oriantation == Oriantation.Left)
                     {
                         //Ser till så att objekten inte längre är innuti varandra
-                        position.X = collided.X - velocity.X - texture.Width;
+                        position.X -= velocity.X;
+
+                        //position.X = collided.X - velocity.X - texture.Width;
                         //Återställer velocity så den inte fortsätter in i objektet
                         velocity.X = 0;
                     }
