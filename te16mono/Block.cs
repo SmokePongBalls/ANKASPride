@@ -9,9 +9,8 @@ using System.Threading.Tasks;
 namespace te16mono
 {
 
-    class Block
+    class Block : Objects
     {
-        public Vector2 position, velocity;
         private Texture2D texture;
         private int width, height;
         public int damage = 0;
@@ -30,7 +29,7 @@ namespace te16mono
             canStandOn = true;
         }
 
-        public Rectangle Hitbox
+        public override Rectangle Hitbox
         {
             get
             {
@@ -39,10 +38,9 @@ namespace te16mono
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            //Använder sig utav hitboxen för att bestämma hur stor den ska vara
-            spriteBatch.Draw(texture, Hitbox, Color.White);
+            spriteBatch.Draw(texture, Hitbox, Color.Pink);
         }
 
 

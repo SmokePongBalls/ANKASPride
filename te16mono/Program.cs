@@ -23,8 +23,7 @@ namespace te16mono
 
         }
 
-
-
+        
         /// <summary>
         /// The main entry point for the application.
         /// </summary>

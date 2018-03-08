@@ -2,19 +2,14 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace te16mono
 {
     class Player : MovingObjects
     {
         //Ha kvar "points" ifall vi använder det senare.
         public int points;
-        private bool canJump;
+        private Oriantation lastTouchedSurface;
+        private bool holdingJump = true;
 
 
         //kontroller
@@ -31,6 +26,7 @@ namespace te16mono
             this.texture = texture;
             canJump = true;
             health = 10;
+            holdingJump = false;
             //Initiera värden
 
         }
@@ -42,7 +38,6 @@ namespace te16mono
             velocity.Y += Program.Gravity;
             //Spellogik
             pressedKeys = Keyboard.GetState();
-
             
             if (pressedKeys.IsKeyDown(left))
                 velocity.X -= acceleration;
@@ -52,18 +47,30 @@ namespace te16mono
                 velocity.X += acceleration;
             if (Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Space))
             {
-                if (canJump == true)
+                if (canJump == true && holdingJump == false)
                 {
                     velocity.Y -= 30;
                     canJump = false;
                 }
-                
+                holdingJump = true;
             }
+            else
+            {
+                holdingJump = false;
+            }
+
+
+            if (Keyboard.GetState().IsKeyDown(Keys.R))
+            {
+                position = new Vector2(0);
+            }
+
+
 
 
             //Själva: Ordna styrning för a, s, d också
 
-            position += velocity;
+                position += velocity;
 
             
             /*
@@ -117,13 +124,14 @@ namespace te16mono
                         position.Y = collided.Y - Hitbox.Height;
                         //Står på solid mark så man får hoppa igen
                         canJump = true;
+                        lastTouchedSurface = Oriantation.Up;
                     }
                     else if (oriantation == Oriantation.Up && collidedCanStandOn == false)
                     {
                         //Slänger den upp i luften
                         velocity.Y = -10;
                         //Ser till så att objekten inte längre är innuti varandra
-                        position.Y = collided.Y - Hitbox.Height;
+                        position.Y -= velocity.Y;
                     }
                     else if (oriantation == Oriantation.Down)
                     {
@@ -170,6 +178,7 @@ namespace te16mono
                         position.Y = collided.Y - Hitbox.Height;
                         //Står på solid mark så man får hoppa igen
                         canJump = true;
+                        lastTouchedSurface = Oriantation.Up;
                     }
                     else if (oriantation == Oriantation.Down)
                     {
@@ -189,6 +198,12 @@ namespace te16mono
                         //Återställer velocity så den inte fortsätter in i objektet
                         velocity.X = 0;
 
+                        //Om man inte rörde en högervägg senast
+                        if (lastTouchedSurface != Oriantation.Right)
+                        canJump = true;
+
+                        lastTouchedSurface = Oriantation.Right;
+
                     }
                     else if (oriantation == Oriantation.Left)
                     {
@@ -198,6 +213,13 @@ namespace te16mono
                         //position.X = collided.X - velocity.X - texture.Width;
                         //Återställer velocity så den inte fortsätter in i objektet
                         velocity.X = 0;
+
+
+                        //Om inte rörde en vänstervägg senast
+                        if (lastTouchedSurface != Oriantation.Left)
+                            canJump = true;
+
+                        lastTouchedSurface = Oriantation.Left;
                     }
                 }
                 

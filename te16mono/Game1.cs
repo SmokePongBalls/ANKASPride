@@ -72,10 +72,15 @@ namespace te16mono
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             //testblocks.Add(new Block(new Vector2(500, 450), 500, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
-            testblocks.Add(new Block(new Vector2(0, 900), 1900, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
-            testblocks.Add(new Block(new Vector2(2300, 900), 300, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
-            testblocks.Add(new Block(new Vector2(2500, 800), 300, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
-            testblocks.Add(new Block(new Vector2(2700, 700), 300, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
+            testblocks.Add(new Block(new Vector2(0, 900), 1900, 100, new Vector2(0), Content.Load<Texture2D>("square")));
+            testblocks.Add(new Block(new Vector2(2300, 900), 300, 100, new Vector2(0), Content.Load<Texture2D>("square")));
+            testblocks.Add(new Block(new Vector2(2500, 800), 300, 100, new Vector2(0), Content.Load<Texture2D>("square")));
+            testblocks.Add(new Block(new Vector2(2700, 700), 300, 100, new Vector2(0), Content.Load<Texture2D>("square")));
+
+            testblocks.Add(new Block(new Vector2(500, -1000), 40, 1700, new Vector2(0), Content.Load<Texture2D>("square")));
+            testblocks.Add(new Block(new Vector2(700, -1000), 40, 1700, new Vector2(0), Content.Load<Texture2D>("square")));
+
+
             //Testkatten
             testObjects.Add(new Katt(1, Content.Load<Texture2D>("kattModel"), new Vector2(100, 100), false, (float)0.5, 1700, 0));
             testObjects.Add(new Frog(1, Content.Load<Texture2D>("frog"), new Vector2(100, 100), false, (float)0.5, 1700, 0));
@@ -122,24 +127,7 @@ namespace te16mono
             {
                 if (player.Hitbox.Intersects(testBlock.Hitbox))
                 {
-
                     player.Intersect(testBlock.Hitbox, testBlock.velocity, testBlock.damage, testBlock.canStandOn);
-
-                    /*
-                     *  IRRELEVANT KOD 
-                     *
-                    if (player.Hitbox.X <= testblock.position.X && player.Hitbox.Y > testblock.position.Y)
-                    {
-                        player.velocity.X = -player.velocity.X;
-                        player.position.X -= 1;
-                    }
-
-                    player.velocity.Y = -player.velocity.Y;
-                    player.position.Y -= (float)0.5;
-
-                    // if (testblock.type == TypeOfBlock.teleporter)
-                    //    player.position = Vector2.Zero;
-                    */
                 }
             }
             
@@ -219,4 +207,5 @@ namespace te16mono
         }
 
     }
+
 }

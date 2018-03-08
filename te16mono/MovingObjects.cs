@@ -9,14 +9,11 @@ using System.Threading.Tasks;
 namespace te16mono
 {
 
-    enum Oriantation {Up, Down, Left, Right}
-    class MovingObjects
+
+    abstract class MovingObjects : Objects
     {
 
         protected Random rng;
-        public int health;
-        public Vector2 velocity, position;
-        protected Texture2D texture;
         protected float acceleration = (float)0.5;
         protected bool walkLeft;
         public int damage;
@@ -24,30 +21,18 @@ namespace te16mono
         protected bool canJump;
         protected float maxSpeed;
         protected float maxX, minX;
+        public int health;
 
 
         //Måla ut allting
 
-        public virtual void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
 
             spriteBatch.Draw(texture, position, Color.White);
         }
 
-
-
-        //Få objektets hitbox
-        public Rectangle Hitbox
-        {
-            get
-            {
-                Rectangle hitbox = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
-                return hitbox;
-            }
-        }
-
-        //Gammal intersect
-        /*
+        /* <summary>Gammal intersect </summary>
 
         public virtual void Intersect(Rectangle collided, Vector2 collidedVelocity, int damage, bool collidedCanStandOn)
         {
@@ -102,6 +87,15 @@ namespace te16mono
         }
         */
 
+        //<Summary> Hitboxen</summary>
+        public override Rectangle Hitbox
+        {
+            get
+            {
+                Rectangle hitbox = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
+                return hitbox;
+            }
+        }
 
 
         public virtual void Intersect(Rectangle collided, Vector2 collidedVelocity, int damage, bool collidedCanStandOn)
@@ -161,26 +155,12 @@ namespace te16mono
                 }
             }
         }
-        public virtual void Update()
-        { }
+        public abstract void Update();
+
 
         //Tar reda på vilken sida utav objektet som hitboxen befinner sig
         //Fungerar hyfsat bra men kollisionen underifrån kan göras bättre
-        protected Oriantation CheckCollision(Rectangle collided)
-        {
-            //Om den är till vänster
-            if (Hitbox.Intersects(new Rectangle(collided.X - collided.Width, collided.Y + (int)velocity.Y + 1, collided.Width, collided.Height)))
-                return Oriantation.Left;
-            //Om den är till höger
-            else if (Hitbox.Intersects(new Rectangle(collided.X + collided.Width, collided.Y + (int)velocity.Y + 1, collided.Width, collided.Height)))
-                return Oriantation.Right;
-            //Om den är över
-            else if (Hitbox.Intersects(new Rectangle(collided.X, collided.Y - collided.Height, collided.Width, collided.Height)))
-                return Oriantation.Up;
-            //Om den är under
-            else
-                return Oriantation.Down;
-        }
+        
     }
 
 
