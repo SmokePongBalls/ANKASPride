@@ -15,10 +15,6 @@ namespace te16mono
     class Katt : MovingObjects
     {
 
-        private  float maxSpeed;
-        private float maxX, minX;
-
-
         public Katt(int seed, Texture2D texture, Vector2 position, bool walkLeft, float maxSpeed, float maxX, float minX)
         {
             this.texture = texture;

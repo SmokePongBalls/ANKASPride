@@ -22,6 +22,8 @@ namespace te16mono
         public int damage;
         public bool canStandOn;
         protected bool canJump;
+        protected float maxSpeed;
+        protected float maxX, minX;
 
 
         //Måla ut allting
