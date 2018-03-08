@@ -72,8 +72,10 @@ namespace te16mono
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             //testblocks.Add(new Block(new Vector2(500, 450), 500, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
-            testblocks.Add(new Block(new Vector2(0, 900), 1920, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
-
+            testblocks.Add(new Block(new Vector2(0, 900), 1900, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
+            testblocks.Add(new Block(new Vector2(2300, 900), 300, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
+            testblocks.Add(new Block(new Vector2(2500, 800), 300, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
+            testblocks.Add(new Block(new Vector2(2700, 700), 300, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
             //Testkatten
             testObjects.Add(new Katt(1, Content.Load<Texture2D>("kattModel"), new Vector2(100, 100), false, (float)0.5, 1700, 0));
             testObjects.Add(new Frog(1, Content.Load<Texture2D>("frog"), new Vector2(100, 100), false, (float)0.5, 1700, 0));
@@ -208,7 +210,7 @@ namespace te16mono
             //Här ska alla saker som stannar i skärmen vara
             // (UI)
             spriteBatch.Begin();
-            spriteBatch.DrawString(font, "Time: " + player.health + "," + gameTime.TotalGameTime.Milliseconds, Vector2.Zero, Color.White);
+            spriteBatch.DrawString(font, "Health: " + player.health + " Time: " + gameTime.TotalGameTime.Seconds +"," + gameTime.TotalGameTime.Milliseconds, Vector2.Zero, Color.White);
             spriteBatch.End();
 
             // TODO: Add your drawing code here
