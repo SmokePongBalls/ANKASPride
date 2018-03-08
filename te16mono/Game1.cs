@@ -72,21 +72,20 @@ namespace te16mono
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             //testblocks.Add(new Block(new Vector2(500, 450), 500, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
-            testblocks.Add(new Block(new Vector2(0, 900), 1920, 500, new Vector2(0), Content.Load<Texture2D>("stone")));
-
+            testblocks.Add(new Block(new Vector2(0, 900), 1900, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
+            testblocks.Add(new Block(new Vector2(2300, 900), 300, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
+            testblocks.Add(new Block(new Vector2(2500, 800), 300, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
+            testblocks.Add(new Block(new Vector2(2700, 700), 300, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
             //Testkatten
             testObjects.Add(new Katt(1, Content.Load<Texture2D>("kattModel"), new Vector2(100, 100), false, (float)0.5, 1700, 0));
             testObjects.Add(new Frog(1, Content.Load<Texture2D>("frog"), new Vector2(100, 100), false, (float)0.5, 1700, 0));
-            testObjects.Add(new Bird(45, Content.Load<Texture2D>("bird"), new Vector2(100, 300), true, (float)0.3, 2000, 0));
 
 
 
             font = Content.Load<SpriteFont>("Font");
 
-            /*
             music = Content.Load<Song>("megaman2");
             MediaPlayer.Play(music);
-            */
 
             // TODO: use this.Content to load your game content here
         }
@@ -158,6 +157,10 @@ namespace te16mono
                     {
                         testObject.Intersect(testblock.Hitbox, testblock.velocity, testblock.damage ,testblock.canStandOn);
                     }
+                if (testObject.Hitbox.Intersects(player.Hitbox))
+                {
+                    
+                }
                 foreach (MovingObjects obj in testObjects)
                 {
                     if (testObject.Hitbox.Intersects(obj.Hitbox))
@@ -207,7 +210,7 @@ namespace te16mono
             //Här ska alla saker som stannar i skärmen vara
             // (UI)
             spriteBatch.Begin();
-            spriteBatch.DrawString(font, "Time: " + player.health + "," + gameTime.TotalGameTime.Milliseconds, Vector2.Zero, Color.White);
+            spriteBatch.DrawString(font, "Health: " + player.health + " Time: " + gameTime.TotalGameTime.Seconds +"," + gameTime.TotalGameTime.Milliseconds, Vector2.Zero, Color.White);
             spriteBatch.End();
 
             // TODO: Add your drawing code here

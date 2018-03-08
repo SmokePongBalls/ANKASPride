@@ -28,7 +28,7 @@ namespace te16mono
 
         //Måla ut allting
 
-        public void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
 
             spriteBatch.Draw(texture, position, Color.White);
@@ -127,7 +127,7 @@ namespace te16mono
                     //Ifall player åker upp i objektet
                     if (velocity.Y < 0)
                         position.Y -= velocity.Y;
-
+                    
                     //Återstället velocity
                     velocity.Y = 0;
                 }

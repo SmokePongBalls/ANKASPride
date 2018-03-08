@@ -30,6 +30,7 @@ namespace te16mono
             velocity = new Vector2();
             this.texture = texture;
             canJump = true;
+            health = 10;
             //Initiera värden
 
         }
@@ -133,7 +134,7 @@ namespace te16mono
 
                         //Återstället velocity
                         velocity.Y = 0;
-
+                        
                         //Ser till så att objekten inte längre är innuti varandra
 
                     }
