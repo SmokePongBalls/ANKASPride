@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace te16mono
 {
+    enum Oriantation {Left, Right, Up, Down }
 
-
-    abstract class MovingObjects : Objects
+    abstract class MovingObjects
     {
 
         protected Random rng;
@@ -22,11 +22,13 @@ namespace te16mono
         protected float maxSpeed;
         protected float maxX, minX;
         public int health;
+        protected Texture2D texture;
+        public Vector2 velocity, position;
 
 
         //Måla ut allting
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
 
             spriteBatch.Draw(texture, position, Color.White);
@@ -88,7 +90,7 @@ namespace te16mono
         */
 
         //<Summary> Hitboxen</summary>
-        public override Rectangle Hitbox
+        public virtual Rectangle Hitbox
         {
             get
             {
@@ -160,7 +162,22 @@ namespace te16mono
 
         //Tar reda på vilken sida utav objektet som hitboxen befinner sig
         //Fungerar hyfsat bra men kollisionen underifrån kan göras bättre
-        
+        protected Oriantation CheckCollision(Rectangle collided)
+        {
+            //Om den är till vänster
+            if (Hitbox.Intersects(new Rectangle(collided.X - collided.Width, collided.Y + (int)velocity.Y + 1, collided.Width, collided.Height)))
+                return Oriantation.Left;
+            //Om den är till höger
+            else if (Hitbox.Intersects(new Rectangle(collided.X + collided.Width, collided.Y + (int)velocity.Y + 1, collided.Width, collided.Height)))
+                return Oriantation.Right;
+            //Om den är över
+            else if (Hitbox.Intersects(new Rectangle(collided.X, collided.Y - collided.Height, collided.Width, collided.Height)))
+                return Oriantation.Up;
+            //Om den är under
+            else
+                return Oriantation.Down;
+        }
+
     }
 
 

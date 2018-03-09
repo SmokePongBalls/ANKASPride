@@ -82,8 +82,9 @@ namespace te16mono
 
 
             //Testkatten
+            testObjects.Add(new Bird(1, Content.Load<Texture2D>("bird"), new Vector2(900, 100), false, (float)0.5, 1700, 0));
             testObjects.Add(new Katt(1, Content.Load<Texture2D>("kattModel"), new Vector2(100, 100), false, (float)0.5, 1700, 0));
-            testObjects.Add(new Frog(1, Content.Load<Texture2D>("frog"), new Vector2(100, 100), false, (float)0.5, 1700, 0));
+            testObjects.Add(new Frog(1, Content.Load<Texture2D>("frog"), new Vector2(100, 100), false, (float)0.5, 1700, -1000));
 
 
 
