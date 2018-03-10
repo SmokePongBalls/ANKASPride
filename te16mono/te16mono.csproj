@@ -48,6 +48,7 @@
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Projectiles\Projectiles.cs" />
+    <Compile Include="Projectiles\RegularProjectile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

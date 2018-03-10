@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace te16mono
 {
-    class Projectiles
+    public abstract class Projectiles
     {
         protected int health;
         public int damage;
         public Vector2 velocity, position;
-        private Texture2D texture;
-        private Oriantation direction;
+        protected Texture2D texture;
+        public bool isDead;
 
         public virtual void Draw(SpriteBatch spritebatch)
         {
@@ -29,5 +29,24 @@ namespace te16mono
                 return hitbox;
             }
         }
+
+        public virtual Rectangle BlastRadious
+        {
+            get
+            {
+                Rectangle hitbox = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
+                return hitbox;
+            }
+        }
+
+
+        public virtual void Intersect()
+        {
+            isDead = true;
+        }
+
+
+
+        public abstract void Update();
     }
 }

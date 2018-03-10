@@ -99,6 +99,25 @@ namespace te16mono
             }
         }
 
+        public virtual void ProjectileIntersect(Rectangle collided, int damage)
+        {
+
+            if (Hitbox.Intersects(new Rectangle(collided.X - collided.Width, collided.Y, collided.Width, collided.Height)))
+                velocity.X += 20 * damage;
+            //Om den är till höger
+            if (Hitbox.Intersects(new Rectangle(collided.X + collided.Width, collided.Y, collided.Width, collided.Height)))
+                velocity.X -= 20 * damage;
+            //Om den är över
+            if (Hitbox.Intersects(new Rectangle(collided.X, collided.Y - collided.Height, collided.Width, collided.Height)))
+                velocity.Y += 20 * damage;
+            //Om den är under
+            if (Hitbox.Intersects(new Rectangle(collided.X, collided.Y + collided.Height, collided.Width, collided.Height)))
+                velocity.Y -= 20 * damage;
+
+            health -= damage;
+
+        }
+
 
         public virtual void Intersect(Rectangle collided, Vector2 collidedVelocity, int damage, bool collidedCanStandOn)
         {
