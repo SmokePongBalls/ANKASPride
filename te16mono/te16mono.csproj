@@ -38,15 +38,16 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Main\Main.cs" />
     <Compile Include="MovingObjects\Bird.cs" />
     <Compile Include="Blocks\Block.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="MovingObjects\Frog.cs" />
-    <Compile Include="Game1.cs" />
+    <Compile Include="Main\Game1.cs" />
     <Compile Include="MovingObjects\Katt.cs" />
     <Compile Include="MovingObjects\MovingObjects.cs" />
     <Compile Include="Player.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Main\Program.cs" />
     <Compile Include="Projectiles\Projectiles.cs" />
     <Compile Include="Projectiles\RegularProjectile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

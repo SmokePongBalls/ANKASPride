@@ -19,5 +19,6 @@ namespace te16mono
         {
             position += velocity;
         }
+        
     }
 }

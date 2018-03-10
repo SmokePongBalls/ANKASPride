@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace te16mono
 {
-    public abstract class Projectiles
+    abstract class Projectiles
     {
         protected int health;
         public int damage;

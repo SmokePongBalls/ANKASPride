@@ -54,6 +54,9 @@ namespace te16mono
                 }
                 holdingJump = true;
             }
+            if (Keyboard.GetState().IsKeyDown(Keys.G))
+                Main.Shoot("regular", new Vector2(-1, 0), new Vector2(position.X - 21, position.Y), 1);
+
             else
             {
                 holdingJump = false;

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
@@ -6,51 +7,26 @@ using System.Collections.Generic;
 
 namespace te16mono
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
-    /// 
-    
-    
-
-    public class Game1 : Game
+    static class Main
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        Player player;
-        SpriteFont font;
-        Song music;
-        double countdown = 0;
-
         
+        static SpriteBatch spriteBatch;
+        static Player player;
+        static SpriteFont font;
+        static Song music;
+        static double countdown = 0;
+        static ContentManager Content;
 
-        List<Block> testBlocks;
-        public List<Projectiles> projectiles;
+        static List<Block> testBlocks;
+        static List<Projectiles> projectiles;
 
         //TestKatten
-        List<MovingObjects> testObjects;
+        static List<MovingObjects> testObjects;
 
-        public Game1()
+        static public void Initialize(ContentManager content)
         {
-            graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
-        }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
-        protected override void Initialize()
-        {
-            //Fullscreen --
-            graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
-            graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
-            graphics.IsFullScreen = false;
-            graphics.ApplyChanges();
-            //--
-
+            Content = content;
             testBlocks = new List<Block>();
             testObjects = new List<MovingObjects>();
             projectiles = new List<Projectiles>();
@@ -61,18 +37,11 @@ namespace te16mono
             player.down = Keys.S;
             player.left = Keys.A;
             player.right = Keys.D;
-            
-            base.Initialize();
         }
-
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
-        protected override void LoadContent()
+        static public void LoadContent(GraphicsDevice graphicsDevice)
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            spriteBatch = new SpriteBatch(graphicsDevice);
             //testblocks.Add(new Block(new Vector2(500, 450), 500, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
             testBlocks.Add(new Block(new Vector2(0, 900), 1900, 100, new Vector2(0), Content.Load<Texture2D>("square")));
             testBlocks.Add(new Block(new Vector2(2300, 900), 300, 100, new Vector2(0), Content.Load<Texture2D>("square")));
@@ -94,37 +63,10 @@ namespace te16mono
 
             music = Content.Load<Song>("megaman2");
             MediaPlayer.Play(music);
-
-            // TODO: use this.Content to load your game content here
         }
-
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
-        protected override void UnloadContent()
+        public static void Update(GameTime gameTime)
         {
-            // TODO: Unload any non ContentManager content here
-        }
-
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Update(GameTime gameTime)
-        {
-
-
             //Testkatten
-            
-
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-            if (Keyboard.GetState().IsKeyDown(Keys.T))
-            {
-                graphics.ToggleFullScreen();
-            }
 
             foreach (Block testBlock in testBlocks)
             {
@@ -133,7 +75,7 @@ namespace te16mono
                     player.Intersect(testBlock.Hitbox, testBlock.velocity, testBlock.damage, testBlock.canStandOn);
                 }
             }
-            
+
 
             //Om katten rör hitboxen
             foreach (MovingObjects testObject in testObjects)
@@ -146,17 +88,17 @@ namespace te16mono
                 foreach (Block testblock in testBlocks)
                     if (testObject.Hitbox.Intersects(testblock.Hitbox))
                     {
-                        testObject.Intersect(testblock.Hitbox, testblock.velocity, testblock.damage ,testblock.canStandOn);
+                        testObject.Intersect(testblock.Hitbox, testblock.velocity, testblock.damage, testblock.canStandOn);
                     }
                 if (testObject.Hitbox.Intersects(player.Hitbox))
                 {
-                    
+
                 }
                 foreach (MovingObjects obj in testObjects)
                 {
                     if (testObject.Hitbox.Intersects(obj.Hitbox))
                     {
-                        testObject.Intersect(obj.Hitbox, obj.velocity, obj.damage,obj.canStandOn);
+                        testObject.Intersect(obj.Hitbox, obj.velocity, obj.damage, obj.canStandOn);
                     }
                 }
 
@@ -165,6 +107,7 @@ namespace te16mono
             }
             foreach (Projectiles projectile in projectiles)
             {
+                projectile.Update();
                 bool hasCollided = false;
                 //Kollar först ifall den krockar med någonting
                 if (projectile.Hitbox.Intersects(player.Hitbox))
@@ -172,11 +115,11 @@ namespace te16mono
                     hasCollided = true;
                 }
                 else if (hasCollided == false)
-                foreach (MovingObjects testObject in testObjects)
-                {
+                    foreach (MovingObjects testObject in testObjects)
+                    {
                         if (projectile.Hitbox.Intersects(testObject.Hitbox))
                             hasCollided = true;
-                }
+                    }
                 else if (hasCollided == false)
                     foreach (Block testBlock in testBlocks)
                     {
@@ -185,45 +128,34 @@ namespace te16mono
                     }
                 if (hasCollided)
                 {
-                    //Så att vi vet att projektilen är "död"
-                    projectile.Intersect();
-
-
+                    
                     if (projectile.BlastRadious.Intersects(player.Hitbox))
                     {
                         player.ProjectileIntersect(projectile.BlastRadious, projectile.damage);
                     }
-                    else if (hasCollided == false)
                         foreach (MovingObjects testObject in testObjects)
                         {
                             if (projectile.BlastRadious.Intersects(testObject.Hitbox))
                                 testObject.ProjectileIntersect(projectile.Hitbox, projectile.damage);
                         }
+                    //projectiles.Remove(projectile);
+
                 }
+                
 
             }
-            
-            
+
+
 
             countdown -= gameTime.ElapsedGameTime.TotalMilliseconds;
             player.Update();
-          
-            // TODO: Add your update logic here
 
-            base.Update(gameTime);
         }
-
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Draw(GameTime gameTime)
+        public static void Draw(GameTime gameTime, GraphicsDevice graphicsDevise)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
             
-
             //Här i ska alla saker som kan hamna utanför skärmen vara
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, DepthStencilState.None, null, null, Camera.Position(player, GraphicsDevice.DisplayMode.Width, GraphicsDevice.DisplayMode.Height));
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, DepthStencilState.None, null, null, Camera.Position(player, graphicsDevise.DisplayMode.Width, graphicsDevise.DisplayMode.Height));
 
             //Testkatten
             foreach (MovingObjects testObjekt in testObjects)
@@ -232,6 +164,9 @@ namespace te16mono
             foreach (Block testblock in testBlocks)
                 testblock.Draw(spriteBatch);
 
+            foreach (Projectiles projectile in projectiles)
+                projectile.Draw(spriteBatch);
+
             player.Draw(spriteBatch);
 
             spriteBatch.End();
@@ -239,13 +174,20 @@ namespace te16mono
             //Här ska alla saker som stannar i skärmen vara
             // (UI)
             spriteBatch.Begin();
-            spriteBatch.DrawString(font, "Health: " + player.health + " Time: " + gameTime.TotalGameTime.Seconds +"," + gameTime.TotalGameTime.Milliseconds, Vector2.Zero, Color.White);
+            spriteBatch.DrawString(font, "Health: " + player.health + " Time: " + gameTime.TotalGameTime.Seconds + "," + gameTime.TotalGameTime.Milliseconds, Vector2.Zero, Color.White);
             spriteBatch.End();
 
             // TODO: Add your drawing code here
 
-            base.Draw(gameTime);
+            
         }
+
+        public static void Shoot(string type, Vector2 position, Vector2 velocity, int damage)
+        {
+            if (type == "regular")
+                projectiles.Add(new RegularProjectile(1, damage, position, velocity, Content.Load<Texture2D>("RegularProjectile")));
+        }
+
 
     }
 
