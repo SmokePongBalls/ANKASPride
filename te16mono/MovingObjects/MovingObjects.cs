@@ -176,7 +176,7 @@ namespace te16mono
                 }
             }
         }
-        public abstract void Update();
+        public abstract void Update(GameTime gameTime);
 
 
         //Tar reda på vilken sida utav objektet som hitboxen befinner sig

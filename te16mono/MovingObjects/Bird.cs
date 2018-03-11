@@ -10,6 +10,7 @@ namespace te16mono
 {
     class Bird : MovingObjects
     {
+        int timeToShoot;
 
         public Bird(int seed, Texture2D texture, Vector2 position, bool walkLeft, float maxSpeed, float maxX, float minX)
         {
@@ -25,9 +26,10 @@ namespace te16mono
             //Bestämmer hur långt den får gå
             this.maxX = maxX;
             this.minX = minX;
+            timeToShoot = 4000;
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
 
             // Om den inte har uppnåt maxfart
@@ -69,6 +71,12 @@ namespace te16mono
                 velocity.X = acceleration;
             }
 
+            timeToShoot -= gameTime.ElapsedGameTime.Milliseconds;
+            if (timeToShoot <= 0)
+            {
+                Main.Shoot("regular", new Vector2(0, 5), new Vector2(position.X + texture.Width/2, position.Y + texture.Height + 1), 1);
+                timeToShoot = 500;
+            }
         }
 
         public override void Intersect(Rectangle collided, Vector2 collidedVelocity, int damage, bool collidedCanStandOn)

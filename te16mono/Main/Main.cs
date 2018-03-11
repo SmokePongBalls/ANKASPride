@@ -48,12 +48,12 @@ namespace te16mono
             testBlocks.Add(new Block(new Vector2(2500, 800), 300, 100, new Vector2(0), Content.Load<Texture2D>("square")));
             testBlocks.Add(new Block(new Vector2(2700, 700), 300, 100, new Vector2(0), Content.Load<Texture2D>("square")));
 
-            testBlocks.Add(new Block(new Vector2(500, -1000), 40, 1700, new Vector2(0), Content.Load<Texture2D>("square")));
-            testBlocks.Add(new Block(new Vector2(700, -1000), 40, 1700, new Vector2(0), Content.Load<Texture2D>("square")));
+            testBlocks.Add(new Block(new Vector2(500, -1100), 40, 1700, new Vector2(0), Content.Load<Texture2D>("square")));
+            testBlocks.Add(new Block(new Vector2(700, -1100), 40, 1700, new Vector2(0), Content.Load<Texture2D>("square")));
 
 
             //Testkatten
-            testObjects.Add(new Bird(1, Content.Load<Texture2D>("bird"), new Vector2(900, 100), false, (float)0.5, 1700, 0));
+            testObjects.Add(new Bird(1, Content.Load<Texture2D>("bird"), new Vector2(900, 300), false, (float)0.25, 1700, 0));
             testObjects.Add(new Katt(1, Content.Load<Texture2D>("kattModel"), new Vector2(100, 100), false, (float)0.5, 1700, 0));
             testObjects.Add(new Frog(1, Content.Load<Texture2D>("frog"), new Vector2(100, 100), false, (float)0.5, 1700, -1000));
 
@@ -103,9 +103,9 @@ namespace te16mono
                 }
 
 
-                testObject.Update();
+                testObject.Update(gameTime);
             }
-            foreach (Projectiles projectile in projectiles)
+            foreach (Projectiles projectile in projectiles.ToArray())
             {
                 projectile.Update();
                 bool hasCollided = false;
@@ -114,14 +114,12 @@ namespace te16mono
                 {
                     hasCollided = true;
                 }
-                else if (hasCollided == false)
-                    foreach (MovingObjects testObject in testObjects)
-                    {
-                        if (projectile.Hitbox.Intersects(testObject.Hitbox))
-                            hasCollided = true;
-                    }
-                else if (hasCollided == false)
-                    foreach (Block testBlock in testBlocks)
+                foreach (MovingObjects testObject in testObjects)
+                {
+                    if (projectile.Hitbox.Intersects(testObject.Hitbox))
+                        hasCollided = true;
+                }
+                foreach (Block testBlock in testBlocks)
                     {
                         if (projectile.Hitbox.Intersects(testBlock.Hitbox))
                             hasCollided = true;
@@ -138,7 +136,7 @@ namespace te16mono
                             if (projectile.BlastRadious.Intersects(testObject.Hitbox))
                                 testObject.ProjectileIntersect(projectile.Hitbox, projectile.damage);
                         }
-                    //projectiles.Remove(projectile);
+                    projectiles.Remove(projectile);
 
                 }
                 
@@ -148,7 +146,7 @@ namespace te16mono
 
 
             countdown -= gameTime.ElapsedGameTime.TotalMilliseconds;
-            player.Update();
+            player.Update(gameTime);
 
         }
         public static void Draw(GameTime gameTime, GraphicsDevice graphicsDevise)

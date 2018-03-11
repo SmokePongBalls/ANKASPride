@@ -31,7 +31,7 @@ namespace te16mono
             this.minX = minX;
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
 
             // Om den inte har uppnåt maxfart

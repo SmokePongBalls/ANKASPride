@@ -31,7 +31,7 @@ namespace te16mono
 
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
 
             velocity = velocity * (float)0.95;
