@@ -10,6 +10,7 @@ namespace te16mono
 {
     abstract class Projectiles
     {
+        //Hur många milisekunder till som det ska leva
         protected int health;
         public int damage;
         public Vector2 velocity, position;
@@ -47,6 +48,6 @@ namespace te16mono
 
 
 
-        public abstract void Update();
+        public abstract void Update(GameTime gameTime);
     }
 }

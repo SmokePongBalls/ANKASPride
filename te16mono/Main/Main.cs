@@ -68,7 +68,7 @@ namespace te16mono
         {
             //Testkatten
 
-            foreach (Block testBlock in testBlocks)
+            foreach (Block testBlock in testBlocks.ToArray())
             {
                 if (player.Hitbox.Intersects(testBlock.Hitbox))
                 {
@@ -78,7 +78,7 @@ namespace te16mono
 
 
             //Om katten rör hitboxen
-            foreach (MovingObjects testObject in testObjects)
+            foreach (MovingObjects testObject in testObjects.ToArray())
             {
                 if (player.Hitbox.Intersects(testObject.Hitbox))
                 {
@@ -104,10 +104,12 @@ namespace te16mono
 
 
                 testObject.Update(gameTime);
+                if (testObject.health <= 0)
+                    testObjects.Remove(testObject);
             }
             foreach (Projectiles projectile in projectiles.ToArray())
             {
-                projectile.Update();
+                projectile.Update(gameTime);
                 bool hasCollided = false;
                 //Kollar först ifall den krockar med någonting
                 if (projectile.Hitbox.Intersects(player.Hitbox))
@@ -136,11 +138,12 @@ namespace te16mono
                             if (projectile.BlastRadious.Intersects(testObject.Hitbox))
                                 testObject.ProjectileIntersect(projectile.Hitbox, projectile.damage);
                         }
-                    projectiles.Remove(projectile);
+                    projectile.isDead = true;
 
                 }
                 
-
+                if (projectile.isDead)
+                    projectiles.Remove(projectile);
             }
 
 
@@ -180,10 +183,10 @@ namespace te16mono
             
         }
 
-        public static void Shoot(string type, Vector2 position, Vector2 velocity, int damage)
+        public static void Shoot(string type, Vector2 position, Vector2 velocity, int damage, int health)
         {
             if (type == "regular")
-                projectiles.Add(new RegularProjectile(1, damage, position, velocity, Content.Load<Texture2D>("RegularProjectile")));
+                projectiles.Add(new RegularProjectile(health, damage, position, velocity, Content.Load<Texture2D>("RegularProjectile")));
         }
 
 

@@ -15,9 +15,12 @@ namespace te16mono
         }
 
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             position += velocity;
+            health -= gameTime.ElapsedGameTime.Milliseconds;
+            if (health < 0)
+                isDead = true;
         }
         
     }

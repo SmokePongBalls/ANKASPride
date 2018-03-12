@@ -10,6 +10,7 @@ namespace te16mono
         public int points;
         private Oriantation lastTouchedSurface;
         private bool holdingJump = true;
+        private int shootCooldown;
 
 
         //kontroller
@@ -27,6 +28,7 @@ namespace te16mono
             canJump = true;
             health = 10;
             holdingJump = false;
+            shootCooldown = 0;
             //Initiera värden
 
         }
@@ -38,7 +40,7 @@ namespace te16mono
             velocity.Y += Program.Gravity;
             //Spellogik
             pressedKeys = Keyboard.GetState();
-            
+
             if (pressedKeys.IsKeyDown(left))
                 velocity.X -= acceleration;
             if (pressedKeys.IsKeyDown(down))
@@ -54,13 +56,31 @@ namespace te16mono
                 }
                 holdingJump = true;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.G))
-                Main.Shoot("regular", new Vector2(-1, 0), new Vector2(position.X - 21, position.Y), 1);
-
             else
             {
                 holdingJump = false;
             }
+
+
+
+            //<summary>De som kollar ifall man trycker på skjutknapparna</summary>
+            if (Keyboard.GetState().IsKeyDown(Keys.Left) && shootCooldown <= 0)
+            {
+                Main.Shoot("regular", new Vector2(-10 + velocity.X, velocity.Y / 4 + 0), new Vector2(position.X - 21, position.Y), 1, 100000);
+                shootCooldown = 500;
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Up) && shootCooldown <= 0)
+            {
+                Main.Shoot("regular", new Vector2(0 + velocity.X / 4,velocity.Y+ -10), new Vector2(position.X , position.Y - 21), 1, 100000);
+                shootCooldown = 500;
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Right) && shootCooldown <= 0)
+            {
+                Main.Shoot("regular", new Vector2(+10 + velocity.X, velocity.Y/4 + 0), new Vector2(position.X + texture.Width + 1, position.Y), 1, 100000);
+                shootCooldown = 500;
+            }
+            else
+                shootCooldown -= gameTime.ElapsedGameTime.Milliseconds;
 
 
             if (Keyboard.GetState().IsKeyDown(Keys.R))

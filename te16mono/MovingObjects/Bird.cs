@@ -27,6 +27,7 @@ namespace te16mono
             this.maxX = maxX;
             this.minX = minX;
             timeToShoot = 4000;
+            health = 5;
         }
 
         public override void Update(GameTime gameTime)
@@ -74,7 +75,7 @@ namespace te16mono
             timeToShoot -= gameTime.ElapsedGameTime.Milliseconds;
             if (timeToShoot <= 0)
             {
-                Main.Shoot("regular", new Vector2(0, 5), new Vector2(position.X + texture.Width/2, position.Y + texture.Height + 1), 1);
+                Main.Shoot("regular", new Vector2(0, 5), new Vector2(position.X + texture.Width/2, position.Y + texture.Height + 1), 1, 100000);
                 timeToShoot = 500;
             }
         }
