@@ -42,12 +42,12 @@ namespace te16mono
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(graphicsDevice);
+            //Block för nivån. en lösning så att det inte är så mycket kod?(json,xml)
             //testblocks.Add(new Block(new Vector2(500, 450), 500, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
             testBlocks.Add(new Block(new Vector2(0, 900), 1900, 100, new Vector2(0), Content.Load<Texture2D>("square")));
             testBlocks.Add(new Block(new Vector2(2300, 900), 300, 100, new Vector2(0), Content.Load<Texture2D>("square")));
             testBlocks.Add(new Block(new Vector2(2500, 800), 300, 100, new Vector2(0), Content.Load<Texture2D>("square")));
             testBlocks.Add(new Block(new Vector2(2700, 700), 300, 100, new Vector2(0), Content.Load<Texture2D>("square")));
-
             testBlocks.Add(new Block(new Vector2(500, -1100), 40, 1700, new Vector2(0), Content.Load<Texture2D>("square")));
             testBlocks.Add(new Block(new Vector2(700, -1100), 40, 1700, new Vector2(0), Content.Load<Texture2D>("square")));
 
@@ -59,9 +59,10 @@ namespace te16mono
             testObjects.Add(new Hedgehog(1, Content.Load<Texture2D>("hedgehog"), new Vector2(2350, 0), true, 0f, 2600, 2300));
 
 
-
+            //Används för att lägga till text i programmet. Används i det här programmet för att skriva tid och HP.
             font = Content.Load<SpriteFont>("Font");
 
+            //Om vi vill ha music så har kvar den här raden. Kanske ska bytas så att det inte är samma. Olika låtar för olika banor? Annan music för boss? boss?
             music = Content.Load<Song>("megaman2");
             MediaPlayer.Play(music);
         }
