@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace te16mono
 {
 
-    //Anton
+    //Anton, Hugo F
     class Block
     {
         private Texture2D texture;
