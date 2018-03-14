@@ -29,9 +29,10 @@ namespace te16mono
             //Bestämmer hur långt den får gå
             this.maxX = maxX;
             this.minX = minX;
+            health = 1;
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
 
             // Om den inte har uppnåt maxfart

@@ -11,12 +11,11 @@ namespace te16mono
 
     class Block
     {
-        public Vector2 position, velocity;
         private Texture2D texture;
         private int width, height;
         public int damage = 0;
         public bool canStandOn;
-
+        public Vector2 position, velocity;
 
         
         public Block(Vector2 position, int width, int height, Vector2 velocity, Texture2D texture)
@@ -30,7 +29,7 @@ namespace te16mono
             canStandOn = true;
         }
 
-        public Rectangle Hitbox
+        public virtual Rectangle Hitbox
         {
             get
             {
@@ -39,10 +38,9 @@ namespace te16mono
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
-            //Använder sig utav hitboxen för att bestämma hur stor den ska vara
-            spriteBatch.Draw(texture, Hitbox, Color.White);
+            spriteBatch.Draw(texture, Hitbox, Color.Pink);
         }
 
 

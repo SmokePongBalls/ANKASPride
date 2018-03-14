@@ -2,19 +2,15 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace te16mono
 {
     class Player : MovingObjects
     {
         //Ha kvar "points" ifall vi använder det senare.
         public int points;
-        private bool canJump;
+        private Oriantation lastTouchedSurface;
+        private bool holdingJump = true;
+        private int shootCooldown;
 
 
         //kontroller
@@ -31,11 +27,13 @@ namespace te16mono
             this.texture = texture;
             canJump = true;
             health = 10;
+            holdingJump = false;
+            shootCooldown = 0;
             //Initiera värden
 
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
 
             velocity = velocity * (float)0.95;
@@ -43,7 +41,6 @@ namespace te16mono
             //Spellogik
             pressedKeys = Keyboard.GetState();
 
-            
             if (pressedKeys.IsKeyDown(left))
                 velocity.X -= acceleration;
             if (pressedKeys.IsKeyDown(down))
@@ -52,18 +49,51 @@ namespace te16mono
                 velocity.X += acceleration;
             if (Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Space))
             {
-                if (canJump == true)
+                if (canJump == true && holdingJump == false)
                 {
                     velocity.Y -= 30;
                     canJump = false;
                 }
-                
+                holdingJump = true;
             }
+            else
+            {
+                holdingJump = false;
+            }
+
+
+
+            //<summary>De som kollar ifall man trycker på skjutknapparna</summary>
+            if (Keyboard.GetState().IsKeyDown(Keys.Left) && shootCooldown <= 0)
+            {
+                Main.Shoot("regular", new Vector2(-10 + velocity.X, velocity.Y / 4 + 0), new Vector2(position.X - 21, position.Y), 1, 100000);
+                shootCooldown = 500;
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Up) && shootCooldown <= 0)
+            {
+                Main.Shoot("regular", new Vector2(0 + velocity.X / 4,velocity.Y+ -10), new Vector2(position.X , position.Y - 21), 1, 100000);
+                shootCooldown = 500;
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Right) && shootCooldown <= 0)
+            {
+                Main.Shoot("regular", new Vector2(+10 + velocity.X, velocity.Y/4 + 0), new Vector2(position.X + texture.Width + 1, position.Y), 1, 100000);
+                shootCooldown = 500;
+            }
+            else
+                shootCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+
+
+            if (Keyboard.GetState().IsKeyDown(Keys.R))
+            {
+                position = new Vector2(0);
+            }
+
+
 
 
             //Själva: Ordna styrning för a, s, d också
 
-            position += velocity;
+                position += velocity;
 
             
             /*
@@ -117,13 +147,14 @@ namespace te16mono
                         position.Y = collided.Y - Hitbox.Height;
                         //Står på solid mark så man får hoppa igen
                         canJump = true;
+                        lastTouchedSurface = Oriantation.Up;
                     }
                     else if (oriantation == Oriantation.Up && collidedCanStandOn == false)
                     {
                         //Slänger den upp i luften
                         velocity.Y = -10;
                         //Ser till så att objekten inte längre är innuti varandra
-                        position.Y = collided.Y - Hitbox.Height;
+                        position.Y -= velocity.Y;
                     }
                     else if (oriantation == Oriantation.Down)
                     {
@@ -170,6 +201,7 @@ namespace te16mono
                         position.Y = collided.Y - Hitbox.Height;
                         //Står på solid mark så man får hoppa igen
                         canJump = true;
+                        lastTouchedSurface = Oriantation.Up;
                     }
                     else if (oriantation == Oriantation.Down)
                     {
@@ -189,6 +221,12 @@ namespace te16mono
                         //Återställer velocity så den inte fortsätter in i objektet
                         velocity.X = 0;
 
+                        //Om man inte rörde en högervägg senast
+                        if (lastTouchedSurface != Oriantation.Right)
+                        canJump = true;
+
+                        lastTouchedSurface = Oriantation.Right;
+
                     }
                     else if (oriantation == Oriantation.Left)
                     {
@@ -198,6 +236,13 @@ namespace te16mono
                         //position.X = collided.X - velocity.X - texture.Width;
                         //Återställer velocity så den inte fortsätter in i objektet
                         velocity.X = 0;
+
+
+                        //Om inte rörde en vänstervägg senast
+                        if (lastTouchedSurface != Oriantation.Left)
+                            canJump = true;
+
+                        lastTouchedSurface = Oriantation.Left;
                     }
                 }
                 
