@@ -8,10 +8,11 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace te16mono
 {
+
+    //Ánton
+
     class Frog : MovingObjects
     {
-        private float maxSpeed;
-        private float maxX, minX;
 
         public Frog(int seed, Texture2D texture, Vector2 position, bool walkLeft, float maxSpeed, float maxX, float minX)
         {

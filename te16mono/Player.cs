@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework.Input;
 
 namespace te16mono
 {
+    //Anton, Hugo F
+
     class Player : MovingObjects
     {
         //Ha kvar "points" ifall vi använder det senare.
@@ -77,6 +79,11 @@ namespace te16mono
             else if (Keyboard.GetState().IsKeyDown(Keys.Right) && shootCooldown <= 0)
             {
                 Main.Shoot("regular", new Vector2(+10 + velocity.X, velocity.Y/4 + 0), new Vector2(position.X + texture.Width + 1, position.Y), 1, 100000);
+                shootCooldown = 500;
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Down) && shootCooldown <= 0)
+            {
+                Main.Shoot("regular", new Vector2(velocity.X/4, velocity.Y + 10), new Vector2(position.X + texture.Width/2, position.Y + texture.Height), 1, 100000);
                 shootCooldown = 500;
             }
             else

@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace te16mono
 {
+    //Anton
+
     class RegularProjectile : Projectiles
     {
         public RegularProjectile(int health, int damage, Vector2 velocity, Vector2 position, Texture2D texture)

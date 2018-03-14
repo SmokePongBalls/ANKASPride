@@ -10,6 +10,8 @@ namespace te16mono
 {
     enum Oriantation {Left, Right, Up, Down }
 
+    //Anton 
+
     abstract class MovingObjects
     {
 
