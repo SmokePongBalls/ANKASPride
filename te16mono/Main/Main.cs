@@ -48,6 +48,7 @@ namespace te16mono
             testBlocks.Add(new Block(new Vector2(2300, 900), 300, 100, new Vector2(0), Content.Load<Texture2D>("square")));
             testBlocks.Add(new Block(new Vector2(2500, 800), 300, 100, new Vector2(0), Content.Load<Texture2D>("square")));
             testBlocks.Add(new Block(new Vector2(2700, 700), 300, 100, new Vector2(0), Content.Load<Texture2D>("square")));
+            testBlocks.Add(new Block(new Vector2(3000, 700), 1000, 100, new Vector2(0), Content.Load<Texture2D>("square")));
             testBlocks.Add(new Block(new Vector2(500, -1100), 40, 1700, new Vector2(0), Content.Load<Texture2D>("square")));
             testBlocks.Add(new Block(new Vector2(700, -1100), 40, 1700, new Vector2(0), Content.Load<Texture2D>("square")));
 
