@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace te16mono
 {
@@ -31,6 +32,7 @@ namespace te16mono
             health = 10;
             holdingJump = false;
             shootCooldown = 0;
+            rng = new Random(seed);
             //Initiera värden
 
         }
@@ -73,7 +75,7 @@ namespace te16mono
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.Up) && shootCooldown <= 0)
             {
-                Main.Shoot("regular", new Vector2(0 + velocity.X / 4,velocity.Y+ -10), new Vector2(position.X , position.Y - 21), 1, 100000);
+                Main.Shoot("regular", new Vector2(0 + velocity.X / 4,velocity.Y -10), new Vector2(position.X , position.Y - 21), 1, 100000);
                 shootCooldown = 500;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.Right) && shootCooldown <= 0)
@@ -159,9 +161,14 @@ namespace te16mono
                     else if (oriantation == Oriantation.Up && collidedCanStandOn == false)
                     {
                         //Slänger den upp i luften
-                        velocity.Y = -10;
+                        velocity.Y = -25;
+
+                        if (rng.Next(0, 2) == 1)
+                            velocity.X = -10;
+                        else
+                            velocity.X = 10;
                         //Ser till så att objekten inte längre är innuti varandra
-                        position.Y -= velocity.Y;
+                        position += velocity;
                     }
                     else if (oriantation == Oriantation.Down)
                     {

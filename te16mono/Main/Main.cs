@@ -54,9 +54,10 @@ namespace te16mono
 
 
             //Testkatten
-            testObjects.Add(new Bird(1, Content.Load<Texture2D>("bird"), new Vector2(900, 300), false, (float)0.25, 1700, 0));
-            testObjects.Add(new Katt(1, Content.Load<Texture2D>("kattModel"), new Vector2(100, 100), false, (float)0.5, 1700, 0));
-            testObjects.Add(new Frog(1, Content.Load<Texture2D>("frog"), new Vector2(100, 100), false, (float)0.5, 1700, -1000));
+            testObjects.Add(new Bird(1, Content.Load<Texture2D>("bird"), new Vector2(900, 300), false, 0.25f, 1700, 0));
+            testObjects.Add(new Katt(1, Content.Load<Texture2D>("kattModel"), new Vector2(100, 100), false, 0.5f, 1700, 0));
+            testObjects.Add(new Frog(1, Content.Load<Texture2D>("frog"), new Vector2(100, 100), false, 0.5f, 1700, -1000));
+            testObjects.Add(new Hedgehog(1, Content.Load<Texture2D>("hedgehog"), new Vector2(2350, 0), true, 0f, 2600, 2300));
 
 
             //Används för att lägga till text i programmet. Används i det här programmet för att skriva tid och HP.
@@ -103,7 +104,6 @@ namespace te16mono
                         testObject.Intersect(obj.Hitbox, obj.velocity, obj.damage, obj.canStandOn);
                     }
                 }
-
 
                 testObject.Update(gameTime);
                 if (testObject.health <= 0)

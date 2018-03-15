@@ -44,6 +44,7 @@
     <Compile Include="Camera.cs" />
     <Compile Include="MovingObjects\Frog.cs" />
     <Compile Include="Main\Game1.cs" />
+    <Compile Include="MovingObjects\Hedgehog.cs" />
     <Compile Include="MovingObjects\Katt.cs" />
     <Compile Include="MovingObjects\MovingObjects.cs" />
     <Compile Include="Player.cs" />
