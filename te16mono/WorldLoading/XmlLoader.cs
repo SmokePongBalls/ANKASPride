@@ -22,9 +22,13 @@ namespace te16mono
                 {
                     LoadMovingObjects(Content, node);
                 }
-                if (node.Name == "Blocks")
+                else if (node.Name == "Blocks")
                 {
                     LoadBlocks(Content, node);
+                }
+                else if (node.Name == "Points")
+                {
+                    LoadPoints(Content, node);
                 }
             }
         }
@@ -173,6 +177,32 @@ namespace te16mono
                     }
                     Main.testBlocks.Add(new Block(new Vector2(X, Y), width, height, new Vector2(velocityX, velocityY), Content.Load<Texture2D>(texture)));
                 }
+            }
+        }
+
+        static void LoadPoints(ContentManager Content, XmlNode node)
+        {
+            foreach (XmlNode child in node.ChildNodes)
+            {
+                if (child.Name == "Point")
+                {
+                    int worth = 0;
+                    string texture = "pear";
+                    float X = 0, Y = 0;
+                    foreach (XmlNode childNode in child.ChildNodes)
+                    {
+                        if (childNode.Name == "Worth")
+                            worth = Convert.ToInt32(childNode.InnerXml);
+                        else if (childNode.Name == "Texture")
+                            texture = childNode.InnerXml;
+                        else if (childNode.Name == "X")
+                            X = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                        else if (childNode.Name == "Y")
+                            Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                    }
+                    Main.points.Add(new Point(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
+                }
+                    
             }
         }
     }
