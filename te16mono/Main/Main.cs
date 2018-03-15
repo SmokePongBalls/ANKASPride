@@ -19,6 +19,7 @@ namespace te16mono
 
         static List<Block> testBlocks;
         static List<Projectiles> projectiles;
+        static List<Point> points;
 
         //TestKatten
         static List<MovingObjects> testObjects;
@@ -30,6 +31,7 @@ namespace te16mono
             testBlocks = new List<Block>();
             testObjects = new List<MovingObjects>();
             projectiles = new List<Projectiles>();
+            points = new List<Point>();
 
             // TODO: Add your initialization logic here
             player = new Player(1, Content.Load<Texture2D>("square"));
@@ -50,6 +52,8 @@ namespace te16mono
             testBlocks.Add(new Block(new Vector2(2700, 700), 300, 100, new Vector2(0), Content.Load<Texture2D>("square")));
             testBlocks.Add(new Block(new Vector2(500, -1100), 40, 1700, new Vector2(0), Content.Load<Texture2D>("square")));
             testBlocks.Add(new Block(new Vector2(700, -1100), 40, 1700, new Vector2(0), Content.Load<Texture2D>("square")));
+
+            //Poäng
 
 
             //Testkatten
@@ -104,7 +108,12 @@ namespace te16mono
                     }
                 }
 
+                Rectangle screenRectangle = Camera.Rectangle(player.Hitbox);
+                if (screenRectangle.Intersects(testObject.Hitbox))
                 testObject.Update(gameTime);
+
+
+
                 if (testObject.health <= 0)
                     testObjects.Remove(testObject);
             }
