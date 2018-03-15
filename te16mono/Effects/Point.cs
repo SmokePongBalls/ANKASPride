@@ -12,7 +12,7 @@ namespace te16mono
     {
         Vector2 position;
         Texture2D texture;
-        int worth;
+        public int worth;
 
         public Point(Vector2 position, Texture2D texture, int worth)
         {

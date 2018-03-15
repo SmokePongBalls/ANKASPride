@@ -55,7 +55,7 @@ namespace te16mono
             testBlocks.Add(new Block(new Vector2(700, -1100), 40, 1700, new Vector2(0), Content.Load<Texture2D>("square")));
 
             //Poäng
-
+            points.Add(new Point(new Vector2(550, -1035), Content.Load<Texture2D>("pear"), 100));
 
             //Testkatten
             testObjects.Add(new Bird(1, Content.Load<Texture2D>("bird"), new Vector2(900, 300), false, 0.25f, 1700, 0));
@@ -157,6 +157,14 @@ namespace te16mono
                     projectiles.Remove(projectile);
             }
 
+            foreach (Point point in points.ToArray())
+            {
+                if (player.Hitbox.Intersects(point.Hitbox))
+                {
+                    player.points += point.worth;
+                    points.Remove(point);
+                }
+            }
 
 
             countdown -= gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -179,6 +187,9 @@ namespace te16mono
             foreach (Projectiles projectile in projectiles)
                 projectile.Draw(spriteBatch);
 
+            foreach (Point point in points)
+                point.Draw(spriteBatch);
+
             player.Draw(spriteBatch);
 
             spriteBatch.End();
@@ -186,7 +197,7 @@ namespace te16mono
             //Här ska alla saker som stannar i skärmen vara
             // (UI)
             spriteBatch.Begin();
-            spriteBatch.DrawString(font, "Health: " + player.health + " Time: " + gameTime.TotalGameTime.Seconds + "," + gameTime.TotalGameTime.Milliseconds, Vector2.Zero, Color.White);
+            spriteBatch.DrawString(font, "Health: " + player.health + " Time: " + gameTime.TotalGameTime.Seconds + "," + gameTime.TotalGameTime.Milliseconds + "                " + player.points, Vector2.Zero, Color.White);
             spriteBatch.End();
 
             // TODO: Add your drawing code here
