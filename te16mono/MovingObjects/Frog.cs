@@ -14,11 +14,10 @@ namespace te16mono
     class Frog : MovingObjects
     {
 
-        public Frog(int seed, Texture2D texture, Vector2 position, bool walkLeft, float maxSpeed, float maxX, float minX)
+        public Frog(Texture2D texture, Vector2 position, bool walkLeft, float maxSpeed, float maxX, float minX)
         {
             this.texture = texture;
             this.position = position;
-            rng = new Random(seed);
             this.walkLeft = walkLeft;
             this.maxSpeed = maxSpeed;
             velocity = new Vector2(0);

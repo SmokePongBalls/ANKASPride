@@ -17,12 +17,12 @@ namespace te16mono
         static double countdown = 0;
         static ContentManager Content;
 
-        static List<Block> testBlocks;
-        static List<Projectiles> projectiles;
-        static List<Point> points;
+        public static List<Block> testBlocks;
+        public static List<Projectiles> projectiles;
+        public static List<Point> points;
 
         //TestKatten
-        static List<MovingObjects> testObjects;
+        public static List<MovingObjects> testObjects;
 
         static public void Initialize(ContentManager content)
         {
@@ -46,6 +46,7 @@ namespace te16mono
             spriteBatch = new SpriteBatch(graphicsDevice);
             //Block för nivån. en lösning så att det inte är så mycket kod?(json,xml)
             //testblocks.Add(new Block(new Vector2(500, 450), 500, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
+            /*
             testBlocks.Add(new Block(new Vector2(0, 900), 1900, 100, new Vector2(0), Content.Load<Texture2D>("square")));
             testBlocks.Add(new Block(new Vector2(2300, 900), 300, 100, new Vector2(0), Content.Load<Texture2D>("square")));
             testBlocks.Add(new Block(new Vector2(2500, 800), 300, 100, new Vector2(0), Content.Load<Texture2D>("square")));
@@ -53,20 +54,21 @@ namespace te16mono
             testBlocks.Add(new Block(new Vector2(3000, 700), 1000, 100, new Vector2(0), Content.Load<Texture2D>("square")));
             testBlocks.Add(new Block(new Vector2(500, -1100), 40, 1700, new Vector2(0), Content.Load<Texture2D>("square")));
             testBlocks.Add(new Block(new Vector2(700, -1100), 40, 1700, new Vector2(0), Content.Load<Texture2D>("square")));
-
+            */
             //Poäng
             points.Add(new Point(new Vector2(550, -1035), Content.Load<Texture2D>("pear"), 100));
 
+            XmlLoader.LoadMap(Content, "WorldLoading/1.xml");
+            /*
             //Testkatten
-            testObjects.Add(new Bird(1, Content.Load<Texture2D>("bird"), new Vector2(900, 300), false, 0.25f, 1700, 0));
+            testObjects.Add(new Bird(Content.Load<Texture2D>("bird"), new Vector2(900, 300), false, 0.25f, 1700, 0));
             testObjects.Add(new Katt(1, Content.Load<Texture2D>("kattModel"), new Vector2(100, 100), false, 0.5f, 1700, 0));
             testObjects.Add(new Frog(1, Content.Load<Texture2D>("frog"), new Vector2(100, 100), false, 0.5f, 1700, -1000));
             testObjects.Add(new Hedgehog(1, Content.Load<Texture2D>("hedgehog"), new Vector2(2350, 0), true, 0f, 2600, 2300));
-
+            */
 
             //Används för att lägga till text i programmet. Används i det här programmet för att skriva tid och HP.
             font = Content.Load<SpriteFont>("Font");
-
             //Om vi vill ha music så har kvar den här raden. Kanske ska bytas så att det inte är samma. Olika låtar för olika banor? Annan music för boss? boss?
             music = Content.Load<Song>("megaman2");
             MediaPlayer.Play(music);

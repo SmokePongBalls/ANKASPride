@@ -10,11 +10,10 @@ namespace te16mono
 {
     class Hedgehog : Katt
     {
-        public Hedgehog(int seed, Texture2D texture, Vector2 position, bool walkLeft, float maxSpeed, float maxX, float minX) : base(seed, texture, position, walkLeft, maxSpeed, maxX, minX)
+        public Hedgehog(Texture2D texture, Vector2 position, bool walkLeft, float maxSpeed, float maxX, float minX) : base(texture, position, walkLeft, maxSpeed, maxX, minX)
         {
             this.texture = texture;
             this.position = position;
-            rng = new Random(seed);
             this.walkLeft = walkLeft;
             this.maxSpeed = maxSpeed;
             velocity = new Vector2(0);
