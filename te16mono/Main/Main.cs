@@ -4,12 +4,22 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
+using System;
 
 namespace te16mono
 {
     static class Main
     {
-        
+
+
+        public enum State { Meny, Quit, Run };
+
+        public static State currentState;
+
+
+
+        static Texture2D menySprite;
+        static Vector2 menyPos;
         static SpriteBatch spriteBatch;
         static Player player;
         static SpriteFont font;
@@ -38,10 +48,23 @@ namespace te16mono
             player.left = Keys.A;
             player.right = Keys.D;
         }
-        static public void LoadContent(GraphicsDevice graphicsDevice)
-        {
+        public static void LoadContent(GraphicsDevice graphicsDevice , GameWindow window)
+        {       
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(graphicsDevice);
+
+
+            // Läger till meny bilden  och bestämmer storleken och positionen
+            menySprite = Content.Load<Texture2D>("meny");           
+            menyPos.X = window.ClientBounds.Width / 2 - menySprite.Width / 2;
+            menyPos.Y = window.ClientBounds.Width / 2 - menySprite.Width / 2;
+
+
+
+
+
+
+
             //testblocks.Add(new Block(new Vector2(500, 450), 500, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
             testBlocks.Add(new Block(new Vector2(0, 900), 1900, 100, new Vector2(0), Content.Load<Texture2D>("square")));
             testBlocks.Add(new Block(new Vector2(2300, 900), 300, 100, new Vector2(0), Content.Load<Texture2D>("square")));
@@ -64,7 +87,31 @@ namespace te16mono
             music = Content.Load<Song>("megaman2");
             MediaPlayer.Play(music);
         }
-        public static void Update(GameTime gameTime)
+
+      
+
+        public static State MenyUpdate()
+        {
+            KeyboardState keyboardState = Keyboard.GetState();
+            if (keyboardState.IsKeyDown(Keys.S))
+                return State.Run;
+
+            if (keyboardState.IsKeyDown(Keys.A))  //
+                return State.Quit;
+
+            return State.Meny; // Stannar kvar i menyn 
+
+        }
+
+        public static void MenyDraw(SpriteBatch spritebatch)
+        {
+
+            spritebatch.Draw(menySprite,menyPos,Color.White);
+
+        }
+
+
+        public static State RunUpdate(GameTime gameTime)
         {
             //Testkatten
 
@@ -151,12 +198,17 @@ namespace te16mono
             countdown -= gameTime.ElapsedGameTime.TotalMilliseconds;
             player.Update(gameTime);
 
+            return State.Run; // Stannar kvar i run 
+
         }
-        public static void Draw(GameTime gameTime, GraphicsDevice graphicsDevise)
+
+        
+
+        public static void RunDraw( GraphicsDevice  graphicsDevice , GameTime gameTime)
         {
             
             //Här i ska alla saker som kan hamna utanför skärmen vara
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, DepthStencilState.None, null, null, Camera.Position(player, graphicsDevise.DisplayMode.Width, graphicsDevise.DisplayMode.Height));
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, DepthStencilState.None, null, null, Camera.Position(player, graphicsDevice.DisplayMode.Width, graphicsDevice.DisplayMode.Height));
 
             //Testkatten
             foreach (MovingObjects testObjekt in testObjects)

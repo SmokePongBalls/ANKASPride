@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Main\Main.cs" />
+    <Compile Include="Main\Meny.cs" />
     <Compile Include="MovingObjects\Bird.cs" />
     <Compile Include="Blocks\Block.cs" />
     <Compile Include="Camera.cs" />
@@ -64,6 +65,9 @@
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\images\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />

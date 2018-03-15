@@ -22,7 +22,7 @@ namespace te16mono
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
-        
+        SpriteBatch spriteBatch;
         
 
 
@@ -47,6 +47,7 @@ namespace te16mono
             graphics.ApplyChanges();
             //--
 
+            Main.currentState = Main.State.Meny;
             Main.Initialize(Content);
             
             base.Initialize();
@@ -58,7 +59,11 @@ namespace te16mono
         /// </summary>
         protected override void LoadContent()
         {
-            Main.LoadContent(GraphicsDevice);
+
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            Main.LoadContent(GraphicsDevice, Window);
+
+            
 
             // TODO: use this.Content to load your game content here
         }
@@ -87,8 +92,22 @@ namespace te16mono
                 graphics.ToggleFullScreen();
             }
 
-            Main.Update(gameTime);
+            
             // TODO: Add your update logic here
+
+            switch(Main.currentState)
+            {
+                case Main.State.Run: Main.currentState = Main.RunUpdate(gameTime);// kör själva spelet 
+                break;
+
+                case Main.State.Quit: this.Exit();
+                break;
+
+                default: Main.currentState = Main.MenyUpdate();
+                break;
+
+            }
+
 
             base.Update(gameTime);
         }
@@ -97,10 +116,31 @@ namespace te16mono
         /// This is called when the game should draw itself.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Draw(GameTime gameTime)
+        protected override void Draw(GameTime gameTime )
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-            Main.Draw(gameTime, GraphicsDevice);
+            
+
+            GraphicsDevice.Clear(Color.CornflowerBlue); // Rensar skärmen 
+
+            spriteBatch.Begin(); // "Ritar menyn"
+
+            switch (Main.currentState)
+            {
+
+                default: Main.MenyDraw(spriteBatch);
+                    break;
+                
+
+                case Main.State.Run: Main.RunDraw(GraphicsDevice, gameTime);
+                    break; 
+
+                
+
+
+            }
+
+            spriteBatch.End();
+
             base.Draw(gameTime);
         }
 
