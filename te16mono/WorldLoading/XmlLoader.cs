@@ -11,11 +11,9 @@ using System.Globalization;
 
 namespace te16mono
 {
+    //Anton
     static class XmlLoader
     {
-
-        
-
         public static void LoadMap(ContentManager Content, string mapName)
         {
             XmlDocument document = new XmlDocument();
