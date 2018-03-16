@@ -1,22 +1,19 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace te16mono
 {
+    //Anton
+
     class Bird : MovingObjects
     {
         int timeToShoot;
 
-        public Bird(int seed, Texture2D texture, Vector2 position, bool walkLeft, float maxSpeed, float maxX, float minX)
+        public Bird(Texture2D texture, Vector2 position, bool walkLeft, float maxSpeed, float maxX, float minX)
         {
             this.texture = texture;
             this.position = position;
-            rng = new Random(seed);
             this.walkLeft = walkLeft;
             this.maxSpeed = maxSpeed;
             velocity = new Vector2(0);
@@ -78,6 +75,7 @@ namespace te16mono
                 Main.Shoot("regular", new Vector2(0, 5), new Vector2(position.X + texture.Width/2, position.Y + texture.Height + 1), 1, 100000);
                 timeToShoot = 500;
             }
+            velocity.Y = 0;
         }
 
         public override void Intersect(Rectangle collided, Vector2 collidedVelocity, int damage, bool collidedCanStandOn)

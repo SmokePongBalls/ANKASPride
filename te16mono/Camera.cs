@@ -1,12 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace te16mono
 {
+    //Anton
     static class Camera
     {
 
@@ -17,6 +12,10 @@ namespace te16mono
             Matrix screenSize = Matrix.CreateTranslation((float)screenWidth / 3, (float)screenHeight / (float)1.5, 0);
 
             return position * screenSize;
+        }
+        public static Rectangle Rectangle(Rectangle player)
+        {
+            return new Rectangle(player.X - 2000, player.Y - 2000, player.Width + 4000, player.Height + 4000);
         }
     }
 }

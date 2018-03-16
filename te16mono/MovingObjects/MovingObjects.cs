@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 
 namespace te16mono
 {
-    enum Oriantation {Left, Right, Up, Down }
+    enum Oriantation { Left, Right, Up, Down }
+
+    //Anton 
 
     abstract class MovingObjects
     {
@@ -142,7 +144,7 @@ namespace te16mono
                     //Ifall player åker upp i objektet
                     if (velocity.Y < 0)
                         position.Y -= velocity.Y;
-                    
+
                     //Återstället velocity
                     velocity.Y = 0;
                 }
