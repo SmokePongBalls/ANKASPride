@@ -38,9 +38,11 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Effects\FinishLine.cs" />
     <Compile Include="Effects\Point.cs" />
     <Compile Include="Main\Main.cs" />
-    <Compile Include="Main\Meny.cs" />
+    <Compile Include="Main\Menus\Finish.cs" />
+    <Compile Include="Main\Menus\Meny.cs" />
     <Compile Include="MovingObjects\Bird.cs" />
     <Compile Include="Blocks\Block.cs" />
     <Compile Include="Camera.cs" />
@@ -65,8 +67,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="WorldLoading\2.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="WorldLoading\1.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -3,35 +3,36 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 
 namespace te16mono
 {
+    //Anton, Hugo F, Filip
     static class Main
     {
 
 
-        public enum State { Meny, Quit, Run };
+        public enum State { Meny, Quit, Run, Finish };
 
         public static State currentState;
 
-
+        public static int map;
 
         static Texture2D menySprite;
         static Vector2 menyPos;
         static SpriteBatch spriteBatch;
-        static Player player;
-        static SpriteFont font;
+        public static Player player;
+        static SpriteFont font, pointFont;
         static Song music;
         static double countdown = 0;
         static ContentManager Content;
 
-        static List<Block> testBlocks;
-        static List<Projectiles> projectiles;
-
+        public static List<Block> testBlocks;
+        public static List<Projectiles> projectiles;
+        public static List<Point> effects;
         //TestKatten
-        static List<MovingObjects> testObjects;
+        public static List<MovingObjects> testObjects;
 
         static public void Initialize(ContentManager content)
         {
@@ -40,13 +41,14 @@ namespace te16mono
             testBlocks = new List<Block>();
             testObjects = new List<MovingObjects>();
             projectiles = new List<Projectiles>();
-
+            effects = new List<Point>();
             // TODO: Add your initialization logic here
             player = new Player(1, Content.Load<Texture2D>("square"));
             player.up = Keys.W;
             player.down = Keys.S;
             player.left = Keys.A;
             player.right = Keys.D;
+            map = 1;
         }
         public static void LoadContent(GraphicsDevice graphicsDevice , GameWindow window)
         {       
@@ -59,30 +61,9 @@ namespace te16mono
             menyPos.X = window.ClientBounds.Width / 2 - menySprite.Width / 2;
             menyPos.Y = window.ClientBounds.Width / 2 - menySprite.Width / 2;
 
-
-
-
-
-
-
-            //testblocks.Add(new Block(new Vector2(500, 450), 500, 100, new Vector2(0), Content.Load<Texture2D>("square"), TypeOfBlock.plattform));
-            testBlocks.Add(new Block(new Vector2(0, 900), 1900, 100, new Vector2(0), Content.Load<Texture2D>("square")));
-            testBlocks.Add(new Block(new Vector2(2300, 900), 300, 100, new Vector2(0), Content.Load<Texture2D>("square")));
-            testBlocks.Add(new Block(new Vector2(2500, 800), 300, 100, new Vector2(0), Content.Load<Texture2D>("square")));
-            testBlocks.Add(new Block(new Vector2(2700, 700), 300, 100, new Vector2(0), Content.Load<Texture2D>("square")));
-
-            testBlocks.Add(new Block(new Vector2(500, -1100), 40, 1700, new Vector2(0), Content.Load<Texture2D>("square")));
-            testBlocks.Add(new Block(new Vector2(700, -1100), 40, 1700, new Vector2(0), Content.Load<Texture2D>("square")));
-
-
-            //Testkatten
-            testObjects.Add(new Bird(1, Content.Load<Texture2D>("bird"), new Vector2(900, 300), false, (float)0.25, 1700, 0));
-            testObjects.Add(new Katt(1, Content.Load<Texture2D>("kattModel"), new Vector2(100, 100), false, (float)0.5, 1700, 0));
-            testObjects.Add(new Frog(1, Content.Load<Texture2D>("frog"), new Vector2(100, 100), false, (float)0.5, 1700, -1000));
-
-
-
             font = Content.Load<SpriteFont>("Font");
+            pointFont = Content.Load<SpriteFont>("pointFont");
+
 
             music = Content.Load<Song>("megaman2");
             MediaPlayer.Play(music);
@@ -94,19 +75,21 @@ namespace te16mono
         {
             KeyboardState keyboardState = Keyboard.GetState();
             if (keyboardState.IsKeyDown(Keys.S))
-                return State.Run;
+                currentState = State.Run;
 
             if (keyboardState.IsKeyDown(Keys.A))  //
-                return State.Quit;
+                currentState = State.Quit;
 
             return State.Meny; // Stannar kvar i menyn 
 
         }
 
-        public static void MenyDraw(SpriteBatch spritebatch)
+        public static void MenyDraw()
         {
 
-            spritebatch.Draw(menySprite,menyPos,Color.White);
+            spriteBatch.Begin();
+            spriteBatch.Draw(menySprite,menyPos,Color.White);
+            spriteBatch.End();
 
         }
 
@@ -148,8 +131,8 @@ namespace te16mono
                         testObject.Intersect(obj.Hitbox, obj.velocity, obj.damage, obj.canStandOn);
                     }
                 }
-
-
+                Rectangle activationPos = Camera.Rectangle(player.Hitbox);
+                if (activationPos.Intersects(testObject.Hitbox))
                 testObject.Update(gameTime);
                 if (testObject.health <= 0)
                     testObjects.Remove(testObject);
@@ -193,16 +176,36 @@ namespace te16mono
                     projectiles.Remove(projectile);
             }
 
-
+            foreach (Point effect in effects.ToArray())
+            {
+                if (effect.Hitbox.Intersects(player.Hitbox))
+                {
+                    player.points += effect.worth;
+                    effect.Intersect(gameTime);
+                    effects.Remove(effect);
+                }
+            }
 
             countdown -= gameTime.ElapsedGameTime.TotalMilliseconds;
             player.Update(gameTime);
 
-            return State.Run; // Stannar kvar i run 
+
+            return currentState; // Stannar kvar i run 
 
         }
 
-        
+        public static void FinishUpdate()
+        {
+            Finish.Update();
+        }
+
+        public static void FinishDraw(GraphicsDevice graphicsDevice)
+        {
+            spriteBatch.Begin();
+            spriteBatch.Draw(Content.Load<Texture2D>("finish"), Finish.Rectangle(graphicsDevice), Color.White);
+            spriteBatch.DrawString(pointFont, Convert.ToString(player.points), new Vector2(graphicsDevice.DisplayMode.Width / 2 - 30, graphicsDevice.DisplayMode.Height / 2 - 250), Color.White);
+            spriteBatch.End();
+        }
 
         public static void RunDraw( GraphicsDevice  graphicsDevice , GameTime gameTime)
         {
@@ -219,6 +222,9 @@ namespace te16mono
 
             foreach (Projectiles projectile in projectiles)
                 projectile.Draw(spriteBatch);
+
+            foreach (Point point in effects)
+                point.Draw(spriteBatch);
 
             player.Draw(spriteBatch);
 
@@ -241,7 +247,19 @@ namespace te16mono
                 projectiles.Add(new RegularProjectile(health, damage, position, velocity, Content.Load<Texture2D>("RegularProjectile")));
         }
 
+        public static void LoadMap()
+        {
 
+            //Återställer alla variabler tills nästa bana
+            player.position = new Vector2(0);
+            player.velocity = new Vector2(0);
+            player.health = 10;
+            testObjects = new List<MovingObjects>();
+            testBlocks = new List<Block>();
+            effects = new List<Point>();
+
+            XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
+        }
     }
 
 }

@@ -1,8 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
-using System.Collections.Generic;
+
 
 namespace te16mono
 {
@@ -17,13 +16,13 @@ namespace te16mono
     /// </summary>
     /// 
     
-    //Anton
+    //Anton, Hugo F, Filip
 
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        
+
 
 
         public Game1()
@@ -46,7 +45,6 @@ namespace te16mono
             graphics.IsFullScreen = false;
             graphics.ApplyChanges();
             //--
-
             Main.currentState = Main.State.Meny;
             Main.Initialize(Content);
             
@@ -97,14 +95,26 @@ namespace te16mono
 
             switch(Main.currentState)
             {
-                case Main.State.Run: Main.currentState = Main.RunUpdate(gameTime);// kör själva spelet 
+                case Main.State.Run: Main.RunUpdate(gameTime);// kör själva spelet 
                 break;
 
                 case Main.State.Quit: this.Exit();
                 break;
 
-                default: Main.currentState = Main.MenyUpdate();
-                break;
+
+                case Main.State.Finish: Main.FinishUpdate();
+                    if (Main.currentState == Main.State.Run)
+                        Main.LoadMap();
+                    break;
+
+                default:
+                    {
+                        Main.MenyUpdate();
+                        if (Main.currentState == Main.State.Run)
+                            Main.LoadMap();
+                        break;
+                    } 
+                
 
             }
 
@@ -127,9 +137,12 @@ namespace te16mono
             switch (Main.currentState)
             {
 
-                default: Main.MenyDraw(spriteBatch);
+                default: Main.MenyDraw();
                     break;
-                
+
+                case Main.State.Finish:
+                    Main.FinishDraw(GraphicsDevice);
+                    break;
 
                 case Main.State.Run: Main.RunDraw(GraphicsDevice, gameTime);
                     break; 

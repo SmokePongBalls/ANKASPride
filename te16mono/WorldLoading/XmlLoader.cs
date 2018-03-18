@@ -200,9 +200,26 @@ namespace te16mono
                         else if (childNode.Name == "Y")
                             Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
                     }
-                    Main.points.Add(new Point(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
+                    Main.effects.Add(new Point(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
                 }
-                    
+                if (child.Name == "Finish")
+                {
+                    int worth = 0;
+                    string texture = "finishFlag";
+                    float X = 0, Y = 0;
+                    foreach (XmlNode childNode in child.ChildNodes)
+                    {
+                        if (childNode.Name == "Worth")
+                            worth = Convert.ToInt32(childNode.InnerXml);
+                        else if (childNode.Name == "Texture")
+                            texture = childNode.InnerXml;
+                        else if (childNode.Name == "X")
+                            X = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                        else if (childNode.Name == "Y")
+                            Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                    }
+                    Main.effects.Add(new FinishLine(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
+                }
             }
         }
     }

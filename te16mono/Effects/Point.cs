@@ -5,8 +5,8 @@ namespace te16mono
 {
     class Point
     {
-        Vector2 position;
-        Texture2D texture;
+        protected Vector2 position;
+        protected Texture2D texture;
         public int worth;
 
         public Point(Vector2 position, Texture2D texture, int worth)
@@ -30,7 +30,11 @@ namespace te16mono
 
             spriteBatch.Draw(texture, Hitbox, Color.White);
         }
+        public virtual void Intersect(GameTime gameTime)
+        {
 
+
+        }
     }
 
     

@@ -112,8 +112,8 @@
     </Point>
     <Finish>
       <Texture>finishFlag</Texture>
-      <X>3750</X>
-      <Y>432</Y>
+      <X>500</X>
+      <Y>-1135</Y>
       <Worth>0</Worth>
     </Finish>
   </Points>
