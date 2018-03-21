@@ -109,10 +109,12 @@ namespace te16mono
                     }
                 }
 
+                //ser till så att fiender uppdateras om de är närheten av player(en bit utanför synfältet) annars så står de stilla.
                 Rectangle screenRectangle = Camera.Rectangle(player.Hitbox);
                 if (screenRectangle.Intersects(testObject.Hitbox))
-                testObject.Update(gameTime);
-
+                {
+                    testObject.Update(gameTime);
+                }
 
 
                 if (testObject.health <= 0)
