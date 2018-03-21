@@ -1,8 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
-using System.Collections.Generic;
+
 
 namespace te16mono
 {
@@ -17,13 +16,13 @@ namespace te16mono
     /// </summary>
     /// 
     
-    //Anton
+    //Anton, Hugo F, Filip
 
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
-        
-        
+        SpriteBatch spriteBatch;
+
 
 
         public Game1()
@@ -46,7 +45,7 @@ namespace te16mono
             graphics.IsFullScreen = false;
             graphics.ApplyChanges();
             //--
-
+            Main.currentState = Main.State.Meny;
             Main.Initialize(Content);
             
             base.Initialize();
@@ -58,7 +57,11 @@ namespace te16mono
         /// </summary>
         protected override void LoadContent()
         {
-            Main.LoadContent(GraphicsDevice);
+
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            Main.LoadContent(GraphicsDevice, Window);
+
+            
 
             // TODO: use this.Content to load your game content here
         }
@@ -87,8 +90,40 @@ namespace te16mono
                 graphics.ToggleFullScreen();
             }
 
-            Main.Update(gameTime);
+            
             // TODO: Add your update logic here
+
+            switch(Main.currentState)
+            {
+                case Main.State.Run: Main.RunUpdate(gameTime);// kör själva spelet 
+                break;
+
+                case Main.State.Quit: this.Exit();
+                break;
+
+
+                case Main.State.Finish: Main.FinishUpdate();
+                    if (Main.currentState == Main.State.Run)
+                        Main.LoadMap();
+                    break;
+
+                case Main.State.GameOver: Main.GameOverUpdate();
+                    if (Main.currentState == Main.State.Run)
+                        Main.LoadMap();
+                    break;
+
+
+                default:
+                    {
+                        Main.MenyUpdate();
+                        if (Main.currentState == Main.State.Run)
+                            Main.LoadMap();
+                        break;
+                    } 
+                
+
+            }
+
 
             base.Update(gameTime);
         }
@@ -97,10 +132,37 @@ namespace te16mono
         /// This is called when the game should draw itself.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Draw(GameTime gameTime)
+        protected override void Draw(GameTime gameTime )
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-            Main.Draw(gameTime, GraphicsDevice);
+            
+
+            GraphicsDevice.Clear(Color.CornflowerBlue); // Rensar skärmen 
+
+            spriteBatch.Begin(); // "Ritar menyn"
+
+            switch (Main.currentState)
+            {
+
+                default: Main.MenyDraw();
+                    break;
+
+                case Main.State.Finish:
+                    Main.FinishDraw(GraphicsDevice);
+                    break;
+
+                case Main.State.GameOver: Main.GameOverDraw(GraphicsDevice);
+                    break;
+
+                case Main.State.Run: Main.RunDraw(GraphicsDevice, gameTime);
+                    break; 
+
+                
+
+
+            }
+
+            spriteBatch.End();
+
             base.Draw(gameTime);
         }
 

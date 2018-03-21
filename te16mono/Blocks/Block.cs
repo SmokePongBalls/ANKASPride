@@ -28,7 +28,6 @@ namespace te16mono
             this.height = height;
             this.texture = texture;
             canStandOn = true;
-            velocity.Y = 100;
         }
 
         public virtual Rectangle Hitbox

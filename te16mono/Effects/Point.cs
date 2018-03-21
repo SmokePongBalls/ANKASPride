@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace te16mono
 {
     class Point
     {
-        Vector2 position;
-        Texture2D texture;
-        int worth;
+        protected Vector2 position;
+        protected Texture2D texture;
+        public int worth;
 
         public Point(Vector2 position, Texture2D texture, int worth)
         {
@@ -35,7 +30,11 @@ namespace te16mono
 
             spriteBatch.Draw(texture, Hitbox, Color.White);
         }
+        public virtual void Intersect(GameTime gameTime)
+        {
 
+
+        }
     }
 
     
