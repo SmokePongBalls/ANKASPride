@@ -42,6 +42,7 @@
     <Compile Include="Effects\Point.cs" />
     <Compile Include="Main\Main.cs" />
     <Compile Include="Main\Menus\Finish.cs" />
+    <Compile Include="Main\Menus\GameOver.cs" />
     <Compile Include="Main\Menus\Meny.cs" />
     <Compile Include="MovingObjects\Bird.cs" />
     <Compile Include="Blocks\Block.cs" />

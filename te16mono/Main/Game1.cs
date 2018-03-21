@@ -107,6 +107,12 @@ namespace te16mono
                         Main.LoadMap();
                     break;
 
+                case Main.State.GameOver: Main.GameOverUpdate();
+                    if (Main.currentState == Main.State.Run)
+                        Main.LoadMap();
+                    break;
+
+
                 default:
                     {
                         Main.MenyUpdate();
@@ -142,6 +148,9 @@ namespace te16mono
 
                 case Main.State.Finish:
                     Main.FinishDraw(GraphicsDevice);
+                    break;
+
+                case Main.State.GameOver: Main.GameOverDraw(GraphicsDevice);
                     break;
 
                 case Main.State.Run: Main.RunDraw(GraphicsDevice, gameTime);

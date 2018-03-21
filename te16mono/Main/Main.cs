@@ -13,7 +13,7 @@ namespace te16mono
     {
 
 
-        public enum State { Meny, Quit, Run, Finish };
+        public enum State { Meny, Quit, Run, Finish, GameOver };
 
         public static State currentState;
 
@@ -190,8 +190,24 @@ namespace te16mono
             player.Update(gameTime);
 
 
+            if (player.health <= 0)
+                currentState = State.GameOver;
+
             return currentState; // Stannar kvar i run 
 
+        }
+
+        public static void GameOverUpdate()
+        {
+            GameOver.Update();
+        }
+
+        public static void GameOverDraw(GraphicsDevice graphicsDevice)
+        {
+            spriteBatch.Begin();
+            spriteBatch.Draw(Content.Load<Texture2D>("GameOver"), Finish.Rectangle(graphicsDevice), Color.White);
+            spriteBatch.DrawString(pointFont, Convert.ToString(player.points), new Vector2(graphicsDevice.DisplayMode.Width / 2, graphicsDevice.DisplayMode.Height / 2 - 145), Color.White);
+            spriteBatch.End();
         }
 
         public static void FinishUpdate()
@@ -258,7 +274,17 @@ namespace te16mono
             testBlocks = new List<Block>();
             effects = new List<Point>();
 
-            XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
+
+            try
+            {
+                XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
+            }
+            catch
+            {
+                map = 1;
+                XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
+            }
+            
         }
     }
 

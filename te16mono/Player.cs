@@ -167,6 +167,8 @@ namespace te16mono
                             velocity.X = -10;
                         else
                             velocity.X = 10;
+
+                        health -= damage;
                         //Ser till så att objekten inte längre är innuti varandra
                         position += velocity;
                     }
