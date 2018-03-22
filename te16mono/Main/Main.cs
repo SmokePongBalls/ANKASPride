@@ -131,9 +131,13 @@ namespace te16mono
                         testObject.Intersect(obj.Hitbox, obj.velocity, obj.damage, obj.canStandOn);
                     }
                 }
-                Rectangle activationPos = Camera.Rectangle(player.Hitbox);
-                if (activationPos.Intersects(testObject.Hitbox))
+
+                Rectangle screenRectangle = Camera.Rectangle(player.Hitbox);
+                if (screenRectangle.Intersects(testObject.Hitbox))
                 testObject.Update(gameTime);
+
+
+
                 if (testObject.health <= 0)
                     testObjects.Remove(testObject);
             }
