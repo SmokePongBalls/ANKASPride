@@ -18,8 +18,10 @@ namespace te16mono
                 Main.map++;
             }
             if (keyboardState.IsKeyDown(Keys.R))
+            {
                 Main.currentState = State.Run;
-            
+                
+            }
             //Lämna spelet
             if (keyboardState.IsKeyDown(Keys.Q))  //
                 Main.currentState = State.Quit;

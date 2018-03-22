@@ -85,6 +85,7 @@ namespace te16mono
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
             if (Keyboard.GetState().IsKeyDown(Keys.T))
             {
                 graphics.ToggleFullScreen();
