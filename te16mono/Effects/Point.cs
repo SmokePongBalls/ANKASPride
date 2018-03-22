@@ -30,10 +30,11 @@ namespace te16mono
 
             spriteBatch.Draw(texture, Hitbox, Color.White);
         }
-        public virtual void Intersect(GameTime gameTime)
+        public virtual Player Intersect(GameTime gameTime, Player player)
         {
 
-
+            player.points += worth;
+            return player;
         }
     }
 

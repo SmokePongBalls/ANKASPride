@@ -14,9 +14,10 @@ namespace te16mono
         public FinishLine(Vector2 position, Texture2D texture, int worth) : base(position, texture, worth)
         {
         }
-        public override void Intersect(GameTime gameTime)
+        public override Player Intersect(GameTime gameTime, Player player)
         {
             Main.currentState = Main.State.Finish;
+            return player;
         }
         public override Rectangle Hitbox
         {

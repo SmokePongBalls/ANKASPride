@@ -66,7 +66,7 @@ namespace te16mono
 
 
             music = Content.Load<Song>("megaman2");
-            MediaPlayer.Play(music);
+            //MediaPlayer.Play(music);
         }
 
       
@@ -180,8 +180,8 @@ namespace te16mono
             {
                 if (effect.Hitbox.Intersects(player.Hitbox))
                 {
-                    player.points += effect.worth;
-                    effect.Intersect(gameTime);
+
+                    player = effect.Intersect(gameTime, player);
                     effects.Remove(effect);
                 }
             }
