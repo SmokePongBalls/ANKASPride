@@ -71,9 +71,15 @@
     <Point>
       <Texture>goldbag</Texture>
       <X>550</X>
-      <Y>-1035</Y>
+      <Y>500</Y>
       <Worth>100</Worth>
     </Point>
+    <Health>
+      <Texture>pear</Texture>
+      <X>450</X>
+      <Y>500</Y>
+      <Worth>1</Worth>
+    </Health>
     <Finish>
       <Texture>finishFlag</Texture>
       <X>3750</X>

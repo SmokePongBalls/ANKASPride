@@ -11,6 +11,7 @@ namespace te16mono
     {
         //Ha kvar "points" ifall vi använder det senare.
         public int points;
+        public int maxHealth = 10;
         private Oriantation lastTouchedSurface;
         private bool holdingJump = true;
         private int shootCooldown;

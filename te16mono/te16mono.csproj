@@ -40,7 +40,7 @@
   <ItemGroup>
     <Compile Include="Effects\FinishLine.cs" />
     <Compile Include="Effects\Point.cs" />
-    <Compile Include="Health.cs" />
+    <Compile Include="Effects\Health.cs" />
     <Compile Include="Main\Main.cs" />
     <Compile Include="Main\Menus\Finish.cs" />
     <Compile Include="Main\Menus\GameOver.cs" />
