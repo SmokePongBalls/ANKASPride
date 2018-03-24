@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using te16mono.LevelBuilder;
 
 
 namespace te16mono
@@ -15,13 +16,16 @@ namespace te16mono
     /// 
     /// </summary>
     /// 
-    
+
     //Anton, Hugo F, Filip
+
+    enum GameSection { CoreGame, LevelBuilding}
 
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        GameSection gameSection;
 
 
 
@@ -47,7 +51,11 @@ namespace te16mono
             //--
             Main.currentState = Main.State.Meny;
             Main.Initialize(Content);
-            
+            MainLevelBuilder.Initialize(Content, GraphicsDevice);
+            gameSection = GameSection.LevelBuilding;
+
+            this.IsMouseVisible = true;
+
             base.Initialize();
         }
 
@@ -91,43 +99,52 @@ namespace te16mono
                 graphics.ToggleFullScreen();
             }
 
-            
+
             // TODO: Add your update logic here
 
-            switch(Main.currentState)
+
+            if (gameSection == GameSection.CoreGame)
             {
-                case Main.State.Run: Main.RunUpdate(gameTime);// kör själva spelet 
-                break;
+                switch (Main.currentState)
+                {
+                    case Main.State.Run:
+                        Main.RunUpdate(gameTime);// kör själva spelet 
+                        break;
 
-                case Main.State.Quit: this.Exit();
-                break;
-
-
-                case Main.State.Finish: Main.FinishUpdate();
-                    if (Main.currentState == Main.State.Run)
-                        Main.LoadMap();
-                    break;
-
-                case Main.State.GameOver: Main.GameOverUpdate();
-                    if (Main.currentState == Main.State.Run)
-                        Main.LoadMap();
-                    break;
+                    case Main.State.Quit:
+                        this.Exit();
+                        break;
 
 
-                default:
-                    {
+                    case Main.State.Finish:
+                        Main.FinishUpdate();
+                        if (Main.currentState == Main.State.Run)
+                            Main.LoadMap();
+                        break;
+
+                    case Main.State.GameOver:
+                        Main.GameOverUpdate();
+                        if (Main.currentState == Main.State.Run)
+                            Main.LoadMap();
+                        break;
+
+
+                    default:
                         Main.MenyUpdate();
                         if (Main.currentState == Main.State.Run)
                             Main.LoadMap();
                         break;
-                    } 
-                
-
-            }
 
 
+                    }
+                }
+                else if (gameSection == GameSection.LevelBuilding)
+                {
+                MainLevelBuilder.Update(GraphicsDevice);
+                }
             base.Update(gameTime);
         }
+  
 
         /// <summary>
         /// This is called when the game should draw itself.
@@ -138,31 +155,35 @@ namespace te16mono
             
 
             GraphicsDevice.Clear(Color.CornflowerBlue); // Rensar skärmen 
-
-            spriteBatch.Begin(); // "Ritar menyn"
-
-            switch (Main.currentState)
+            if (gameSection == GameSection.CoreGame)
             {
+                switch (Main.currentState)
+                {
 
-                default: Main.MenyDraw();
-                    break;
+                    default:
+                        Main.MenyDraw();
+                        break;
 
-                case Main.State.Finish:
-                    Main.FinishDraw(GraphicsDevice);
-                    break;
+                    case Main.State.Finish:
+                        Main.FinishDraw(GraphicsDevice);
+                        break;
 
-                case Main.State.GameOver: Main.GameOverDraw(GraphicsDevice);
-                    break;
+                    case Main.State.GameOver:
+                        Main.GameOverDraw(GraphicsDevice);
+                        break;
 
-                case Main.State.Run: Main.RunDraw(GraphicsDevice, gameTime);
-                    break; 
+                    case Main.State.Run:
+                        Main.RunDraw(GraphicsDevice, gameTime);
+                        break;
 
-                
-
-
+                }
             }
+            else if (gameSection == GameSection.LevelBuilding)
+            {
+                MainLevelBuilder.Draw(GraphicsDevice);
+            }
+            
 
-            spriteBatch.End();
 
             base.Draw(gameTime);
         }
