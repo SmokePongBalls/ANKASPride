@@ -13,5 +13,13 @@ namespace te16mono
         public Health(Vector2 position, Texture2D texture, int worth) : base(position, texture, worth)
         {
         }
+
+        public override Player Intersect(GameTime gameTime, Player player)
+        {
+            if(player.health<player.maxHealth)
+            player.health += worth;
+
+            return player;
+        }
     }
 }
