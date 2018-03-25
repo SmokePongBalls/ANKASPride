@@ -98,43 +98,8 @@ namespace te16mono
                 position = new Vector2(0);
             }
 
-
-
-
-            //Själva: Ordna styrning för a, s, d också
-
                 position += velocity;
 
-            
-            /*
-             * PLATTFORMAR FUNGERAR NU
-             * 
-            //Ser till så att karaktären inte kan åka ur skärmen.
-            //Får tas bort senare för att det är lättare att testa om vi har det så här.
-            if(position.X<0)
-            {
-                position.X = 0;
-                velocity.X = -velocity.X;
-            }
-
-            if (position.Y < 0)
-            {
-                position.Y = 0;
-                velocity.Y = -velocity.Y;
-            }
-
-            if (position.X+texture.Width >1920)
-            {
-                position.X = 1920-texture.Width;
-                velocity.X = -velocity.X;
-            }
-
-            if (position.Y + texture.Height> 1080)
-            {
-                position.Y = 1080- texture.Height;
-                velocity.Y = -velocity.Y;
-            }
-            */
         }
 
         public override void Intersect(Rectangle collided,  Vector2 collidedVelocity, int damage, bool collidedCanStandOn)

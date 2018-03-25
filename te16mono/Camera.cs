@@ -15,9 +15,9 @@ namespace te16mono
         }
         public static Matrix LevelBuilderPosition(Vector2 position, int screenWidth, int screenHeight)
         {
-            Matrix matrixPosition = Matrix.CreateTranslation(-position.X, -position.Y, 0);
+            Matrix matrixPosition = Matrix.CreateTranslation(-position.X, -position.Y, -1);
 
-            Matrix screenSize = Matrix.CreateTranslation((float)screenWidth / 2, (float)screenHeight / (float)2, 0);
+            Matrix screenSize = Matrix.CreateTranslation((float)screenWidth / 2, (float)screenHeight / (float)2, 1f);
 
             return matrixPosition * screenSize;
         }

@@ -3,28 +3,39 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
+using te16mono.LevelBuilder.UI;
+using te16mono.LevelBuilder.ObjectEditing;
 
 namespace te16mono.LevelBuilder
 {
-    public static class MainLevelBuilder
+    //Anton
+    static class MainLevelBuilder
     {
 
         static ContentManager Content;
-        static List<Block> blocks;
-        static List<Point> effects;
-        static List<MovingObjects> movingObjects;
         static Player player;
-        static SpriteBatch spriteBatch;
-        static MouseState mouse;
         static Vector2 position;
-        static KeyboardState keyboardState;
-        static SpriteFont spriteFont;
+        static SpriteBatch spriteBatch;
+        static bool showError;
 
-        static public void Initialize(ContentManager Content, GraphicsDevice graphicsDevice)
+        public static MouseState mouse, lastmouse;
+        public static KeyboardState keyboardState, lastKeyboardState;
+        public static SelectedObject selectedObject;
+        public static SpriteFont spriteFont;
+        public static List<Block> blocks;
+        public static List<MovingObjects> movingObjects;
+        public static List<Point> effects;
+        public static Texture2D
+            cat,
+            pear,
+            bird,
+            hedgehog,
+            square,
+            frog,
+            finishFlag;
+
+        public static void Initialize(ContentManager Content, GraphicsDevice graphicsDevice)
         {
             MainLevelBuilder.Content = Content;
             player = new Player(1, Content.Load<Texture2D>("square"));
@@ -34,22 +45,53 @@ namespace te16mono.LevelBuilder
             blocks = new List<Block>();
             Vector2 position = new Vector2(0);
             mouse = new MouseState();
+            lastmouse = new MouseState();
             keyboardState = new KeyboardState();
+            lastKeyboardState = new KeyboardState();
             spriteFont = Content.Load<SpriteFont>("font");
-            
+            lastmouse = Mouse.GetState();
+            lastKeyboardState = Keyboard.GetState();
+
+            selectedObject = SelectedObject.Hedgehog;
+            Menu.Load(Content);
+            LoadAllTextures();
         }
 
-            static public void Update(GraphicsDevice graphicsDevice)
+        static public void Update(GraphicsDevice graphicsDevice)
         {
             keyboardState = Keyboard.GetState();
             mouse = Mouse.GetState();
-            if (mouse.LeftButton == ButtonState.Pressed)
-                blocks.Add(new Block(new Vector2(Convert.ToInt32(mouse.X - graphicsDevice.DisplayMode.Width/2 + position.X), Convert.ToInt32(mouse.Y - graphicsDevice.DisplayMode.Height/2 + position.Y)), 50, 50, new Vector2(0), Content.Load<Texture2D>("square")));
+            showError = ObjectPlacing.CheckPosition();
+
+            Menu.Update();
+
+            //Ska endast ifall muspekaren inte är över menyn
+            if (mouse.X < 1440)
+            {
+                //Placerar ut block
+                if (mouse.LeftButton == ButtonState.Pressed && lastmouse.LeftButton == ButtonState.Released)
+                    ObjectPlacing.Create();
+
+                //Flyttar runt kameran
+                if (mouse.RightButton == ButtonState.Pressed)
+                {
+                    if (lastmouse.RightButton == ButtonState.Pressed)
+                    {
+                        position.X += lastmouse.X - mouse.X;
+                        position.Y += lastmouse.Y - mouse.Y;
+                    }
+
+                }
+            }
+            
+
+            lastmouse = mouse;
+            lastKeyboardState = keyboardState;
         }
         static public void Draw(GraphicsDevice graphicsDevice)
         {
+            //Allting som är del utav banan
             spriteBatch.Begin(SpriteSortMode.BackToFront, null, null, null, null, null, Camera.LevelBuilderPosition(position, graphicsDevice.DisplayMode.Width, graphicsDevice.DisplayMode.Height));
-            spriteBatch.DrawString(spriteFont, Convert.ToString(blocks.Count), new Vector2(-500, -500), Color.Wheat);
             foreach (MovingObjects movingObject in movingObjects)
             {
                 movingObject.Draw(spriteBatch);
@@ -63,8 +105,46 @@ namespace te16mono.LevelBuilder
                 block.Draw(spriteBatch);
             }
             player.Draw(spriteBatch);
-            
+
+            if (showError)
+                spriteBatch.DrawString(spriteFont, "X", MousePosition, Color.Red);
+
             spriteBatch.End();
+            //Allting som är en del utav UI
+            spriteBatch.Begin();
+            spriteBatch.DrawString(spriteFont, Convert.ToString(blocks.Count), new Vector2(0), Color.Wheat);
+            Menu.Draw(spriteBatch);
+
+                
+            spriteBatch.End();
+        }
+
+
+        public static Rectangle MouseHitbox
+        {
+            get
+            {
+                return new Rectangle(mouse.X, mouse.Y, 1, 1);
+            }
+        }
+
+        static void LoadAllTextures()
+        {
+            cat = Content.Load<Texture2D>("katt");
+            pear = Content.Load<Texture2D>("pear");
+            bird = Content.Load<Texture2D>("bird");
+            hedgehog = Content.Load<Texture2D>("hedgehog");
+            square = Content.Load<Texture2D>("square");
+            finishFlag = Content.Load<Texture2D>("finishFlag");
+            frog = Content.Load<Texture2D>("frog");
+        }
+
+        public static Vector2 MousePosition
+        {
+            get
+            {
+                return new Vector2(mouse.X - 960 + position.X, mouse.Y - 540 + position.Y);
+            }
         }
     }
 }

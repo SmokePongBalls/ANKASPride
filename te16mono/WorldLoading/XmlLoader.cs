@@ -200,7 +200,8 @@ namespace te16mono
                         else if (childNode.Name == "Y")
                             Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
                     }
-                    Main.effects.Add(new Health(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
+                    
+                    //Main.effects.Add(new Health(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
 
                 }
                     if (child.Name == "Point")

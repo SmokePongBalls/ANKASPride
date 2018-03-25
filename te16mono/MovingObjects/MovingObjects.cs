@@ -36,60 +36,7 @@ namespace te16mono
             spriteBatch.Draw(texture, position, Color.White);
         }
 
-        /* <summary>Gammal intersect </summary>
-
-        public virtual void Intersect(Rectangle collided, Vector2 collidedVelocity, int damage, bool collidedCanStandOn)
-        {
-            //Ser till så att den inte krockat med sig själv
-            //Är mest ett failsafe ifall alla movingObjects ligger i samma lista
-            if (Hitbox != collided)
-            {
-                Oriantation oriantation = CheckCollision(collided);
-
-                if (oriantation == Oriantation.Up)
-                {
-                    //Får samma y velocity som objektet det krockar med
-                    //Vi kanske kan göra fungerande hissar med det här
-                    position.Y -= velocity.Y;
-                    velocity.Y = collidedVelocity.Y;
-                    //Ser till så att objekten inte längre är innuti varandra
-                    
-                }
-                else if (oriantation == Oriantation.Down)
-                {
-                    health = 0;
-                }
-                else if (oriantation == Oriantation.Right)
-                {
-                    //Ser till så att objekten inte längre är innuti varandra
-
-                    position.X -= velocity.X;
-
-                    //position.X = collided.X + collided.Width - velocity.X;
-
-
-                    //Säger ut fienden att gå åt andra hållet
-                    walkLeft = false;
-                    //Återställer acceleration och velocity så den inte fortsätter in i objektet
-                    acceleration = 0;
-                    velocity.X = acceleration;
-                }
-                else if (oriantation == Oriantation.Left)
-                {
-                    //Ser till så att objekten inte längre är innuti varandra
-                    position.X -= velocity.X;
-
-                    //position.X = collided.X + collided.Width - velocity.X;
-
-                    //Säger ut fienden att gå åt andra hållet
-                    walkLeft = true;
-                    //Återställer acceleration och velocity så den inte fortsätter in i objektet
-                    acceleration = 0;
-                    velocity.X = acceleration;
-                }
-            }
-        }
-        */
+        
 
         //<Summary> Hitboxen</summary>
         public virtual Rectangle Hitbox
