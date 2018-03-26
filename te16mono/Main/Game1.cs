@@ -84,7 +84,11 @@ namespace te16mono
         {
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+                Main.currentState = Main.State.Pause;
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Q))
+                Main.currentState = Main.State.Quit;
+
+
             if (Keyboard.GetState().IsKeyDown(Keys.T))
             {
                 graphics.ToggleFullScreen();
@@ -106,6 +110,11 @@ namespace te16mono
                     if (Main.currentState == Main.State.Run)
                         Main.LoadMap();
                     break;
+                    
+                case Main.State.Pause:Main.PauseUpdate();
+                    break;
+
+
 
                 default:
                     {
@@ -145,9 +154,10 @@ namespace te16mono
                     break;
 
                 case Main.State.Run: Main.RunDraw(GraphicsDevice, gameTime);
-                    break; 
+                    break;
 
-                
+                case Main.State.Pause: Main.PauseDraw();
+                break;
 
 
             }
