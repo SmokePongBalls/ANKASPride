@@ -44,7 +44,9 @@
     <Compile Include="LevelBuilder\ObjectEditing\ObjectPlacing.cs" />
     <Compile Include="LevelBuilder\UI\enums.cs" />
     <Compile Include="LevelBuilder\UI\Menu.cs" />
+    <Compile Include="LevelBuilder\UI\MovingObjectChanging.cs" />
     <Compile Include="LevelBuilder\UI\Selection.cs" />
+    <Compile Include="LevelBuilder\UI\ValueChanging.cs" />
     <Compile Include="Main\Main.cs" />
     <Compile Include="Main\Menus\Finish.cs" />
     <Compile Include="Main\Menus\GameOver.cs" />

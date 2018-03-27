@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace te16mono
 {
-    enum Oriantation { Left, Right, Up, Down }
+    public enum Oriantation { Left, Right, Up, Down }
 
     //Anton 
 
-    abstract class MovingObjects
+    public abstract class MovingObjects
     {
 
         protected Random rng;
@@ -21,8 +21,8 @@ namespace te16mono
         public int damage;
         public bool canStandOn;
         protected bool canJump;
-        protected float maxSpeed;
-        protected float maxX, minX;
+        public float maxSpeed;
+        public float maxX, minX;
         public int health;
         protected Texture2D texture;
         public Vector2 velocity, position;

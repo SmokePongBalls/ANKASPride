@@ -11,6 +11,7 @@ namespace te16mono.LevelBuilder.UI
     {
         
         static Vector2 position;
+        static string[] options = new string[] { "None", "Block", "Cat", "Frog", "Point", "Hedgehog", "Finishline" };
 
         public static void Update()
         {
@@ -36,27 +37,13 @@ namespace te16mono.LevelBuilder.UI
         //Ritar ut de olika alternativen
         static void DrawOptions(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.LightSeaGreen);
-            spriteBatch.DrawString(MainLevelBuilder.spriteFont, "None", position, Color.Black);
-            position.Y += 40;
-            spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.LightSeaGreen);
-            spriteBatch.DrawString(MainLevelBuilder.spriteFont, "Block", position, Color.Black);
-            position.Y += 40;
-            spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.LightSeaGreen);
-            spriteBatch.DrawString(MainLevelBuilder.spriteFont, "Cat", position, Color.Black);
-            position.Y += 40;
-            spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.LightSeaGreen);
-            spriteBatch.DrawString(MainLevelBuilder.spriteFont, "Frog", position, Color.Black);
-            position.Y += 40;
-            spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.LightSeaGreen);
-            spriteBatch.DrawString(MainLevelBuilder.spriteFont, "Point", position, Color.Black);
-            position.Y += 40;
-            spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.LightSeaGreen);
-            spriteBatch.DrawString(MainLevelBuilder.spriteFont, "Hedgehog", position, Color.Black);
-            position.Y += 40;
-            spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.LightSeaGreen);
-            spriteBatch.DrawString(MainLevelBuilder.spriteFont, "Finishline", position, Color.Black);
-            position.Y += 40;
+
+            for (int i = 0; i < options.Length; i++)
+            {
+                spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.LightSeaGreen);
+                spriteBatch.DrawString(MainLevelBuilder.spriteFont, options[i], position, Color.Black);
+                position.Y += 40;
+            }
         }
 
         //Kollar ifall man trycker på en knapp

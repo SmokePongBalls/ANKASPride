@@ -99,5 +99,8 @@ namespace te16mono.LevelBuilder.ObjectEditing
                 MainLevelBuilder.effects.Add(new Point(MainLevelBuilder.MousePosition, MainLevelBuilder.pear, 100));
             }
         }
+
+        
+
     }
 }

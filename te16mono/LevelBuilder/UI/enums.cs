@@ -23,4 +23,18 @@ namespace te16mono.LevelBuilder.UI
         Selection,
         ValueChanging
     }
+    enum Editing
+    {
+        Null,
+        X,
+        Y,
+        MaxX,
+        MinX,
+        MaxSpeed,
+        Width,
+        Height,
+        Worth,
+        VelocityX,
+        VelocityY
+    }
 }

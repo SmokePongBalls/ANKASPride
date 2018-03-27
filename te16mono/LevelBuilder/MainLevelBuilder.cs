@@ -14,7 +14,7 @@ namespace te16mono.LevelBuilder
     {
 
         static ContentManager Content;
-        static Player player;
+        public static Player player;
         static Vector2 position;
         static SpriteBatch spriteBatch;
         static bool showError;
@@ -23,6 +23,11 @@ namespace te16mono.LevelBuilder
         public static KeyboardState keyboardState, lastKeyboardState;
         public static SelectedObject selectedObject;
         public static SpriteFont spriteFont;
+
+        public static MovingObjects movingObject;
+        public static Block block;
+        public static Point point;
+
         public static List<Block> blocks;
         public static List<MovingObjects> movingObjects;
         public static List<Point> effects;
@@ -55,6 +60,9 @@ namespace te16mono.LevelBuilder
             selectedObject = SelectedObject.Hedgehog;
             Menu.Load(Content);
             LoadAllTextures();
+
+            //SKA TAS BORT
+            movingObject = player;
         }
 
         static public void Update(GraphicsDevice graphicsDevice)
@@ -124,7 +132,7 @@ namespace te16mono.LevelBuilder
         {
             get
             {
-                return new Rectangle(mouse.X, mouse.Y, 1, 1);
+                return new Rectangle(mouse.X, mouse.Y + 10, 1, 1);
             }
         }
 
