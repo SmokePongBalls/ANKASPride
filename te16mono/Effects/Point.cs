@@ -5,12 +5,14 @@ namespace te16mono
 {
     public class Point
     {
+        public string name;
         public Vector2 position;
         protected Texture2D texture;
         public int worth;
 
         public Point(Vector2 position, Texture2D texture, int worth)
         {
+            name = "Point";
             this.position = position;
             this.texture = texture;
             this.worth = worth;

@@ -8,9 +8,9 @@ namespace te16mono
 
     class Frog : MovingObjects
     {
-
         public Frog(Texture2D texture, Vector2 position, bool walkLeft, float maxSpeed, float maxX, float minX)
         {
+            name = "Frog";
             this.texture = texture;
             this.position = position;
             this.walkLeft = walkLeft;

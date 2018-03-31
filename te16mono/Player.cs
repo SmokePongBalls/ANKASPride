@@ -16,16 +16,15 @@ namespace te16mono
         private bool holdingJump = true;
         private int shootCooldown;
 
-
         //kontroller
         public Keys up, down, left, right;
         KeyboardState pressedKeys;
-
 
         // "Seed" är tillför att se till så att alla object som -->
         // --> vill ha ett random värde får olika värde. Olika seeds olika random värden.
         public Player(int seed, Texture2D texture)
         {
+            name = "Player";
             position = new Vector2();
             velocity = new Vector2();
             this.texture = texture;
@@ -35,7 +34,6 @@ namespace te16mono
             shootCooldown = 0;
             rng = new Random(seed);
             //Initiera värden
-
         }
 
         public override void Update(GameTime gameTime)

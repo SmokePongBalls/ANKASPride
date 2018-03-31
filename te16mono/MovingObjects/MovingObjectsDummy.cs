@@ -12,7 +12,7 @@ namespace te16mono
     {
         public MovingObjectsDummy(Texture2D texture, Vector2 position, bool walkLeft, float maxSpeed, float maxX, float minX)
         {
-            
+            name = "MovingObjectsDummy";
         }
 
         public override void Update(GameTime gameTime)

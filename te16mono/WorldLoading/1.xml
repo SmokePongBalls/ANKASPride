@@ -67,7 +67,7 @@
       <VelocityY>0</VelocityY>
     </Block>
   </Blocks>
-  <Points>
+  <Effects>
     <Point>
       <Texture>goldbag</Texture>
       <X>550</X>
@@ -86,5 +86,5 @@
       <Y>432</Y>
       <Worth>0</Worth>
     </Finish>
-  </Points>
+  </Effects>
 </Map>

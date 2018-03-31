@@ -62,7 +62,8 @@ namespace te16mono.LevelBuilder
             Menu.Load(Content);
             LoadAllTextures();
             placementAllowed = true;
-            DummyValues();
+            LevelBuilderDummy.SetDummyValues();
+            LevelBuilderDummy.DummyValues();
         }
 
         static public void Update(GraphicsDevice graphicsDevice)
@@ -117,6 +118,9 @@ namespace te16mono.LevelBuilder
 
             lastMouse = mouse;
             lastKeyboardState = keyboardState;
+
+            if (keyboardState.IsKeyDown(Keys.Space))
+                XmlSaver.Save();
         }
 
         static public void Draw(GraphicsDevice graphicsDevice)
@@ -192,33 +196,83 @@ namespace te16mono.LevelBuilder
 
         static void MovingObjectSelected(MovingObjects input)
         {
-            selectedMovingObject = input;
-            movingObjects.Remove(input);
-            Menu.ChangeMovingObject(selectedMovingObject);
-            placementAllowed = false;
+            if (Menu.menu != MenuType.ValueChanging)
+            {
+                selectedMovingObject = input;
+                movingObjects.Remove(input);
+                Menu.ChangeMovingObject(selectedMovingObject);
+                placementAllowed = false;
+            }
+            else
+            {
+                SaveValue();
+                selectedMovingObject = input;
+                movingObjects.Remove(input);
+                Menu.ChangeMovingObject(selectedMovingObject);
+                placementAllowed = false;
+            }
         }
 
         static void BlockSelected(Block input)
         {
-            selectedBlock = input;
-            blocks.Remove(input);
-            Menu.ChangeBlock(selectedBlock);
-            placementAllowed = false;
+            if (Menu.menu != MenuType.ValueChanging)
+            {
+                selectedBlock = input;
+                blocks.Remove(input);
+                Menu.ChangeBlock(selectedBlock);
+                placementAllowed = false;
+            }
+            else
+            {
+                SaveValue();
+                selectedBlock = input;
+                blocks.Remove(input);
+                Menu.ChangeBlock(selectedBlock);
+                placementAllowed = false;
+            }
+            
         }
 
         static void EffectSelected(Point input)
         {
-            selectedEffect = input;
-            effects.Remove(input);
-            Menu.ChangeEffect(selectedEffect);
-            placementAllowed = false;
+            if (Menu.menu != MenuType.ValueChanging)
+            {
+                selectedEffect = input;
+                effects.Remove(input);
+                Menu.ChangeEffect(selectedEffect);
+                placementAllowed = false;
+            }
+            else
+            {
+                SaveValue();
+                selectedEffect = input;
+                effects.Remove(input);
+                Menu.ChangeEffect(selectedEffect);
+                placementAllowed = false;
+            }
+            
         }
 
-        public static void DummyValues()
+        static void SaveValue()
         {
-            selectedMovingObject = new MovingObjectsDummy(cat, new Vector2(0), true, 64564, 6454, 545454);
-            selectedBlock = new BlockDummy(new Vector2(0), 0, 0, new Vector2(0), cat);
-            selectedEffect = new EffectDummy(new Vector2(0), cat, 56556);
+            if (selectedBlock != LevelBuilderDummy.DummyBlock)
+            {
+                blocks.Add(selectedBlock);
+                selectedBlock = LevelBuilderDummy.DummyBlock;
+            }
+            else if (selectedEffect != LevelBuilderDummy.DummyEffect)
+            {
+                effects.Add(selectedEffect);
+                selectedEffect = LevelBuilderDummy.DummyEffect;
+            }
+            else if (selectedMovingObject != LevelBuilderDummy.DummyMovingObject)
+            {
+                movingObjects.Add(selectedMovingObject);
+                selectedMovingObject = LevelBuilderDummy.DummyMovingObject;
+            }
         }
+
+        //Dummy värden
+        
     }
 }

@@ -13,6 +13,7 @@ namespace te16mono
 
         public FinishLine(Vector2 position, Texture2D texture, int worth) : base(position, texture, worth)
         {
+            name = "Finish";
         }
         public override Player Intersect(GameTime gameTime, Player player)
         {

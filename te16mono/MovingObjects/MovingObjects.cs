@@ -14,7 +14,7 @@ namespace te16mono
 
     public abstract class MovingObjects
     {
-
+        public string name;
         protected Random rng;
         protected float acceleration = (float)0.5;
         protected bool walkLeft;
@@ -27,9 +27,7 @@ namespace te16mono
         protected Texture2D texture;
         public Vector2 velocity, position;
 
-
         //Måla ut allting
-
         public virtual void Draw(SpriteBatch spriteBatch)
         {
 

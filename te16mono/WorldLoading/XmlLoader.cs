@@ -26,7 +26,7 @@ namespace te16mono
                 {
                     LoadBlocks(Content, node);
                 }
-                else if (node.Name == "Points")
+                else if (node.Name == "Effects")
                 {
                     LoadPoints(Content, node);
                 }

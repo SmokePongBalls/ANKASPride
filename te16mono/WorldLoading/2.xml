@@ -103,7 +103,7 @@
       <VelocityY>0</VelocityY>
     </Block>
   </Blocks>
-  <Points>
+  <Effects>
     <Point>
       <Texture>pear</Texture>
       <X>550</X>
@@ -116,5 +116,5 @@
       <Y>-1135</Y>
       <Worth>0</Worth>
     </Finish>
-  </Points>
+  </Effects>
 </Map>

@@ -12,7 +12,7 @@ namespace te16mono.LevelBuilder.UI
     //Anton
     public static class Menu
     {
-        static MenuType menu = MenuType.Selection;
+        public static MenuType menu = MenuType.Selection;
         static Texture2D square;
         static ValueChanging valueChanging;
 
@@ -47,18 +47,19 @@ namespace te16mono.LevelBuilder.UI
             menu = MenuType.Selection;
             MainLevelBuilder.movingObjects.Add(MainLevelBuilder.selectedMovingObject);
             MainLevelBuilder.placementAllowed = true;
+            LevelBuilderDummy.DummyValues();
+        }
+        public static void ChangeBlock(Block input)
+        {
+            valueChanging = new BlockChanging(input);
+            menu = MenuType.ValueChanging;
         }
         public static void DoneWithBlock()
         {
             menu = MenuType.Selection;
             MainLevelBuilder.blocks.Add(MainLevelBuilder.selectedBlock);
             MainLevelBuilder.placementAllowed = true;
-
-        }
-        public static void ChangeBlock(Block input)
-        {
-            valueChanging = new BlockChanging(input);
-            menu = MenuType.ValueChanging;
+            LevelBuilderDummy.DummyValues();
         }
         public static void ChangeEffect(Point input)
         {
@@ -70,12 +71,13 @@ namespace te16mono.LevelBuilder.UI
             menu = MenuType.Selection;
             MainLevelBuilder.effects.Add(MainLevelBuilder.selectedEffect);
             MainLevelBuilder.placementAllowed = true;
+            LevelBuilderDummy.DummyValues();
         }
         public static void DeleteValueChanging()
         {
             menu = MenuType.Selection;
             MainLevelBuilder.placementAllowed = true;
-            MainLevelBuilder.DummyValues();
+            LevelBuilderDummy.DummyValues();
         }
         public static void Draw(SpriteBatch spriteBatch)
         {

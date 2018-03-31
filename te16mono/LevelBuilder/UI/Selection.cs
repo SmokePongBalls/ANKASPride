@@ -11,7 +11,7 @@ namespace te16mono.LevelBuilder.UI
     {
         
         static Vector2 position;
-        static string[] options = new string[] { "None", "Block", "Cat", "Frog", "Point", "Hedgehog", "Finishline" };
+        static string[] options = new string[] { "None", "Block", "Cat", "Frog", "Point", "Hedgehog", "Finishline", "Bird" };
 
         public static void Update()
         {
@@ -73,6 +73,8 @@ namespace te16mono.LevelBuilder.UI
                 if (SelectionRectangle.Intersects(MainLevelBuilder.MouseHitbox))
                     return SelectedObject.FinishLine;
                 position.Y += 40;
+                if (SelectionRectangle.Intersects(MainLevelBuilder.MouseHitbox))
+                    return SelectedObject.Bird;
             }
             
             return MainLevelBuilder.selectedObject;

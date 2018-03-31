@@ -18,7 +18,7 @@ namespace te16mono.LevelBuilder.UI
         Bird,
         FinishLine
     }
-    enum MenuType
+    public enum MenuType
     {
         Selection,
         ValueChanging
