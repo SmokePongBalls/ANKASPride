@@ -3,9 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace te16mono
 {
-    class Point
+    public class Point
     {
-        protected Vector2 position;
+        public Vector2 position;
         protected Texture2D texture;
         public int worth;
 

@@ -7,7 +7,7 @@ namespace te16mono
 {
     //Anton, Hugo F
 
-    class Player : MovingObjects
+    public class Player : MovingObjects
     {
         //Ha kvar "points" ifall vi använder det senare.
         public int points;

@@ -16,10 +16,59 @@ namespace te16mono.LevelBuilder.UI
         protected Vector2 position;
         protected string editString = "";
         protected bool isEditing = false;
-        public abstract void Update();
-        public abstract void Draw(SpriteBatch spriteBatch);
 
+        protected abstract void SetEdit();
+        protected abstract bool CheckHitbox();
+        protected abstract void CheckForExit();
+        protected abstract void SetValues();
+        protected abstract void DrawValues(SpriteBatch spriteBatch);
 
+        public void Update()
+        {
+            if (isEditing)
+            {
+                Edit();
+                SetEdit();
+                if (isEditing == false)
+                {
+                    SetValues();
+                    editing = Editing.Null;
+                }
+
+            }
+            else
+            {
+                SetValues();
+                isEditing = CheckHitbox();
+                CheckForDelete();
+            }
+            CheckForExit();
+        }
+
+        //Main drawdelen
+        public virtual void Draw(SpriteBatch spriteBatch)
+        {
+            BeginDrawing(spriteBatch);
+            for (int i = 0; i < options.Count; i++)
+            {
+                spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.LightSeaGreen);
+                spriteBatch.DrawString(MainLevelBuilder.spriteFont, options[i], position, Color.Black);
+                position.Y += 80;
+            }
+            DrawDelete(spriteBatch);
+            DrawValues(spriteBatch);
+            DrawBack(spriteBatch);
+        }
+
+        protected void BeginDrawing(SpriteBatch spriteBatch)
+        {
+            position = new Vector2(1500, 100);
+            spriteBatch.Draw(Menu.Square, Menu.MenuRectangle, Color.Gray);
+        }
+
+        
+
+        
         public virtual Rectangle SelectionRectangle
         {
             get
@@ -34,12 +83,6 @@ namespace te16mono.LevelBuilder.UI
                 return new Rectangle((int)position.X - 10, (int)position.Y - 3, 300, 80);
             }
         }
-        protected void BeginDrawing(SpriteBatch spriteBatch)
-        {
-            position = new Vector2(1500, 100);
-            spriteBatch.Draw(Menu.Square, Menu.MenuRectangle, Color.Gray);
-        }
-
         protected virtual void DrawBack(SpriteBatch spriteBatch)
         {
             position = new Vector2(1500, 1000);
@@ -59,7 +102,7 @@ namespace te16mono.LevelBuilder.UI
             {
                 isEditing = false;
             }
-            else if (keyboardState.IsKeyDown(Keys.NumPad0) && lastKeyboardState.IsKeyDown(Keys.NumPad0) == false|| keyboardState.IsKeyDown(Keys.D0) && lastKeyboardState.IsKeyDown(Keys.D0) == false)
+            else if (keyboardState.IsKeyDown(Keys.NumPad0) && lastKeyboardState.IsKeyDown(Keys.NumPad0) == false || keyboardState.IsKeyDown(Keys.D0) && lastKeyboardState.IsKeyDown(Keys.D0) == false)
             {
                 editString += "0";
             }
@@ -99,6 +142,14 @@ namespace te16mono.LevelBuilder.UI
             {
                 editString += "9";
             }
+            else if (keyboardState.IsKeyDown(Keys.Decimal) && lastKeyboardState.IsKeyDown(Keys.Decimal) == false || keyboardState.IsKeyDown(Keys.OemComma) && lastKeyboardState.IsKeyDown(Keys.OemComma) == false)
+            {
+                editString += ",";
+            }
+            else if (keyboardState.IsKeyDown(Keys.OemMinus) && lastKeyboardState.IsKeyDown(Keys.OemMinus) == false || keyboardState.IsKeyDown(Keys.Subtract) && lastKeyboardState.IsKeyDown(Keys.Subtract) == false)
+            {
+                editString += "-";
+            }
         }
 
         public static Rectangle ExitRectangle
@@ -108,5 +159,26 @@ namespace te16mono.LevelBuilder.UI
                 return new Rectangle(1500, 1000 - 20, 300, 50);
             }
         }
+        public static Rectangle DeleteRectangle
+        {
+            get
+            {
+                return new Rectangle(1500, 950 - 20, 300, 50);
+            }
+        }
+
+        //Delete delen
+        void DrawDelete(SpriteBatch spriteBatch)
+        {
+            position = new Vector2(1500, 950);
+            spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.Red);
+            spriteBatch.DrawString(MainLevelBuilder.spriteFont, "!!DELETE!!", position, Color.Black);
+        }
+        void CheckForDelete()
+        {
+            if (MainLevelBuilder.MouseHitbox.Intersects(DeleteRectangle) && MainLevelBuilder.mouse.LeftButton == ButtonState.Pressed)
+            Menu.DeleteValueChanging();
+        }
+
     }
 }

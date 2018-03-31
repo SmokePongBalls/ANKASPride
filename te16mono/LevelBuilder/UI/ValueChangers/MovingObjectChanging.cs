@@ -29,44 +29,8 @@ namespace te16mono.LevelBuilder.UI
             currentY = Convert.ToString(input.position.Y);
         }
 
-
-        public override void Update()
-        {
-            if (isEditing)
-            {
-                Edit();
-                SetEdit();
-                if (isEditing == false)
-                {
-                    SetValues();
-                    editing = Editing.Null;
-                }
-
-            }
-            else
-            {
-                SetValues();
-                isEditing = CheckHitbox();
-            }
-            CheckForExit();
-        }
-
-        //Målar
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            BeginDrawing(spriteBatch);
-            for (int i = 0; i < options.Count; i++)
-            {
-                spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.LightSeaGreen);
-                spriteBatch.DrawString(MainLevelBuilder.spriteFont, options[i], position, Color.Black);
-                position.Y += 80;
-            }
-            DrawValues(spriteBatch);
-            DrawBack(spriteBatch);
-        }
-
         //Målar ut alla de olika värdena
-        private void DrawValues(SpriteBatch spriteBatch)
+        protected override void DrawValues(SpriteBatch spriteBatch)
         {
             position = new Vector2(1500, 140);
 
@@ -134,7 +98,7 @@ namespace te16mono.LevelBuilder.UI
         }
 
         //Kollar ifall den klickar på någon utav hitboxarna
-        private bool CheckHitbox()
+        protected override bool CheckHitbox()
         {
             MouseState mouse = MainLevelBuilder.mouse;
 
@@ -182,9 +146,9 @@ namespace te16mono.LevelBuilder.UI
 
 
         //Sparar värdena
-        private void SetValues()
+        protected override void SetValues()
         {
-            MovingObjects movingObject = MainLevelBuilder.movingObject;
+            MovingObjects movingObject = MainLevelBuilder.selectedMovingObject;
 
             movingObject.maxX = (float)Convert.ToDouble(currentMaxX);
             movingObject.minX = (float)Convert.ToDouble(currentMinX);
@@ -192,17 +156,16 @@ namespace te16mono.LevelBuilder.UI
             movingObject.position.Y = (float)Convert.ToDouble(currentY);
             movingObject.maxSpeed = (float)Convert.ToDouble(currentMaxSpeed);
 
-            MainLevelBuilder.movingObject = movingObject;
+            MainLevelBuilder.selectedMovingObject = movingObject;
         }
 
         //Kollar ifall man trycker på exit
-        private void CheckForExit()
+        protected override void CheckForExit()
         {
             if (MainLevelBuilder.mouse.LeftButton == ButtonState.Pressed && MainLevelBuilder.MouseHitbox.Intersects(ExitRectangle))
                 Menu.DoneWithMovingObject();
         }
-
-        private void SetEdit()
+        protected override void SetEdit()
         {
             if (editing == Editing.MaxSpeed)
                 currentMaxSpeed = editString;

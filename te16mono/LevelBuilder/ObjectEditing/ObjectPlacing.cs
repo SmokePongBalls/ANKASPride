@@ -15,7 +15,7 @@ namespace te16mono.LevelBuilder.ObjectEditing
         {
 
             bool canPlace = CheckPosition();
-            if (canPlace == false && MainLevelBuilder.mouse.LeftButton == ButtonState.Pressed && MainLevelBuilder.lastmouse.LeftButton != ButtonState.Pressed)
+            if (canPlace == false && MainLevelBuilder.mouse.LeftButton == ButtonState.Pressed && MainLevelBuilder.lastMouse.LeftButton != ButtonState.Pressed)
             {
                 Place();
             }

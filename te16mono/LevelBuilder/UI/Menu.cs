@@ -12,7 +12,7 @@ namespace te16mono.LevelBuilder.UI
     //Anton
     public static class Menu
     {
-        static MenuType menu = MenuType.ValueChanging;
+        static MenuType menu = MenuType.Selection;
         static Texture2D square;
         static ValueChanging valueChanging;
 
@@ -42,6 +42,41 @@ namespace te16mono.LevelBuilder.UI
             menu = MenuType.ValueChanging;
         }
 
+        public static void DoneWithMovingObject()
+        {
+            menu = MenuType.Selection;
+            MainLevelBuilder.movingObjects.Add(MainLevelBuilder.selectedMovingObject);
+            MainLevelBuilder.placementAllowed = true;
+        }
+        public static void DoneWithBlock()
+        {
+            menu = MenuType.Selection;
+            MainLevelBuilder.blocks.Add(MainLevelBuilder.selectedBlock);
+            MainLevelBuilder.placementAllowed = true;
+
+        }
+        public static void ChangeBlock(Block input)
+        {
+            valueChanging = new BlockChanging(input);
+            menu = MenuType.ValueChanging;
+        }
+        public static void ChangeEffect(Point input)
+        {
+            valueChanging = new EffectChanging(input);
+            menu = MenuType.ValueChanging;
+        }
+        public static void DoneWithEffect()
+        {
+            menu = MenuType.Selection;
+            MainLevelBuilder.effects.Add(MainLevelBuilder.selectedEffect);
+            MainLevelBuilder.placementAllowed = true;
+        }
+        public static void DeleteValueChanging()
+        {
+            menu = MenuType.Selection;
+            MainLevelBuilder.placementAllowed = true;
+            MainLevelBuilder.DummyValues();
+        }
         public static void Draw(SpriteBatch spriteBatch)
         {
             if (menu == MenuType.Selection)
@@ -50,11 +85,6 @@ namespace te16mono.LevelBuilder.UI
                 valueChanging.Draw(spriteBatch);
         }
 
-        public static void DoneWithMovingObject()
-        {
-            menu = MenuType.Selection;
-            MainLevelBuilder.movingObjects.Add(MainLevelBuilder.movingObject);
-        }
 
         public static Rectangle MenuRectangle
         { 

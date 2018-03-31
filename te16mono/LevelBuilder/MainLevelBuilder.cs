@@ -19,14 +19,15 @@ namespace te16mono.LevelBuilder
         static SpriteBatch spriteBatch;
         static bool showError;
 
-        public static MouseState mouse, lastmouse;
+        public static bool placementAllowed;
+        public static MouseState mouse, lastMouse;
         public static KeyboardState keyboardState, lastKeyboardState;
         public static SelectedObject selectedObject;
         public static SpriteFont spriteFont;
 
-        public static MovingObjects movingObject;
-        public static Block block;
-        public static Point point;
+        public static MovingObjects selectedMovingObject;
+        public static Block selectedBlock;
+        public static Point selectedEffect;
 
         public static List<Block> blocks;
         public static List<MovingObjects> movingObjects;
@@ -50,19 +51,18 @@ namespace te16mono.LevelBuilder
             blocks = new List<Block>();
             Vector2 position = new Vector2(0);
             mouse = new MouseState();
-            lastmouse = new MouseState();
+            lastMouse = new MouseState();
             keyboardState = new KeyboardState();
             lastKeyboardState = new KeyboardState();
             spriteFont = Content.Load<SpriteFont>("font");
-            lastmouse = Mouse.GetState();
+            lastMouse = Mouse.GetState();
             lastKeyboardState = Keyboard.GetState();
 
             selectedObject = SelectedObject.Hedgehog;
             Menu.Load(Content);
             LoadAllTextures();
-
-            //SKA TAS BORT
-            movingObject = player;
+            placementAllowed = true;
+            DummyValues();
         }
 
         static public void Update(GraphicsDevice graphicsDevice)
@@ -77,25 +77,48 @@ namespace te16mono.LevelBuilder
             if (mouse.X < 1440)
             {
                 //Placerar ut block
-                if (mouse.LeftButton == ButtonState.Pressed && lastmouse.LeftButton == ButtonState.Released)
+                foreach (MovingObjects movingObject in movingObjects.ToArray())
+                {
+                    if (movingObject.Hitbox.Intersects(AbsoluteMouseHitbox) && mouse.LeftButton == ButtonState.Pressed && lastMouse.LeftButton == ButtonState.Released)
+                    {
+                        MovingObjectSelected(movingObject);
+                    }
+                }
+                foreach (Block block in blocks.ToArray())
+                {
+                    if (block.Hitbox.Intersects(AbsoluteMouseHitbox) && mouse.LeftButton == ButtonState.Pressed && lastMouse.LeftButton == ButtonState.Released)
+                    {
+                        BlockSelected(block);
+                    }
+                }
+                foreach (Point effect in effects.ToArray())
+                {
+                    if (effect.Hitbox.Intersects(AbsoluteMouseHitbox) && mouse.LeftButton == ButtonState.Pressed && lastMouse.LeftButton == ButtonState.Released)
+                    {
+                        EffectSelected(effect);
+                    }
+                }
+
+                if (mouse.LeftButton == ButtonState.Pressed && lastMouse.LeftButton == ButtonState.Released && placementAllowed)
                     ObjectPlacing.Create();
 
                 //Flyttar runt kameran
                 if (mouse.RightButton == ButtonState.Pressed)
                 {
-                    if (lastmouse.RightButton == ButtonState.Pressed)
+                    if (lastMouse.RightButton == ButtonState.Pressed)
                     {
-                        position.X += lastmouse.X - mouse.X;
-                        position.Y += lastmouse.Y - mouse.Y;
+                        position.X += lastMouse.X - mouse.X;
+                        position.Y += lastMouse.Y - mouse.Y;
                     }
 
                 }
             }
             
 
-            lastmouse = mouse;
+            lastMouse = mouse;
             lastKeyboardState = keyboardState;
         }
+
         static public void Draw(GraphicsDevice graphicsDevice)
         {
             //Allting som är del utav banan
@@ -114,8 +137,12 @@ namespace te16mono.LevelBuilder
             }
             player.Draw(spriteBatch);
 
-            if (showError)
+            if (showError && placementAllowed)
                 spriteBatch.DrawString(spriteFont, "X", MousePosition, Color.Red);
+
+            selectedBlock.Draw(spriteBatch);
+            selectedEffect.Draw(spriteBatch);
+            selectedMovingObject.Draw(spriteBatch);
 
             spriteBatch.End();
             //Allting som är en del utav UI
@@ -136,6 +163,14 @@ namespace te16mono.LevelBuilder
             }
         }
 
+        public static Rectangle AbsoluteMouseHitbox
+        {
+            get
+            {
+                return new Rectangle(Convert.ToInt32(mouse.X - 960 + position.X), Convert.ToInt32(mouse.Y - 540 + position.Y), 1, 1);
+            }
+        }
+
         static void LoadAllTextures()
         {
             cat = Content.Load<Texture2D>("katt");
@@ -153,6 +188,37 @@ namespace te16mono.LevelBuilder
             {
                 return new Vector2(mouse.X - 960 + position.X, mouse.Y - 540 + position.Y);
             }
+        }
+
+        static void MovingObjectSelected(MovingObjects input)
+        {
+            selectedMovingObject = input;
+            movingObjects.Remove(input);
+            Menu.ChangeMovingObject(selectedMovingObject);
+            placementAllowed = false;
+        }
+
+        static void BlockSelected(Block input)
+        {
+            selectedBlock = input;
+            blocks.Remove(input);
+            Menu.ChangeBlock(selectedBlock);
+            placementAllowed = false;
+        }
+
+        static void EffectSelected(Point input)
+        {
+            selectedEffect = input;
+            effects.Remove(input);
+            Menu.ChangeEffect(selectedEffect);
+            placementAllowed = false;
+        }
+
+        public static void DummyValues()
+        {
+            selectedMovingObject = new MovingObjectsDummy(cat, new Vector2(0), true, 64564, 6454, 545454);
+            selectedBlock = new BlockDummy(new Vector2(0), 0, 0, new Vector2(0), cat);
+            selectedEffect = new EffectDummy(new Vector2(0), cat, 56556);
         }
     }
 }

@@ -38,15 +38,19 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Blocks\BlockDummy.cs" />
+    <Compile Include="Effects\EffectDummy.cs" />
     <Compile Include="Effects\FinishLine.cs" />
     <Compile Include="Effects\Point.cs" />
     <Compile Include="LevelBuilder\MainLevelBuilder.cs" />
     <Compile Include="LevelBuilder\ObjectEditing\ObjectPlacing.cs" />
     <Compile Include="LevelBuilder\UI\enums.cs" />
     <Compile Include="LevelBuilder\UI\Menu.cs" />
-    <Compile Include="LevelBuilder\UI\MovingObjectChanging.cs" />
+    <Compile Include="LevelBuilder\UI\ValueChangers\BlockChanging.cs" />
+    <Compile Include="LevelBuilder\UI\ValueChangers\EffectChanging.cs" />
+    <Compile Include="LevelBuilder\UI\ValueChangers\MovingObjectChanging.cs" />
     <Compile Include="LevelBuilder\UI\Selection.cs" />
-    <Compile Include="LevelBuilder\UI\ValueChanging.cs" />
+    <Compile Include="LevelBuilder\UI\ValueChangers\ValueChanging.cs" />
     <Compile Include="Main\Main.cs" />
     <Compile Include="Main\Menus\Finish.cs" />
     <Compile Include="Main\Menus\GameOver.cs" />
@@ -59,6 +63,7 @@
     <Compile Include="MovingObjects\Hedgehog.cs" />
     <Compile Include="MovingObjects\Katt.cs" />
     <Compile Include="MovingObjects\MovingObjects.cs" />
+    <Compile Include="MovingObjects\MovingObjectsDummy.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Main\Program.cs" />
     <Compile Include="Projectiles\Projectiles.cs" />
