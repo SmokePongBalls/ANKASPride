@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace te16mono.LevelBuilder.UI
 {
@@ -21,7 +17,8 @@ namespace te16mono.LevelBuilder.UI
     public enum MenuType
     {
         Selection,
-        ValueChanging
+        ValueChanging,
+        Options
     }
     enum Editing
     {

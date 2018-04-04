@@ -1,11 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace te16mono.LevelBuilder.UI
 {
@@ -19,8 +15,7 @@ namespace te16mono.LevelBuilder.UI
         public static void Load(ContentManager Content)
         {
             square = Content.Load<Texture2D>("square");
-            valueChanging = new MovingObjectChanging(MainLevelBuilder.player);
-
+            Options.Initialize();
         }
 
         public static void Update()
@@ -32,6 +27,10 @@ namespace te16mono.LevelBuilder.UI
             else if (menu == MenuType.ValueChanging)
             {
                 valueChanging.Update();
+            }
+            else if (menu == MenuType.Options)
+            {
+                Options.Update();
             }
                 
         }
@@ -81,12 +80,21 @@ namespace te16mono.LevelBuilder.UI
         }
         public static void Draw(SpriteBatch spriteBatch)
         {
-            if (menu == MenuType.Selection)
+            if (menu == MenuType.Options)
+            {
+                Options.Draw(spriteBatch);
+            }
+            else if (menu == MenuType.Selection)
                 Selection.Draw(spriteBatch);
             else if (menu == MenuType.ValueChanging)
                 valueChanging.Draw(spriteBatch);
         }
-
+        public static void DoneWithOptions()
+        {
+            menu = MenuType.Selection;
+            MainLevelBuilder.placementAllowed = true;
+            MainLevelBuilder.selectionAllowed = true;
+        }
 
         public static Rectangle MenuRectangle
         { 
@@ -102,6 +110,13 @@ namespace te16mono.LevelBuilder.UI
             {
                 return square;
             }
+        }
+
+        public static void StartOptions()
+        {
+            MainLevelBuilder.placementAllowed = false;
+            MainLevelBuilder.selectionAllowed = false;
+            menu = MenuType.Options;
         }
 
     }

@@ -19,13 +19,13 @@ namespace te16mono
 
     //Anton, Hugo F, Filip
 
-    enum GameSection { CoreGame, LevelBuilding}
+    public enum GameSection { CoreGame, LevelBuilding}
 
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        GameSection gameSection;
+        public static GameSection gameSection;
 
 
 
@@ -52,7 +52,7 @@ namespace te16mono
             Main.currentState = Main.State.Meny;
             Main.Initialize(Content);
             MainLevelBuilder.Initialize(Content, GraphicsDevice);
-            gameSection = GameSection.CoreGame;
+            gameSection = GameSection.LevelBuilding;
 
             this.IsMouseVisible = true;
 

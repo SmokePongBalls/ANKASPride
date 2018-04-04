@@ -45,8 +45,10 @@
     <Compile Include="LevelBuilder\LevelBuilderDummy.cs" />
     <Compile Include="LevelBuilder\MainLevelBuilder.cs" />
     <Compile Include="LevelBuilder\ObjectEditing\ObjectPlacing.cs" />
+    <Compile Include="LevelBuilder\Saving.cs" />
     <Compile Include="LevelBuilder\UI\enums.cs" />
     <Compile Include="LevelBuilder\UI\Menu.cs" />
+    <Compile Include="LevelBuilder\UI\Options.cs" />
     <Compile Include="LevelBuilder\UI\ValueChangers\BlockChanging.cs" />
     <Compile Include="LevelBuilder\UI\ValueChangers\EffectChanging.cs" />
     <Compile Include="LevelBuilder\UI\ValueChangers\MovingObjectChanging.cs" />

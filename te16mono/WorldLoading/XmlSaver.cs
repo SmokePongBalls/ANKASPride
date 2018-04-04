@@ -5,7 +5,7 @@ namespace te16mono
 {
     static class XmlSaver
     {
-        public static void Save()
+        public static void Save(string name)
         {
             string document = "";
             document += " <map><MovingObjects>";
@@ -30,7 +30,7 @@ namespace te16mono
             }
             document += "</Effects></map>";
 
-            File.WriteAllText("file.xml", document);
+            File.WriteAllText(name + ".xml", document);
         }
     }
 }

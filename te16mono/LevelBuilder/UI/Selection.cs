@@ -16,6 +16,8 @@ namespace te16mono.LevelBuilder.UI
         public static void Update()
         {
             MainLevelBuilder.selectedObject = CheckForInteraction();
+            CheckMenuButtons();
+
         }
         public static void Draw(SpriteBatch spriteBatch)
         {
@@ -23,7 +25,7 @@ namespace te16mono.LevelBuilder.UI
 
             spriteBatch.Draw(Menu.Square, Menu.MenuRectangle, Color.Gray);
             DrawOptions(spriteBatch);
-
+            DrawOption(spriteBatch);
 
         }
 
@@ -78,6 +80,36 @@ namespace te16mono.LevelBuilder.UI
             }
             
             return MainLevelBuilder.selectedObject;
+        }
+
+        public static Rectangle OptionsRectangle
+        {
+            get
+            {
+                return new Rectangle(1500, 1000 - 20, 300, 50);
+            }
+        }
+
+        private static void DrawOption(SpriteBatch spriteBatch)
+        {
+            
+            position = new Vector2(1500, 1000);
+            spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.Red);
+            spriteBatch.DrawString(MainLevelBuilder.spriteFont, "OPTIONS", position, Color.Black);
+        }
+
+        private static void CheckMenuButtons()
+        {
+            MouseState mouse = MainLevelBuilder.mouse;
+            MouseState lastMouse = MainLevelBuilder.lastMouse;
+
+            if (mouse.LeftButton == ButtonState.Pressed && lastMouse.LeftButton != ButtonState.Pressed)
+            {
+                if (MainLevelBuilder.MouseHitbox.Intersects(OptionsRectangle))
+                {
+                    Menu.StartOptions();
+                }
+            }
         }
 
     }
