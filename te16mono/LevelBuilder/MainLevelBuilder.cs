@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using te16mono.LevelBuilder.UI;
 using te16mono.LevelBuilder.ObjectEditing;
+using te16mono.Input;
 
 namespace te16mono.LevelBuilder
 {
@@ -19,6 +20,7 @@ namespace te16mono.LevelBuilder
         static Vector2 position;
         static SpriteBatch spriteBatch;
         static bool showError;
+        static Saving saving;
 
         public static bool placementAllowed, selectionAllowed;
         public static MouseState mouse, lastMouse;
@@ -59,6 +61,7 @@ namespace te16mono.LevelBuilder
             lastMouse = Mouse.GetState();
             lastKeyboardState = Keyboard.GetState();
 
+            saving = new Saving();
             state = LevelBuilderState.Main;
             selectedObject = SelectedObject.Hedgehog;
             Menu.Load(Content);
@@ -74,54 +77,61 @@ namespace te16mono.LevelBuilder
             mouse = Mouse.GetState();
             showError = ObjectPlacing.CheckPosition();
 
-            
-
-            //Ska endast ifall muspekaren inte är över menyn
-            if (mouse.X < 1440)
+            if (state == LevelBuilderState.Main)
             {
-                //Kollar om man väljer ett objekt
-                if (selectionAllowed)
+                //Ska endast ifall muspekaren inte är över menyn
+                if (mouse.X < 1440)
                 {
-                    foreach (MovingObjects movingObject in movingObjects.ToArray())
+                    //Kollar om man väljer ett objekt
+                    if (selectionAllowed)
                     {
-                        if (movingObject.Hitbox.Intersects(AbsoluteMouseHitbox) && mouse.LeftButton == ButtonState.Pressed && lastMouse.LeftButton == ButtonState.Released)
+                        foreach (MovingObjects movingObject in movingObjects.ToArray())
                         {
-                            MovingObjectSelected(movingObject);
+                            if (movingObject.Hitbox.Intersects(AbsoluteMouseHitbox) && mouse.LeftButton == ButtonState.Pressed && lastMouse.LeftButton == ButtonState.Released)
+                            {
+                                MovingObjectSelected(movingObject);
+                            }
+                        }
+                        foreach (Block block in blocks.ToArray())
+                        {
+                            if (block.Hitbox.Intersects(AbsoluteMouseHitbox) && mouse.LeftButton == ButtonState.Pressed && lastMouse.LeftButton == ButtonState.Released)
+                            {
+                                BlockSelected(block);
+                            }
+                        }
+                        foreach (Point effect in effects.ToArray())
+                        {
+                            if (effect.Hitbox.Intersects(AbsoluteMouseHitbox) && mouse.LeftButton == ButtonState.Pressed && lastMouse.LeftButton == ButtonState.Released)
+                            {
+                                EffectSelected(effect);
+                            }
                         }
                     }
-                    foreach (Block block in blocks.ToArray())
+
+                    //Placerar ut block
+                    if (mouse.LeftButton == ButtonState.Pressed && lastMouse.LeftButton == ButtonState.Released && placementAllowed)
+                        ObjectPlacing.Create();
+
+                    //Flyttar runt kameran
+                    if (mouse.RightButton == ButtonState.Pressed)
                     {
-                        if (block.Hitbox.Intersects(AbsoluteMouseHitbox) && mouse.LeftButton == ButtonState.Pressed && lastMouse.LeftButton == ButtonState.Released)
+                        if (lastMouse.RightButton == ButtonState.Pressed)
                         {
-                            BlockSelected(block);
+                            position.X += lastMouse.X - mouse.X;
+                            position.Y += lastMouse.Y - mouse.Y;
                         }
-                    }
-                    foreach (Point effect in effects.ToArray())
-                    {
-                        if (effect.Hitbox.Intersects(AbsoluteMouseHitbox) && mouse.LeftButton == ButtonState.Pressed && lastMouse.LeftButton == ButtonState.Released)
-                        {
-                            EffectSelected(effect);
-                        }
-                    }
-                }                
 
-                //Placerar ut block
-                if (mouse.LeftButton == ButtonState.Pressed && lastMouse.LeftButton == ButtonState.Released && placementAllowed)
-                    ObjectPlacing.Create();
-
-                //Flyttar runt kameran
-                if (mouse.RightButton == ButtonState.Pressed)
-                {
-                    if (lastMouse.RightButton == ButtonState.Pressed)
-                    {
-                        position.X += lastMouse.X - mouse.X;
-                        position.Y += lastMouse.Y - mouse.Y;
                     }
-
                 }
+
+                Menu.Update();
+            }
+            else if (state == LevelBuilderState.Saving)
+            {
+                saving.Update(keyboardState, lastKeyboardState);
             }
 
-            Menu.Update();
+            
             lastMouse = mouse;
             lastKeyboardState = keyboardState;
         }
@@ -129,35 +139,45 @@ namespace te16mono.LevelBuilder
         static public void Draw(GraphicsDevice graphicsDevice)
         {
             //Allting som är del utav banan
-            spriteBatch.Begin(SpriteSortMode.BackToFront, null, null, null, null, null, Camera.LevelBuilderPosition(position, graphicsDevice.DisplayMode.Width, graphicsDevice.DisplayMode.Height));
-            foreach (MovingObjects movingObject in movingObjects)
+            if (state == LevelBuilderState.Main)
             {
-                movingObject.Draw(spriteBatch);
+                spriteBatch.Begin(SpriteSortMode.BackToFront, null, null, null, null, null, Camera.LevelBuilderPosition(position, graphicsDevice.DisplayMode.Width, graphicsDevice.DisplayMode.Height));
+                foreach (MovingObjects movingObject in movingObjects)
+                {
+                    movingObject.Draw(spriteBatch);
+                }
+                foreach (Point effect in effects)
+                {
+                    effect.Draw(spriteBatch);
+                }
+                foreach (Block block in blocks)
+                {
+                    block.Draw(spriteBatch);
+                }
+                player.Draw(spriteBatch);
+
+                if (showError && placementAllowed)
+                    spriteBatch.DrawString(spriteFont, "X", MousePosition, Color.Red);
+
+                selectedBlock.Draw(spriteBatch);
+                selectedEffect.Draw(spriteBatch);
+                selectedMovingObject.Draw(spriteBatch);
+
+                spriteBatch.End();
+                //Allting som är en del utav UI
+                spriteBatch.Begin();
+                Menu.Draw(spriteBatch);
+
+
+                spriteBatch.End();
             }
-            foreach (Point effect in effects)
+            else if (state == LevelBuilderState.Saving)
             {
-                effect.Draw(spriteBatch);
+                spriteBatch.Begin();
+                saving.Draw(spriteBatch);
+                spriteBatch.End();
             }
-            foreach (Block block in blocks)
-            {
-                block.Draw(spriteBatch);
-            }
-            player.Draw(spriteBatch);
-
-            if (showError && placementAllowed)
-                spriteBatch.DrawString(spriteFont, "X", MousePosition, Color.Red);
-
-            selectedBlock.Draw(spriteBatch);
-            selectedEffect.Draw(spriteBatch);
-            selectedMovingObject.Draw(spriteBatch);
-
-            spriteBatch.End();
-            //Allting som är en del utav UI
-            spriteBatch.Begin();
-            Menu.Draw(spriteBatch);
-
-                
-            spriteBatch.End();
+            
         }
 
 

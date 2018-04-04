@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using te16mono.Input;
 
 namespace te16mono.LevelBuilder.UI
 {
@@ -98,54 +99,7 @@ namespace te16mono.LevelBuilder.UI
             {
                 isEditing = false;
             }
-            else if (keyboardState.IsKeyDown(Keys.NumPad0) && lastKeyboardState.IsKeyDown(Keys.NumPad0) == false || keyboardState.IsKeyDown(Keys.D0) && lastKeyboardState.IsKeyDown(Keys.D0) == false)
-            {
-                editString += "0";
-            }
-            else if (keyboardState.IsKeyDown(Keys.NumPad1) && lastKeyboardState.IsKeyDown(Keys.NumPad1) == false || keyboardState.IsKeyDown(Keys.D1) && lastKeyboardState.IsKeyDown(Keys.D1) == false)
-            {
-                editString += "1";
-            }
-            else if (keyboardState.IsKeyDown(Keys.NumPad2) && lastKeyboardState.IsKeyDown(Keys.NumPad2) == false || keyboardState.IsKeyDown(Keys.D2) && lastKeyboardState.IsKeyDown(Keys.D2) == false)
-            {
-                editString += "2";
-            }
-            else if (keyboardState.IsKeyDown(Keys.NumPad3) && lastKeyboardState.IsKeyDown(Keys.NumPad3) == false || keyboardState.IsKeyDown(Keys.D3) && lastKeyboardState.IsKeyDown(Keys.D3) == false)
-            {
-                editString += "3";
-            }
-            else if (keyboardState.IsKeyDown(Keys.NumPad4) && lastKeyboardState.IsKeyDown(Keys.NumPad4) == false || keyboardState.IsKeyDown(Keys.D4) && lastKeyboardState.IsKeyDown(Keys.D4) == false)
-            {
-                editString += "4";
-            }
-            else if (keyboardState.IsKeyDown(Keys.NumPad5) && lastKeyboardState.IsKeyDown(Keys.NumPad5) == false || keyboardState.IsKeyDown(Keys.D5) && lastKeyboardState.IsKeyDown(Keys.D5) == false)
-            {
-                editString += "5";
-            }
-            else if (keyboardState.IsKeyDown(Keys.NumPad6) && lastKeyboardState.IsKeyDown(Keys.NumPad6) == false || keyboardState.IsKeyDown(Keys.D6) && lastKeyboardState.IsKeyDown(Keys.D6) == false)
-            {
-                editString += "6";
-            }
-            else if (keyboardState.IsKeyDown(Keys.NumPad7) && lastKeyboardState.IsKeyDown(Keys.NumPad7) == false || keyboardState.IsKeyDown(Keys.D7) && lastKeyboardState.IsKeyDown(Keys.D7) == false)
-            {
-                editString += "7";
-            }
-            else if (keyboardState.IsKeyDown(Keys.NumPad8) && lastKeyboardState.IsKeyDown(Keys.NumPad8) == false || keyboardState.IsKeyDown(Keys.D8) && lastKeyboardState.IsKeyDown(Keys.D8) == false)
-            {
-                editString += "8";
-            }
-            else if (keyboardState.IsKeyDown(Keys.NumPad9) && lastKeyboardState.IsKeyDown(Keys.NumPad9) == false || keyboardState.IsKeyDown(Keys.D9) && lastKeyboardState.IsKeyDown(Keys.D9) == false)
-            {
-                editString += "9";
-            }
-            else if (keyboardState.IsKeyDown(Keys.Decimal) && lastKeyboardState.IsKeyDown(Keys.Decimal) == false || keyboardState.IsKeyDown(Keys.OemComma) && lastKeyboardState.IsKeyDown(Keys.OemComma) == false)
-            {
-                editString += ",";
-            }
-            else if (keyboardState.IsKeyDown(Keys.OemMinus) && lastKeyboardState.IsKeyDown(Keys.OemMinus) == false || keyboardState.IsKeyDown(Keys.Subtract) && lastKeyboardState.IsKeyDown(Keys.Subtract) == false)
-            {
-                editString += "-";
-            }
+            editString += TextInput.CheckNumbers(keyboardState, lastKeyboardState);
         }
 
         public static Rectangle ExitRectangle

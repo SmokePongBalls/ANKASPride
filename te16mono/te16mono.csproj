@@ -42,6 +42,7 @@
     <Compile Include="Effects\EffectDummy.cs" />
     <Compile Include="Effects\FinishLine.cs" />
     <Compile Include="Effects\Point.cs" />
+    <Compile Include="Input\TextInput.cs" />
     <Compile Include="LevelBuilder\LevelBuilderDummy.cs" />
     <Compile Include="LevelBuilder\MainLevelBuilder.cs" />
     <Compile Include="LevelBuilder\ObjectEditing\ObjectPlacing.cs" />
