@@ -13,13 +13,15 @@ namespace te16mono
 
             return position * screenSize;
         }
-        public static Matrix LevelBuilderPosition(Vector2 position, int screenWidth, int screenHeight)
+        public static Matrix LevelBuilderPosition(Vector2 position, float zoom, int screenWidth, int screenHeight)
         {
             Matrix matrixPosition = Matrix.CreateTranslation(-position.X, -position.Y, -1);
 
             Matrix screenSize = Matrix.CreateTranslation((float)screenWidth / 2, (float)screenHeight / (float)2, 1f);
 
-            return matrixPosition * screenSize;
+            Matrix screenZoom = Matrix.CreateScale(zoom, zoom, 0);
+
+            return matrixPosition * screenSize * screenZoom;
         }
 
         public static Rectangle Rectangle(Rectangle player)

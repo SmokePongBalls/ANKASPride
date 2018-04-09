@@ -21,6 +21,8 @@ namespace te16mono.LevelBuilder
         static SpriteBatch spriteBatch;
         static bool showError;
         static Saving saving;
+        static float zoom;
+        static float testScroll;
 
         public static bool placementAllowed, selectionAllowed;
         public static MouseState mouse, lastMouse;
@@ -60,7 +62,9 @@ namespace te16mono.LevelBuilder
             spriteFont = Content.Load<SpriteFont>("font");
             lastMouse = Mouse.GetState();
             lastKeyboardState = Keyboard.GetState();
+            zoom = 1;
 
+            selectionAllowed = true;
             saving = new Saving();
             state = LevelBuilderState.Main;
             selectedObject = SelectedObject.Hedgehog;
@@ -122,8 +126,17 @@ namespace te16mono.LevelBuilder
                         }
 
                     }
+                    //Zoomar kameran
                 }
 
+                if (keyboardState.IsKeyDown(Keys.PageDown) && lastKeyboardState.IsKeyUp(Keys.PageDown) && zoom > 0)
+                {
+                    zoom -= 0.1f;
+                }
+                else if (keyboardState.IsKeyDown(Keys.PageUp) && lastKeyboardState.IsKeyUp(Keys.PageUp) && zoom < 5)
+                {
+                    zoom += 0.1f;
+                }
                 Menu.Update();
             }
             else if (state == LevelBuilderState.Saving)
@@ -131,7 +144,6 @@ namespace te16mono.LevelBuilder
                 saving.Update(keyboardState, lastKeyboardState);
             }
 
-            
             lastMouse = mouse;
             lastKeyboardState = keyboardState;
         }
@@ -141,7 +153,8 @@ namespace te16mono.LevelBuilder
             //Allting som är del utav banan
             if (state == LevelBuilderState.Main)
             {
-                spriteBatch.Begin(SpriteSortMode.BackToFront, null, null, null, null, null, Camera.LevelBuilderPosition(position, graphicsDevice.DisplayMode.Width, graphicsDevice.DisplayMode.Height));
+                
+                spriteBatch.Begin(SpriteSortMode.BackToFront, null, null, null, null, null, Camera.LevelBuilderPosition(position, zoom, graphicsDevice.DisplayMode.Width, graphicsDevice.DisplayMode.Height));
                 foreach (MovingObjects movingObject in movingObjects)
                 {
                     movingObject.Draw(spriteBatch);
@@ -167,7 +180,7 @@ namespace te16mono.LevelBuilder
                 //Allting som är en del utav UI
                 spriteBatch.Begin();
                 Menu.Draw(spriteBatch);
-
+                spriteBatch.DrawString(spriteFont, Convert.ToString(testScroll), new Vector2(0), Color.Black);
 
                 spriteBatch.End();
             }
@@ -193,7 +206,7 @@ namespace te16mono.LevelBuilder
         {
             get
             {
-                return new Rectangle(Convert.ToInt32(mouse.X - 960 + position.X), Convert.ToInt32(mouse.Y - 540 + position.Y), 1, 1);
+                return new Rectangle(Convert.ToInt32( zoom * (mouse.X - 960 + position.X)), Convert.ToInt32(zoom * (mouse.Y - 540 + position.Y)), 1, 1);
             }
         }
 
@@ -301,6 +314,7 @@ namespace te16mono.LevelBuilder
             blocks = new List<Block>();
             LevelBuilderDummy.DummyValues();
             position = new Vector2(0);
+            zoom = 1;
         }
         
     }
