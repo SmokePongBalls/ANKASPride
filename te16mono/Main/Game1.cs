@@ -54,7 +54,7 @@ namespace te16mono
             MainLevelBuilder.Initialize(Content, GraphicsDevice);
             gameSection = GameSection.LevelBuilding;
 
-            this.IsMouseVisible = true;
+            IsMouseVisible = true;
 
             base.Initialize();
         }
@@ -160,6 +160,8 @@ namespace te16mono
                 else if (gameSection == GameSection.LevelBuilding)
                 {
                 MainLevelBuilder.Update(GraphicsDevice);
+                if (gameSection == GameSection.CoreGame)
+                    MainLevelBuilder.Reset();
                 }
             base.Update(gameTime);
         }
