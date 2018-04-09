@@ -59,7 +59,6 @@
     <Compile Include="Main\Menus\Finish.cs" />
     <Compile Include="Main\Menus\GameOver.cs" />
     <Compile Include="Main\Menus\Meny.cs" />
-    <Compile Include="Main\MenyItem.cs" />
     <Compile Include="MenyItem.cs" />
     <Compile Include="MovingObjects\Bird.cs" />
     <Compile Include="Blocks\Block.cs" />

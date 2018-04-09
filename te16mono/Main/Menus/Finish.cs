@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using static te16mono.Main;
+using static te16mono.Meny;
 
 namespace te16mono
 {
@@ -14,17 +15,17 @@ namespace te16mono
             //Gå vidare till nästa bana
             if (keyboardState.IsKeyDown(Keys.N))
             {
-                Main.currentState = State.Run;
+                Main.currentState = Main.State.Run;
                 Main.map++;
             }
             if (keyboardState.IsKeyDown(Keys.R))
             {
-                Main.currentState = State.Run;
+                Main.currentState = Main.State.Run;
                 
             }
             //Lämna spelet
             if (keyboardState.IsKeyDown(Keys.Q))  //
-                Main.currentState = State.Quit;
+                Main.currentState = Main.State.Quit;
 
         }
         public static Rectangle Rectangle(GraphicsDevice graphicsDevice)

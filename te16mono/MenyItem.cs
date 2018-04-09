@@ -38,7 +38,7 @@ namespace te16mono
     }
 
 
-     class Menu
+     class Sak
      {
 
         List<MenyItem> meny; // Lista på meny items 
@@ -50,7 +50,7 @@ namespace te16mono
 
         int defaultMenyState;
 
-        public Menu (int defaultMenystate) // konstruktor som skapar en listan med menyvalen 
+        public void Menu (int defaultMenystate) // konstruktor som skapar en listan med menyvalen 
         {
 
 
@@ -68,7 +68,7 @@ namespace te16mono
         public int Update(GameTime gameTime) // fortsätt här 
         {
 
-
+            return 1;
 
         }
 

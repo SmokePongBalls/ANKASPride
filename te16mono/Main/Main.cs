@@ -13,11 +13,9 @@ namespace te16mono
     {
 
 
-<<<<<<< HEAD
-        public enum State { Meny, Quit, Run, Finish,Pause };
-=======
-        public enum State { Meny, Quit, Run, Finish, GameOver };
->>>>>>> 7448817f527937965f809aeaa7e2afa4486d6163
+
+        public enum State { Meny, Quit, Run, Finish ,Pause, GameOver };
+
 
         public static State currentState;
 
