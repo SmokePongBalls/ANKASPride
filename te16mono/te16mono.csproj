@@ -43,6 +43,8 @@
     <Compile Include="Main\Main.cs" />
     <Compile Include="Main\Menus\Finish.cs" />
     <Compile Include="Main\Menus\Meny.cs" />
+    <Compile Include="Main\MenyItem.cs" />
+    <Compile Include="MenyItem.cs" />
     <Compile Include="MovingObjects\Bird.cs" />
     <Compile Include="Blocks\Block.cs" />
     <Compile Include="Camera.cs" />
@@ -56,6 +58,7 @@
     <Compile Include="Projectiles\Projectiles.cs" />
     <Compile Include="Projectiles\RegularProjectile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WorldLoading\MenyItems.cs" />
     <Compile Include="WorldLoading\XmlLoader.cs" />
   </ItemGroup>
   <ItemGroup>
