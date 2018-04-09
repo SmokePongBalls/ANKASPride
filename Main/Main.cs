@@ -13,11 +13,7 @@ namespace te16mono
     {
 
 
-<<<<<<< HEAD
-        public enum State { Meny, Quit, Run, Finish,Pause };
-=======
         public enum State { Meny, Quit, Run, Finish, GameOver };
->>>>>>> 7448817f527937965f809aeaa7e2afa4486d6163
 
         public static State currentState;
 
@@ -73,7 +69,7 @@ namespace te16mono
             //MediaPlayer.Play(music);
         }
 
-     
+      
 
         public static State MenyUpdate()
         {
@@ -81,7 +77,7 @@ namespace te16mono
             if (keyboardState.IsKeyDown(Keys.S))
                 currentState = State.Run;
 
-            if (keyboardState.IsKeyDown(Keys.Q))  //
+            if (keyboardState.IsKeyDown(Keys.A))  //
                 currentState = State.Quit;
 
             return State.Meny; // Stannar kvar i menyn 
@@ -96,13 +92,6 @@ namespace te16mono
             spriteBatch.End();
 
         }
-
-        
-        
-
-
-        
-
 
 
         public static State RunUpdate(GameTime gameTime)
@@ -228,8 +217,6 @@ namespace te16mono
         public static void FinishUpdate()
         {
             Finish.Update();
-
-
         }
 
         public static void FinishDraw(GraphicsDevice graphicsDevice)
@@ -239,32 +226,6 @@ namespace te16mono
             spriteBatch.DrawString(pointFont, Convert.ToString(player.points), new Vector2(graphicsDevice.DisplayMode.Width / 2 - 30, graphicsDevice.DisplayMode.Height / 2 - 250), Color.White);
             spriteBatch.End();
         }
-
-        public static State PauseUpdate()
-        {
-            KeyboardState keyboard = Keyboard.GetState();
-
-            if (keyboard.IsKeyDown(Keys.S)) // Resume på pause meny fixar detta sen 
-                currentState = State.Run;
-
-            if (keyboard.IsKeyDown(Keys.Q))
-                currentState = State.Quit;
-
-            return State.Pause;
-        }
-
-        public static void PauseDraw()
-        {
-
-            spriteBatch.Begin();
-            spriteBatch.Draw(menySprite, menyPos, Color.White);
-            spriteBatch.End();
-
-
-        }
-
-
-
 
         public static void RunDraw( GraphicsDevice  graphicsDevice , GameTime gameTime)
         {

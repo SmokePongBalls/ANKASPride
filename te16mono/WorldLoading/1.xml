@@ -10,15 +10,6 @@
       <MaxX>1700</MaxX>
       <MinX>0</MinX>
     </Bird>
-    <Katt>
-      <Texture>katt</Texture>
-      <X>100</X>
-      <Y>100</Y>
-      <WalkLeft>false</WalkLeft>
-      <MaxSpeed>0.5</MaxSpeed>
-      <MinX>0</MinX>
-      <MaxX>1700</MaxX>
-    </Katt>
     <Hedgehog>
       <Texture>hedgehog</Texture>
       <X>2350</X>
@@ -28,15 +19,6 @@
       <MaxX>2600</MaxX>
       <MinX>2300</MinX>
     </Hedgehog>
-    <Frog>
-      <Texture>frog</Texture>
-      <X>100</X>
-      <Y>100</Y>
-      <WalkLeft>False</WalkLeft>
-      <MaxSpeed>0.5</MaxSpeed>
-      <MaxX>1700</MaxX>
-      <MinX>0</MinX>
-    </Frog>
   </MovingObjects>
   <Blocks>
     <Block>
@@ -77,24 +59,6 @@
     </Block>
     <Block>
       <Texture>square</Texture>
-      <X>500</X>
-      <Y>-1100</Y>
-      <Width>40</Width>
-      <Height>1700</Height>
-      <VelocityX>0</VelocityX>
-      <VelocityY>0</VelocityY>
-    </Block>
-    <Block>
-      <Texture>square</Texture>
-      <X>700</X>
-      <Y>-1100</Y>
-      <Width>40</Width>
-      <Height>1700</Height>
-      <VelocityX>0</VelocityX>
-      <VelocityY>0</VelocityY>
-    </Block>
-    <Block>
-      <Texture>square</Texture>
       <X>2500</X>
       <Y>800</Y>
       <Width>300</Width>
@@ -103,18 +67,24 @@
       <VelocityY>0</VelocityY>
     </Block>
   </Blocks>
-  <Points>
+  <Effects>
     <Point>
-      <Texture>pear</Texture>
+      <Texture>goldbag</Texture>
       <X>550</X>
-      <Y>-1035</Y>
+      <Y>500</Y>
       <Worth>100</Worth>
     </Point>
+    <Health>
+      <Texture>pear</Texture>
+      <X>450</X>
+      <Y>500</Y>
+      <Worth>1</Worth>
+    </Health>
     <Finish>
       <Texture>finishFlag</Texture>
       <X>3750</X>
       <Y>432</Y>
       <Worth>0</Worth>
     </Finish>
-  </Points>
+  </Effects>
 </Map>

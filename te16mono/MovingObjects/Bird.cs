@@ -9,9 +9,9 @@ namespace te16mono
     class Bird : MovingObjects
     {
         int timeToShoot;
-
         public Bird(Texture2D texture, Vector2 position, bool walkLeft, float maxSpeed, float maxX, float minX)
         {
+            name = "Bird";
             this.texture = texture;
             this.position = position;
             this.walkLeft = walkLeft;

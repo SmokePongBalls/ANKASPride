@@ -3,14 +3,16 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace te16mono
 {
-    class Point
+    public class Point
     {
-        protected Vector2 position;
+        public string name;
+        public Vector2 position;
         protected Texture2D texture;
         public int worth;
 
         public Point(Vector2 position, Texture2D texture, int worth)
         {
+            name = "Point";
             this.position = position;
             this.texture = texture;
             this.worth = worth;
@@ -30,10 +32,11 @@ namespace te16mono
 
             spriteBatch.Draw(texture, Hitbox, Color.White);
         }
-        public virtual void Intersect(GameTime gameTime)
+        public virtual Player Intersect(GameTime gameTime, Player player)
         {
 
-
+            player.points += worth;
+            return player;
         }
     }
 

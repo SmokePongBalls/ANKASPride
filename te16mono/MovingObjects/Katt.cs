@@ -12,6 +12,7 @@ namespace te16mono
 
         public Katt(Texture2D texture, Vector2 position, bool walkLeft, float maxSpeed, float maxX, float minX)
         {
+            name = "Katt";
             this.texture = texture;
             this.position = position;
             this.walkLeft = walkLeft;

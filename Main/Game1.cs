@@ -19,13 +19,13 @@ namespace te16mono
 
     //Anton, Hugo F, Filip
 
-    public enum GameSection { CoreGame, LevelBuilding}
+    enum GameSection { CoreGame, LevelBuilding}
 
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        public static GameSection gameSection;
+        GameSection gameSection;
 
 
 
@@ -92,14 +92,7 @@ namespace te16mono
         {
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-<<<<<<< HEAD
-                Main.currentState = Main.State.Pause;
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Q))
-                Main.currentState = Main.State.Quit;
-
-=======
                 Exit();
->>>>>>> 7448817f527937965f809aeaa7e2afa4486d6163
 
             if (Keyboard.GetState().IsKeyDown(Keys.T))
             {
@@ -123,23 +116,11 @@ namespace te16mono
                         break;
 
 
-<<<<<<< HEAD
-                case Main.State.Finish: Main.FinishUpdate();
-                    if (Main.currentState == Main.State.Run)
-                        Main.LoadMap();
-                    break;
-                    
-                case Main.State.Pause:Main.PauseUpdate();
-                    break;
-
-
-=======
                     case Main.State.Finish:
                         Main.FinishUpdate();
                         if (Main.currentState == Main.State.Run)
                             Main.LoadMap();
                         break;
->>>>>>> 7448817f527937965f809aeaa7e2afa4486d6163
 
                     case Main.State.GameOver:
                         Main.GameOverUpdate();
@@ -183,13 +164,6 @@ namespace te16mono
                         Main.MenyDraw();
                         break;
 
-<<<<<<< HEAD
-                case Main.State.Run: Main.RunDraw(GraphicsDevice, gameTime);
-                    break;
-
-                case Main.State.Pause: Main.PauseDraw();
-                break;
-=======
                     case Main.State.Finish:
                         Main.FinishDraw(GraphicsDevice);
                         break;
@@ -197,7 +171,6 @@ namespace te16mono
                     case Main.State.GameOver:
                         Main.GameOverDraw(GraphicsDevice);
                         break;
->>>>>>> 7448817f527937965f809aeaa7e2afa4486d6163
 
                     case Main.State.Run:
                         Main.RunDraw(GraphicsDevice, gameTime);

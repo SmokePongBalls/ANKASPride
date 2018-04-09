@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace te16mono
@@ -13,10 +8,12 @@ namespace te16mono
 
         public FinishLine(Vector2 position, Texture2D texture, int worth) : base(position, texture, worth)
         {
+            name = "Finish";
         }
-        public override void Intersect(GameTime gameTime)
+        public override Player Intersect(GameTime gameTime, Player player)
         {
             Main.currentState = Main.State.Finish;
+            return player;
         }
         public override Rectangle Hitbox
         {

@@ -10,10 +10,11 @@ namespace te16mono
 {
 
     //Anton, Hugo F
-    class Block
+    public class Block
     {
-        private Texture2D texture;
-        private int width, height;
+        public string name;
+        protected Texture2D texture;
+        public int width, height;
         public int damage = 0;
         public bool canStandOn;
         public Vector2 position, velocity;
@@ -21,7 +22,7 @@ namespace te16mono
         
         public Block(Vector2 position, int width, int height, Vector2 velocity, Texture2D texture)
         {
-            //Behövs fö Intersect metoden
+            name = "Block";
             this.velocity = velocity;
             this.position = position;
             this.width = width;

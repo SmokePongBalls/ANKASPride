@@ -7,6 +7,7 @@ namespace te16mono
     {
         public Hedgehog(Texture2D texture, Vector2 position, bool walkLeft, float maxSpeed, float maxX, float minX) : base(texture, position, walkLeft, maxSpeed, maxX, minX)
         {
+            name = "Hedgehog";
             this.texture = texture;
             this.position = position;
             this.walkLeft = walkLeft;

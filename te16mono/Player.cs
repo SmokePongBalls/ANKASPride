@@ -7,24 +7,24 @@ namespace te16mono
 {
     //Anton, Hugo F
 
-    class Player : MovingObjects
+    public class Player : MovingObjects
     {
         //Ha kvar "points" ifall vi använder det senare.
         public int points;
+        public int maxHealth = 10;
         private Oriantation lastTouchedSurface;
         private bool holdingJump = true;
         private int shootCooldown;
-
 
         //kontroller
         public Keys up, down, left, right;
         KeyboardState pressedKeys;
 
-
         // "Seed" är tillför att se till så att alla object som -->
         // --> vill ha ett random värde får olika värde. Olika seeds olika random värden.
         public Player(int seed, Texture2D texture)
         {
+            name = "Player";
             position = new Vector2();
             velocity = new Vector2();
             this.texture = texture;
@@ -34,7 +34,6 @@ namespace te16mono
             shootCooldown = 0;
             rng = new Random(seed);
             //Initiera värden
-
         }
 
         public override void Update(GameTime gameTime)
@@ -97,43 +96,8 @@ namespace te16mono
                 position = new Vector2(0);
             }
 
-
-
-
-            //Själva: Ordna styrning för a, s, d också
-
                 position += velocity;
 
-            
-            /*
-             * PLATTFORMAR FUNGERAR NU
-             * 
-            //Ser till så att karaktären inte kan åka ur skärmen.
-            //Får tas bort senare för att det är lättare att testa om vi har det så här.
-            if(position.X<0)
-            {
-                position.X = 0;
-                velocity.X = -velocity.X;
-            }
-
-            if (position.Y < 0)
-            {
-                position.Y = 0;
-                velocity.Y = -velocity.Y;
-            }
-
-            if (position.X+texture.Width >1920)
-            {
-                position.X = 1920-texture.Width;
-                velocity.X = -velocity.X;
-            }
-
-            if (position.Y + texture.Height> 1080)
-            {
-                position.Y = 1080- texture.Height;
-                velocity.Y = -velocity.Y;
-            }
-            */
         }
 
         public override void Intersect(Rectangle collided,  Vector2 collidedVelocity, int damage, bool collidedCanStandOn)
@@ -167,6 +131,8 @@ namespace te16mono
                             velocity.X = -10;
                         else
                             velocity.X = 10;
+
+                        health -= damage;
                         //Ser till så att objekten inte längre är innuti varandra
                         position += velocity;
                     }
