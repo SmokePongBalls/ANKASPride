@@ -96,10 +96,12 @@ namespace te16mono
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Q))
                 Main.currentState = Main.State.Quit;
 
+            /*
             if (Keyboard.GetState().IsKeyDown(Keys.T))
             {
                 graphics.ToggleFullScreen();
             }
+            */
 
 
             // TODO: Add your update logic here

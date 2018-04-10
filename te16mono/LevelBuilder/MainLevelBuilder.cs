@@ -188,7 +188,7 @@ namespace te16mono.LevelBuilder
         {
             get
             {
-                return new Rectangle(mouse.X, mouse.Y + 10, 1, 1);
+                return new Rectangle(mouse.X, mouse.Y + 5, 1, 1);
             }
         }
 

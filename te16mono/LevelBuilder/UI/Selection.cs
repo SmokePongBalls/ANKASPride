@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-
+using System;
 
 namespace te16mono.LevelBuilder.UI
 {
@@ -43,8 +43,16 @@ namespace te16mono.LevelBuilder.UI
 
             for (int i = 0; i < options.Length; i++)
             {
-                spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.LightSeaGreen);
-                spriteBatch.DrawString(MainLevelBuilder.spriteFont, options[i], position, Color.Black);
+                if (i == Convert.ToInt32(MainLevelBuilder.selectedObject))
+                {
+                    spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.DarkTurquoise);
+                    spriteBatch.DrawString(MainLevelBuilder.spriteFont, options[i], position, Color.Black);
+                }
+                else
+                {
+                    spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.LightSeaGreen);
+                    spriteBatch.DrawString(MainLevelBuilder.spriteFont, options[i], position, Color.Black);
+                }
                 position.Y += 40;
             }
         }
@@ -53,7 +61,7 @@ namespace te16mono.LevelBuilder.UI
         static SelectedObject CheckForInteraction()
         {
             position = new Vector2(1500, 100);
-            if (MainLevelBuilder.mouse.LeftButton == ButtonState.Pressed)
+            if (MainLevelBuilder.mouse.LeftButton == ButtonState.Pressed && MainLevelBuilder.lastMouse.LeftButton == ButtonState.Released)
             {
                 if (SelectionRectangle.Intersects(MainLevelBuilder.MouseHitbox))
                     return SelectedObject.Null;

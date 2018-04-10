@@ -11,15 +11,18 @@ namespace te16mono.LevelBuilder.UI
     {
         public static void Draw(Vector2 position, SpriteBatch spriteBatch)
         {
+            position.X -= 960;
+            position.Y -= 540;
+            DrawLines(spriteBatch, position);
+            DrawText(spriteBatch, position);
+        }
+
+        static void DrawLines(SpriteBatch spriteBatch, Vector2 position)
+        {
             for (int i = 0; i < 1920; i++)
             {
 
-                if (Convert.ToInt32(position.X + i) % 100 == 0)
-                {
-                    spriteBatch.Draw(Menu.Square, VerticalRectangle(i, 3), Color.Black);
-                    spriteBatch.DrawString(MainLevelBuilder.spriteFont, Convert.ToString(Convert.ToInt32(position.X + i)), new Vector2(i + 15, 0), Color.Black);
-                }
-                else if (Convert.ToInt32(position.X + i) % 50 == 0)
+                if (Convert.ToInt32(position.X + i) % 50 == 0)
                 {
                     spriteBatch.Draw(Menu.Square, VerticalRectangle(i, 2), Color.Black);
                 }
@@ -27,16 +30,17 @@ namespace te16mono.LevelBuilder.UI
                 {
                     spriteBatch.Draw(Menu.Square, VerticalRectangle(i, 1), Color.Black);
                 }
-                
+
+                if (Convert.ToInt32(position.X + i) % 100 == 0)
+                {
+                    spriteBatch.Draw(Menu.Square, VerticalRectangle(i, 3), Color.Black);
+                }
+
             }
             for (int i = 0; i < 1080; i++)
             {
 
-                if (Convert.ToInt32(position.Y + i) % 100 == 0)
-                {
-                    spriteBatch.Draw(Menu.Square, HorizontalRectangle(i, 3), Color.Black);
-                    spriteBatch.DrawString(MainLevelBuilder.spriteFont, Convert.ToString(Convert.ToInt32(position.Y + i)), new Vector2(0, i + 15), Color.Black);
-                }
+
                 if (Convert.ToInt32(position.Y + i) % 50 == 0)
                 {
                     spriteBatch.Draw(Menu.Square, HorizontalRectangle(i, 2), Color.Black);
@@ -45,7 +49,29 @@ namespace te16mono.LevelBuilder.UI
                 {
                     spriteBatch.Draw(Menu.Square, HorizontalRectangle(i, 1), Color.Black);
                 }
+                if (Convert.ToInt32(position.Y + i) % 100 == 0)
+                {
+                    spriteBatch.Draw(Menu.Square, HorizontalRectangle(i, 3), Color.Black);
 
+                }
+
+            }
+        }
+        static void DrawText(SpriteBatch spriteBatch, Vector2 position)
+        {
+            for (int i = 0; i < 1920; i++)
+            {
+                if (Convert.ToInt32(position.X + i) % 100 == 0)
+                {
+                    spriteBatch.DrawString(MainLevelBuilder.spriteFont, Convert.ToString(Convert.ToInt32(position.X + i)), new Vector2(i + 15, 0), Color.White);
+                }
+            }
+            for (int i = 0; i < 1080; i++)
+            {
+                if (Convert.ToInt32(position.Y + i) % 100 == 0)
+                {
+                    spriteBatch.DrawString(MainLevelBuilder.spriteFont, Convert.ToString(Convert.ToInt32(position.Y + i)), new Vector2(0, i + 15), Color.White);
+                }
             }
         }
         private static Rectangle VerticalRectangle(int x, int width)
@@ -56,5 +82,6 @@ namespace te16mono.LevelBuilder.UI
         {
             return new Rectangle(0, y -1, 1920, width);
         }
+
     }
 }
