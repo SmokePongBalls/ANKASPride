@@ -11,11 +11,13 @@ namespace te16mono.LevelBuilder.UI
         public static MenuType menu = MenuType.Selection;
         static Texture2D square;
         static ValueChanging valueChanging;
+        public static bool gridEnabled;
 
         public static void Load(ContentManager Content)
         {
             square = Content.Load<Texture2D>("square");
             Options.Initialize();
+            gridEnabled = true;
         }
 
         public static void Update()
@@ -33,6 +35,21 @@ namespace te16mono.LevelBuilder.UI
                 Options.Update();
             }
                 
+        }
+
+        public static void Draw(SpriteBatch spriteBatch)
+        {
+            if(gridEnabled)
+            HelpLines.Draw(MainLevelBuilder.position, spriteBatch);
+
+            if (menu == MenuType.Options)
+            {
+                Options.Draw(spriteBatch);
+            }
+            else if (menu == MenuType.Selection)
+                Selection.Draw(spriteBatch);
+            else if (menu == MenuType.ValueChanging)
+                valueChanging.Draw(spriteBatch);
         }
 
         public static void ChangeMovingObject(MovingObjects input)
@@ -78,17 +95,7 @@ namespace te16mono.LevelBuilder.UI
             MainLevelBuilder.placementAllowed = true;
             LevelBuilderDummy.DummyValues();
         }
-        public static void Draw(SpriteBatch spriteBatch)
-        {
-            if (menu == MenuType.Options)
-            {
-                Options.Draw(spriteBatch);
-            }
-            else if (menu == MenuType.Selection)
-                Selection.Draw(spriteBatch);
-            else if (menu == MenuType.ValueChanging)
-                valueChanging.Draw(spriteBatch);
-        }
+        
         public static void DoneWithOptions()
         {
             menu = MenuType.Selection;
@@ -118,6 +125,16 @@ namespace te16mono.LevelBuilder.UI
             MainLevelBuilder.selectionAllowed = false;
             menu = MenuType.Options;
         }
-
+        public static void GridToggle()
+        {
+            if (gridEnabled)
+            {
+                gridEnabled = false;
+            }
+            else
+            {
+                gridEnabled = true;
+            }
+        }
     }
 }

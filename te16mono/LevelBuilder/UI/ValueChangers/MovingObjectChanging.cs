@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace te16mono.LevelBuilder.UI
 {
+    //Anton
     class MovingObjectChanging : ValueChanging
     {
         string currentMaxX, currentMinX, currentX, currentY, currentMaxSpeed;

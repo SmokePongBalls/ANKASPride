@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace te16mono.Input
 {
+    //Anton
     static class TextInput
     {
         public static string CheckForInput(KeyboardState keyboard, KeyboardState lastKeyboard)

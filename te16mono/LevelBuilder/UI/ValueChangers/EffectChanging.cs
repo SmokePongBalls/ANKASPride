@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace te16mono.LevelBuilder.UI
 {
+    //Anton
     class EffectChanging : ValueChanging
     {
         string currentWorth, currentX, currentY;

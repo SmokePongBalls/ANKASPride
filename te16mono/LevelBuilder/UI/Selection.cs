@@ -26,6 +26,7 @@ namespace te16mono.LevelBuilder.UI
             spriteBatch.Draw(Menu.Square, Menu.MenuRectangle, Color.Gray);
             DrawOptions(spriteBatch);
             DrawOption(spriteBatch);
+            DrawGridButton(spriteBatch);
 
         }
 
@@ -89,6 +90,13 @@ namespace te16mono.LevelBuilder.UI
                 return new Rectangle(1500, 1000 - 20, 300, 50);
             }
         }
+        public static Rectangle GridRectangle
+        {
+            get
+            {
+                return new Rectangle(1500, 950 - 20, 300, 50);
+            }
+        }
 
         private static void DrawOption(SpriteBatch spriteBatch)
         {
@@ -96,6 +104,20 @@ namespace te16mono.LevelBuilder.UI
             position = new Vector2(1500, 1000);
             spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.Red);
             spriteBatch.DrawString(MainLevelBuilder.spriteFont, "OPTIONS", position, Color.Black);
+        }
+        private static void DrawGridButton(SpriteBatch spriteBatch)
+        {
+            position = new Vector2(1500, 950);
+            spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.Red);
+            if (Menu.gridEnabled)
+            {
+                spriteBatch.DrawString(MainLevelBuilder.spriteFont, "HIDE GRID", position, Color.Black);
+            }
+            else
+            {
+                spriteBatch.DrawString(MainLevelBuilder.spriteFont, "SHOW GRID", position, Color.Black);
+            }
+                
         }
 
         private static void CheckMenuButtons()
@@ -108,6 +130,10 @@ namespace te16mono.LevelBuilder.UI
                 if (MainLevelBuilder.MouseHitbox.Intersects(OptionsRectangle))
                 {
                     Menu.StartOptions();
+                }
+                else if (MainLevelBuilder.MouseHitbox.Intersects(GridRectangle))
+                {
+                    Menu.GridToggle();
                 }
             }
         }
