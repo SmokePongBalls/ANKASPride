@@ -19,7 +19,7 @@ namespace te16mono
 
             Matrix screenSize = Matrix.CreateTranslation((float)screenWidth / 2, (float)screenHeight / (float)2, 1f);
 
-            Matrix screenZoom = Matrix.CreateScale(zoom, zoom, 0);
+            Matrix screenZoom = Matrix.CreateScale(2, 2, 0);
 
             return matrixPosition * screenSize * screenZoom;
         }

@@ -44,7 +44,8 @@ namespace te16mono.LevelBuilder
             hedgehog,
             square,
             frog,
-            finishFlag;
+            finishFlag,
+            test;
 
         public static void Initialize(ContentManager Content, GraphicsDevice graphicsDevice)
         {
@@ -176,10 +177,12 @@ namespace te16mono.LevelBuilder
                 selectedEffect.Draw(spriteBatch);
                 selectedMovingObject.Draw(spriteBatch);
 
+                spriteBatch.Draw(test, new Rectangle(-980, -580, 1920, 1080), Color.White);
+
                 spriteBatch.End();
                 //Allting som är en del utav UI
                 spriteBatch.Begin();
-                Menu.Draw(spriteBatch);
+                //Menu.Draw(spriteBatch);
                 spriteBatch.DrawString(spriteFont, Convert.ToString(testScroll), new Vector2(0), Color.Black);
 
                 spriteBatch.End();
@@ -206,7 +209,7 @@ namespace te16mono.LevelBuilder
         {
             get
             {
-                return new Rectangle(Convert.ToInt32( zoom * (mouse.X - 960 + position.X)), Convert.ToInt32(zoom * (mouse.Y - 540 + position.Y)), 1, 1);
+                return new Rectangle(Convert.ToInt32(mouse.X- 960 + position.X), Convert.ToInt32(mouse.Y- 540 + position.Y), 1, 1);
             }
         }
 
@@ -219,13 +222,14 @@ namespace te16mono.LevelBuilder
             square = Content.Load<Texture2D>("square");
             finishFlag = Content.Load<Texture2D>("finishFlag");
             frog = Content.Load<Texture2D>("frog");
+            test = Content.Load<Texture2D>("test");
         }
 
         public static Vector2 MousePosition
         {
             get
             {
-                return new Vector2(mouse.X - 960 + position.X, mouse.Y - 540 + position.Y);
+                return new Vector2(mouse.X  - 960 + position.X / (zoom*zoom), mouse.Y - 540 + position.Y / (zoom * zoom));
             }
         }
 
