@@ -13,19 +13,21 @@ namespace te16mono.LevelBuilder
         static MovingObjects dummyMovingObjects;
         static Block dummyBlock;
         static Point dummyEffect;
+        //Standard dummyvärdena
         public static void SetDummyValues()
         {
             dummyMovingObjects = new MovingObjectsDummy(MainLevelBuilder.bird, new Vector2(0), true, 0, 0, 0);
             dummyBlock = new BlockDummy(new Vector2(0), 0, 0, new Vector2(0), MainLevelBuilder.bird);
             dummyEffect = new EffectDummy(new Vector2(0), MainLevelBuilder.bird, 0);
         }
-
+        //Ger MainLevelBuilder objecten dummy värdena
         public static void DummyValues()
         {
             MainLevelBuilder.selectedMovingObject = DummyMovingObject;
             MainLevelBuilder.selectedBlock = DummyBlock;
             MainLevelBuilder.selectedEffect = DummyEffect;
         }
+        //Komma åt de olika dummyvärdena
         public static MovingObjects DummyMovingObject
         {
             get

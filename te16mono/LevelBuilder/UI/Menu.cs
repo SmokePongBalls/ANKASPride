@@ -22,6 +22,7 @@ namespace te16mono.LevelBuilder.UI
 
         public static void Update()
         {
+            //Kollar vilken sorts menu som är vald nu
             if (menu == MenuType.Selection)
             {
                 Selection.Update();
@@ -39,7 +40,8 @@ namespace te16mono.LevelBuilder.UI
 
         public static void Draw(SpriteBatch spriteBatch)
         {
-            if(gridEnabled)
+            // Om grid ska målas ut
+            if (gridEnabled)
             HelpLines.Draw(MainLevelBuilder.position, spriteBatch);
 
             if (menu == MenuType.Options)
@@ -52,12 +54,13 @@ namespace te16mono.LevelBuilder.UI
                 valueChanging.Draw(spriteBatch);
         }
 
+        //Initiera och byter meny till MovingObjectsChanging
         public static void ChangeMovingObject(MovingObjects input)
         {
             valueChanging = new MovingObjectChanging(input);
             menu = MenuType.ValueChanging;
         }
-
+        //Återställer till dummyvärdet och byter meny
         public static void DoneWithMovingObject()
         {
             menu = MenuType.Selection;
@@ -65,11 +68,13 @@ namespace te16mono.LevelBuilder.UI
             MainLevelBuilder.placementAllowed = true;
             LevelBuilderDummy.DummyValues();
         }
+        //Initiera och byter meny till BlockChanging
         public static void ChangeBlock(Block input)
         {
             valueChanging = new BlockChanging(input);
             menu = MenuType.ValueChanging;
         }
+        //Återställer till dummyvärdet och byter meny
         public static void DoneWithBlock()
         {
             menu = MenuType.Selection;
@@ -77,11 +82,13 @@ namespace te16mono.LevelBuilder.UI
             MainLevelBuilder.placementAllowed = true;
             LevelBuilderDummy.DummyValues();
         }
+        //Initiera och byter meny till EffectChanging
         public static void ChangeEffect(Point input)
         {
             valueChanging = new EffectChanging(input);
             menu = MenuType.ValueChanging;
         }
+        //Återställer till dummyvärdet och byter meny
         public static void DoneWithEffect()
         {
             menu = MenuType.Selection;
@@ -89,42 +96,21 @@ namespace te16mono.LevelBuilder.UI
             MainLevelBuilder.placementAllowed = true;
             LevelBuilderDummy.DummyValues();
         }
+        //Om man väljer att radera objectet
         public static void DeleteValueChanging()
         {
             menu = MenuType.Selection;
             MainLevelBuilder.placementAllowed = true;
             LevelBuilderDummy.DummyValues();
         }
-        
+        //Om man är färdig med Optionmenyn
         public static void DoneWithOptions()
         {
             menu = MenuType.Selection;
             MainLevelBuilder.placementAllowed = true;
             MainLevelBuilder.selectionAllowed = true;
         }
-
-        public static Rectangle MenuRectangle
-        { 
-            get
-            {
-                return new Rectangle(1440, 0, 480, 1080);
-            }
-        }
-
-        public static Texture2D Square
-        {
-            get
-            {
-                return square;
-            }
-        }
-
-        public static void StartOptions()
-        {
-            MainLevelBuilder.placementAllowed = false;
-            MainLevelBuilder.selectionAllowed = false;
-            menu = MenuType.Options;
-        }
+        //Togglar mellan att ha grid på och av
         public static void GridToggle()
         {
             if (gridEnabled)
@@ -136,5 +122,23 @@ namespace te16mono.LevelBuilder.UI
                 gridEnabled = true;
             }
         }
+        //Rektangeln
+        public static Rectangle MenuRectangle
+        { 
+            get
+            {
+                return new Rectangle(1440, 0, 480, 1080);
+            }
+        }
+        //Texture som används till de flesta UI klasserna
+        public static Texture2D Square
+        {
+            get
+            {
+                return square;
+            }
+        }
+
+        
     }
 }

@@ -85,7 +85,7 @@ namespace te16mono.LevelBuilder
                 //Ska endast ifall muspekaren inte är över menyn
                 if (mouse.X < 1440)
                 {
-                    //Kollar om man väljer ett objekt
+                    //Kollar om man får välja ett objekt
                     if (selectionAllowed)
                     {
                         foreach (MovingObjects movingObject in movingObjects.ToArray())
@@ -130,6 +130,7 @@ namespace te16mono.LevelBuilder
 
                 Menu.Update();
             }
+            //Om den är i sparar stadiet
             else if (state == LevelBuilderState.Saving)
             {
                 saving.Update(keyboardState, lastKeyboardState);
@@ -144,7 +145,7 @@ namespace te16mono.LevelBuilder
             //Allting som är del utav banan
             if (state == LevelBuilderState.Main)
             {
-                
+                //En spritebatch 
                 spriteBatch.Begin(SpriteSortMode.BackToFront, null, null, null, null, null, Camera.LevelBuilderPosition(position, graphicsDevice.DisplayMode.Width, graphicsDevice.DisplayMode.Height));
                 foreach (MovingObjects movingObject in movingObjects)
                 {

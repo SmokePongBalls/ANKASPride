@@ -9,6 +9,7 @@ namespace te16mono
         {
             string document = "";
             document += " <map><MovingObjects>";
+            //lägger till movingobject till stringen
             foreach (MovingObjects movingObject in MainLevelBuilder.movingObjects)
             {
                 document += "<" + movingObject.name + "><X>" + movingObject.position.X + "</X><Y>" 
@@ -16,6 +17,7 @@ namespace te16mono
                     "</MaxSpeed><MaxX>" + movingObject.maxX + "</MaxX><MinX>" + movingObject.minX + "</MinX></" + movingObject.name + ">";
             }
             document += "</MovingObjects><Blocks>";
+            //Lägger till block till stringen
             foreach (Block block in MainLevelBuilder.blocks)
             {
                 document += "<" + block.name + "><X>" + block.position.X + "</X><Y>" + block.position.Y + 
@@ -23,6 +25,7 @@ namespace te16mono
                     "</VelocityX><VelocityY>" + block.velocity.Y + "</VelocityY></" + block.name + ">";
             }
             document += "</Blocks><Effects>";
+            //Lägger till point till stringen
             foreach (Point effect in MainLevelBuilder.effects)
             {
                 document += "<" + effect.name + "><X>" + effect.position.X + "</X><Y>" + effect.position.Y + "</Y><Worth>" + effect.worth + 
@@ -30,6 +33,7 @@ namespace te16mono
             }
             document += "</Effects></map>";
 
+            //Spara stringen
             File.WriteAllText(name + ".xml", document);
         }
     }

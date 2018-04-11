@@ -21,34 +21,38 @@ namespace te16mono.LevelBuilder.UI
         {
             for (int i = 0; i < 1920; i++)
             {
-
+                //Om pixel är modul utav 50
                 if (Convert.ToInt32(position.X + i) % 50 == 0)
                 {
                     spriteBatch.Draw(Menu.Square, VerticalRectangle(i, 2), Color.Black);
                 }
+                //Om pixel är modul utav 25
                 else if (Convert.ToInt32(position.X + i) % 25 == 0)
                 {
                     spriteBatch.Draw(Menu.Square, VerticalRectangle(i, 1), Color.Black);
                 }
-
+                //Om pixel är modul utav 100
                 if (Convert.ToInt32(position.X + i) % 100 == 0)
                 {
                     spriteBatch.Draw(Menu.Square, VerticalRectangle(i, 3), Color.Black);
                 }
 
             }
+            //Går igenom varje pixel från top till botten
             for (int i = 0; i < 1080; i++)
             {
 
-
+                //Om pixel är modul utav 50
                 if (Convert.ToInt32(position.Y + i) % 50 == 0)
                 {
                     spriteBatch.Draw(Menu.Square, HorizontalRectangle(i, 2), Color.Black);
                 }
+                //Om pixel är modul utav 25
                 else if (Convert.ToInt32(position.Y + i) % 25 == 0)
                 {
                     spriteBatch.Draw(Menu.Square, HorizontalRectangle(i, 1), Color.Black);
                 }
+                //Om pixel är modul utav 100
                 if (Convert.ToInt32(position.Y + i) % 100 == 0)
                 {
                     spriteBatch.Draw(Menu.Square, HorizontalRectangle(i, 3), Color.Black);

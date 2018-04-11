@@ -17,11 +17,13 @@ namespace te16mono.LevelBuilder
         }
         public void Update(KeyboardState keyboardState, KeyboardState lastKeyboardState)
         {
+            //Om man trycker på knappen för att spara eller enter
             if (keyboardState.IsKeyDown(Keys.Enter) && lastKeyboardState.IsKeyUp(Keys.Enter) || MainLevelBuilder.MouseHitbox.Intersects(Save) && MainLevelBuilder.lastMouse.LeftButton == ButtonState.Released && MainLevelBuilder.mouse.LeftButton == ButtonState.Pressed)
             {
                 XmlSaver.Save(toSave);
                 MainLevelBuilder.state = LevelBuilderState.Main;
             }
+            //Om man trycker på back knappen
             else if (MainLevelBuilder.MouseHitbox.Intersects(Back) && MainLevelBuilder.lastMouse.LeftButton == ButtonState.Released && MainLevelBuilder.mouse.LeftButton == ButtonState.Pressed)
             {
                 MainLevelBuilder.state = LevelBuilderState.Main;
@@ -34,6 +36,7 @@ namespace te16mono.LevelBuilder
             }
             
         }
+        //Ritar ut 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(MainLevelBuilder.square, BackgroundRectangle, Color.Black);
