@@ -6,10 +6,11 @@ using Microsoft.Xna.Framework.Input;
 
 namespace te16mono.LevelBuilder.UI
 {
-    class Options
+    //Anton
+    static class Options
     {
         static List<string> options = new List<string>();
-        static bool lastUpdate;
+        public static bool lastUpdate;
         static Vector2 position;
         public static void Initialize()
         {

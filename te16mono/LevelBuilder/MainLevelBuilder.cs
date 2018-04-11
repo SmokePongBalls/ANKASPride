@@ -17,18 +17,18 @@ namespace te16mono.LevelBuilder
     {
 
         static ContentManager Content;
-        static Vector2 position;
+
         static SpriteBatch spriteBatch;
         static bool showError;
         static Saving saving;
-        static float zoom;
-        static float testScroll;
 
+        public static Vector2 position;
         public static bool placementAllowed, selectionAllowed;
         public static MouseState mouse, lastMouse;
-        public static KeyboardState keyboardState, lastKeyboardState;
+        public static KeyboardState keyboardState { get; private set; }
+        public static KeyboardState lastKeyboardState {get; private set;}
         public static SelectedObject selectedObject;
-        public static SpriteFont spriteFont;
+        public static SpriteFont spriteFont { get; private set; }
         public static LevelBuilderState state;
         public static MovingObjects selectedMovingObject;
         public static Block selectedBlock;
@@ -44,8 +44,7 @@ namespace te16mono.LevelBuilder
             hedgehog,
             square,
             frog,
-            finishFlag,
-            test;
+            finishFlag;
 
         public static void Initialize(ContentManager Content, GraphicsDevice graphicsDevice)
         {
@@ -63,7 +62,6 @@ namespace te16mono.LevelBuilder
             spriteFont = Content.Load<SpriteFont>("font");
             lastMouse = Mouse.GetState();
             lastKeyboardState = Keyboard.GetState();
-            zoom = 1;
 
             selectionAllowed = true;
             saving = new Saving();
@@ -130,14 +128,6 @@ namespace te16mono.LevelBuilder
                     //Zoomar kameran
                 }
 
-                if (keyboardState.IsKeyDown(Keys.PageDown) && lastKeyboardState.IsKeyUp(Keys.PageDown) && zoom > 0)
-                {
-                    zoom -= 0.1f;
-                }
-                else if (keyboardState.IsKeyDown(Keys.PageUp) && lastKeyboardState.IsKeyUp(Keys.PageUp) && zoom < 5)
-                {
-                    zoom += 0.1f;
-                }
                 Menu.Update();
             }
             else if (state == LevelBuilderState.Saving)
@@ -155,7 +145,7 @@ namespace te16mono.LevelBuilder
             if (state == LevelBuilderState.Main)
             {
                 
-                spriteBatch.Begin(SpriteSortMode.BackToFront, null, null, null, null, null, Camera.LevelBuilderPosition(position, zoom, graphicsDevice.DisplayMode.Width, graphicsDevice.DisplayMode.Height));
+                spriteBatch.Begin(SpriteSortMode.BackToFront, null, null, null, null, null, Camera.LevelBuilderPosition(position, graphicsDevice.DisplayMode.Width, graphicsDevice.DisplayMode.Height));
                 foreach (MovingObjects movingObject in movingObjects)
                 {
                     movingObject.Draw(spriteBatch);
@@ -177,13 +167,10 @@ namespace te16mono.LevelBuilder
                 selectedEffect.Draw(spriteBatch);
                 selectedMovingObject.Draw(spriteBatch);
 
-                spriteBatch.Draw(test, new Rectangle(-980, -580, 1920, 1080), Color.White);
-
                 spriteBatch.End();
                 //Allting som är en del utav UI
                 spriteBatch.Begin();
-                //Menu.Draw(spriteBatch);
-                spriteBatch.DrawString(spriteFont, Convert.ToString(testScroll), new Vector2(0), Color.Black);
+                Menu.Draw(spriteBatch);
 
                 spriteBatch.End();
             }
@@ -201,7 +188,7 @@ namespace te16mono.LevelBuilder
         {
             get
             {
-                return new Rectangle(mouse.X, mouse.Y + 10, 1, 1);
+                return new Rectangle(mouse.X, mouse.Y + 5, 1, 1);
             }
         }
 
@@ -209,7 +196,7 @@ namespace te16mono.LevelBuilder
         {
             get
             {
-                return new Rectangle(Convert.ToInt32(mouse.X- 960 + position.X), Convert.ToInt32(mouse.Y- 540 + position.Y), 1, 1);
+                return new Rectangle(Convert.ToInt32(mouse.X - 960 + position.X), Convert.ToInt32(mouse.Y - 540 + position.Y), 1, 1);
             }
         }
 
@@ -222,14 +209,13 @@ namespace te16mono.LevelBuilder
             square = Content.Load<Texture2D>("square");
             finishFlag = Content.Load<Texture2D>("finishFlag");
             frog = Content.Load<Texture2D>("frog");
-            test = Content.Load<Texture2D>("test");
         }
 
         public static Vector2 MousePosition
         {
             get
             {
-                return new Vector2(mouse.X  - 960 + position.X / (zoom*zoom), mouse.Y - 540 + position.Y / (zoom * zoom));
+                return new Vector2(mouse.X - 960 + position.X, mouse.Y - 540 + position.Y);
             }
         }
 
@@ -318,7 +304,6 @@ namespace te16mono.LevelBuilder
             blocks = new List<Block>();
             LevelBuilderDummy.DummyValues();
             position = new Vector2(0);
-            zoom = 1;
         }
         
     }
