@@ -109,16 +109,17 @@ namespace te16mono
 
                 lastChange = gameTime.TotalGameTime.TotalMilliseconds;
 
-                if (keyboardState.IsKeyDown(Keys.Enter))
-
-                    return meny[selected].State;
+                
 
 
 
                
 
             }
+            if (keyboardState.IsKeyDown(Keys.Enter))
 
+                return meny[selected].State;
+            else
             return defaultMenyState; 
 
         }

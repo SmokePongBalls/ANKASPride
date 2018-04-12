@@ -106,10 +106,15 @@ namespace te16mono
                         Main.RunUpdate(gameTime);// kör själva spelet 
                         break;
 
+
+
                     case Main.State.Quit:
                         this.Exit();
                         break;
-                    
+                       
+                        
+                
+
                 case Main.State.Pause:Main.PauseUpdate();
                     break;
 
