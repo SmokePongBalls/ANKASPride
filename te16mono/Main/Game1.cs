@@ -52,7 +52,7 @@ namespace te16mono
             Main.currentState = Main.State.Meny;
             Main.Initialize(Content);
             MainLevelBuilder.Initialize(Content, GraphicsDevice);
-            gameSection = GameSection.LevelBuilding;
+            gameSection = GameSection.CoreGame;
 
             IsMouseVisible = true;
 
@@ -135,7 +135,7 @@ namespace te16mono
 
 
                     default:
-                        Main.MenyUpdate();
+                        Main.MenyUpdate(gameTime);
                         if (Main.currentState == Main.State.Run)
                             Main.LoadMap();
                         break;

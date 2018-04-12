@@ -13,7 +13,6 @@ namespace te16mono
     {
 
 
-
         public enum State { Meny, Quit, Run, Finish ,Pause, GameOver };
 
 
@@ -21,8 +20,6 @@ namespace te16mono
 
         public static int map;
 
-        static Texture2D menySprite;
-        static Vector2 menyPos;
         static SpriteBatch spriteBatch;
         public static Player player;
         static SpriteFont font, pointFont;
@@ -35,6 +32,13 @@ namespace te16mono
         public static List<Point> effects;
         //TestKatten
         public static List<MovingObjects> testObjects;
+
+
+
+
+        static Menyer meny;
+
+
 
         static public void Initialize(ContentManager content)
         {
@@ -52,16 +56,16 @@ namespace te16mono
             player.right = Keys.D;
             map = 1;
         }
+
         public static void LoadContent(GraphicsDevice graphicsDevice , GameWindow window)
         {       
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(graphicsDevice);
 
-
-            // Läger till meny bilden  och bestämmer storleken och positionen
-            menySprite = Content.Load<Texture2D>("meny");           
-            menyPos.X = window.ClientBounds.Width / 2 - menySprite.Width / 2;
-            menyPos.Y = window.ClientBounds.Width / 2 - menySprite.Width / 2;
+            meny = new Menyer((int)State.Meny);
+            meny.AddItem(Content.Load<Texture2D>("Start"),(int)State.Run);
+            meny.AddItem(Content.Load<Texture2D>("Quit"),(int)State.Quit );
+            
 
             font = Content.Load<SpriteFont>("Font");
             pointFont = Content.Load<SpriteFont>("pointFont");
@@ -73,25 +77,19 @@ namespace te16mono
 
      
 
-        public static State MenyUpdate()
+        public static State MenyUpdate(GameTime gameTime)
         {
-            KeyboardState keyboardState = Keyboard.GetState();
-            if (keyboardState.IsKeyDown(Keys.S))
-                currentState = State.Run;
 
-            if (keyboardState.IsKeyDown(Keys.Q))  //
-                currentState = State.Quit;
 
-            return State.Meny; // Stannar kvar i menyn 
+            return (State)meny.Update(gameTime);
 
         }
 
         public static void MenyDraw()
         {
 
-            spriteBatch.Begin();
-            spriteBatch.Draw(menySprite,menyPos,Color.White);
-            spriteBatch.End();
+            meny.Draw(spriteBatch);
+
 
         }
 
@@ -255,7 +253,7 @@ namespace te16mono
         {
 
             spriteBatch.Begin();
-            spriteBatch.Draw(menySprite, menyPos, Color.White);
+            
             spriteBatch.End();
 
 
