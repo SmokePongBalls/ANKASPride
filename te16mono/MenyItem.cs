@@ -28,7 +28,7 @@ namespace te16mono
             this.currentState = currentState;
 
 
-
+            
         }
 
         public Texture2D Texture { get { return texture; } }
