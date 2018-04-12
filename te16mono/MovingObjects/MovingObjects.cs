@@ -14,6 +14,7 @@ namespace te16mono
 
     public abstract class MovingObjects
     {
+
         public string name;
         protected Random rng;
         protected float acceleration = (float)0.5;
@@ -24,6 +25,7 @@ namespace te16mono
         public float maxSpeed;
         public float maxX, minX;
         public int health;
+        
         protected Texture2D texture;
         public Vector2 velocity, position;
 

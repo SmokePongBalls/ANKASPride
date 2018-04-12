@@ -35,17 +35,13 @@ namespace te16mono
             Content.RootDirectory = "Content";
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
         protected override void Initialize()
         {
-            //Fullscreen --
+            //Fullscreen Hugo F --
+            //Gör så att spelet fyller hela skärmen.
             graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
             graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
+            //Är false för att spelet buggar lite om man tabbar ur det när det är fullscreen. måste fixas. (kanske om man gör en "if-sats" som kollar om "alt" och "tab" trycks samtidigt. Då så går det ur fullscreen?) Hugo F
             graphics.IsFullScreen = false;
             graphics.ApplyChanges();
             //--
@@ -69,9 +65,6 @@ namespace te16mono
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Main.LoadContent(GraphicsDevice, Window);
 
-            
-
-            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -105,7 +98,7 @@ namespace te16mono
 
 
             // TODO: Add your update logic here
-
+            
 
             if (gameSection == GameSection.CoreGame)
             {

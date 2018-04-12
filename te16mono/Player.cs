@@ -9,13 +9,17 @@ namespace te16mono
 
     public class Player : MovingObjects
     {
-        //Ha kvar "points" ifall vi använder det senare.
+        
         public int points;
         public int maxHealth = 10;
+        public int immortalityTime = 5000;
         private Oriantation lastTouchedSurface;
         private bool holdingJump = true;
+        public bool underEffect;
+        public bool canBeDamaged = true;
         private int shootCooldown;
-
+        public string effect;
+        
         //kontroller
         public Keys up, down, left, right;
         KeyboardState pressedKeys;
@@ -33,6 +37,7 @@ namespace te16mono
             holdingJump = false;
             shootCooldown = 0;
             rng = new Random(seed);
+
             //Initiera värden
         }
 
@@ -50,6 +55,7 @@ namespace te16mono
                 velocity.Y += acceleration;
             if (pressedKeys.IsKeyDown(right))
                 velocity.X += acceleration;
+
             if (Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Space))
             {
                 if (canJump == true && holdingJump == false)
@@ -64,7 +70,27 @@ namespace te16mono
                 holdingJump = false;
             }
 
+            //kollar om player är under någon effect Hugo F
+            if(underEffect == true)
+            {
+                //kollar om player är under specifikt "Immortality" effekten
+                if(effect == "Immortality")
+                {
+                    //player kan inte bli skadade om detta är false
+                    canBeDamaged = false;
 
+                    //ser till så att man är odödlig under en specifik tid och inte längre
+                    immortalityTime -= gameTime.ElapsedGameTime.Milliseconds;
+                    if (immortalityTime <= 0)
+                    {
+                        underEffect = false;
+                        canBeDamaged = false;
+                        immortalityTime = 5000;
+                    }
+
+                }
+
+            }
 
             //<summary>De som kollar ifall man trycker på skjutknapparna</summary>
             if (Keyboard.GetState().IsKeyDown(Keys.Left) && shootCooldown <= 0)
@@ -90,7 +116,7 @@ namespace te16mono
             else
                 shootCooldown -= gameTime.ElapsedGameTime.Milliseconds;
 
-
+            //startar om din position till 0
             if (Keyboard.GetState().IsKeyDown(Keys.R))
             {
                 position = new Vector2(0);
@@ -109,7 +135,7 @@ namespace te16mono
                 Oriantation oriantation = CheckCollision(collided);
 
                 //Om objektet har en damage
-                if (damage > 0)
+                if (damage > 0 && canBeDamaged == true)
                 {
                     if (oriantation == Oriantation.Up && collidedCanStandOn)
                     {

@@ -41,7 +41,9 @@
     <Compile Include="Blocks\BlockDummy.cs" />
     <Compile Include="Effects\EffectDummy.cs" />
     <Compile Include="Effects\FinishLine.cs" />
+    <Compile Include="Effects\Immortality.cs" />
     <Compile Include="Effects\Point.cs" />
+    <Compile Include="Effects\Health.cs" />
     <Compile Include="Input\TextInput.cs" />
     <Compile Include="LevelBuilder\LevelBuilderDummy.cs" />
     <Compile Include="LevelBuilder\MainLevelBuilder.cs" />

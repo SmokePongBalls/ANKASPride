@@ -63,6 +63,7 @@ namespace te16mono
             menyPos.X = window.ClientBounds.Width / 2 - menySprite.Width / 2;
             menyPos.Y = window.ClientBounds.Width / 2 - menySprite.Width / 2;
 
+            //Hugo F
             font = Content.Load<SpriteFont>("Font");
             pointFont = Content.Load<SpriteFont>("pointFont");
 
@@ -289,6 +290,7 @@ namespace te16mono
 
             //Här ska alla saker som stannar i skärmen vara
             // (UI)
+            //Hugo F
             spriteBatch.Begin();
             spriteBatch.DrawString(font, "Health: " + player.health + " Time: " + gameTime.TotalGameTime.Minutes + ":" +  gameTime.TotalGameTime.Seconds + ":" + gameTime.TotalGameTime.Milliseconds, Vector2.Zero, Color.White);
             spriteBatch.End();
