@@ -71,7 +71,7 @@ namespace te16mono
             pointFont = Content.Load<SpriteFont>("pointFont");
 
 
-            music = Content.Load<Song>("megaman2");
+            //music = Content.Load<Song>("megaman2");
             //MediaPlayer.Play(music);
         }
 

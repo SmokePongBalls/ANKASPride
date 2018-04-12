@@ -135,7 +135,7 @@ namespace te16mono
 
 
                     default:
-                        Main.MenyUpdate(gameTime);
+                        Main.currentState = Main.MenyUpdate(gameTime);
                         if (Main.currentState == Main.State.Run)
                             Main.LoadMap();
                         break;
