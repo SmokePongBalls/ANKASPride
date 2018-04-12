@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Input;
 
 namespace te16mono.LevelBuilder.ObjectEditing
 {
-    //Anton
     static class ObjectPlacing
     {
         public static void Create()

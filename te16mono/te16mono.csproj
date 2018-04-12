@@ -50,7 +50,6 @@
     <Compile Include="LevelBuilder\ObjectEditing\ObjectPlacing.cs" />
     <Compile Include="LevelBuilder\Saving.cs" />
     <Compile Include="LevelBuilder\UI\enums.cs" />
-    <Compile Include="LevelBuilder\UI\HelpLines.cs" />
     <Compile Include="LevelBuilder\UI\Menu.cs" />
     <Compile Include="LevelBuilder\UI\Options.cs" />
     <Compile Include="LevelBuilder\UI\ValueChangers\BlockChanging.cs" />
@@ -89,9 +88,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Icon.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Icon.ico" />
     <Content Include="WorldLoading\3.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

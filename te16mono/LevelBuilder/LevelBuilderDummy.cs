@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace te16mono.LevelBuilder
 {
-    //Anton
     public static class LevelBuilderDummy
     {
         static MovingObjects dummyMovingObjects;

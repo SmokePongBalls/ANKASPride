@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 namespace te16mono
 {
 
-    // Klass för att spara olika meny Val 
+    // Klass för att spara olika meny Val   Filip
 
     class MenyItem
     {
@@ -38,7 +39,7 @@ namespace te16mono
     }
 
 
-     class Sak
+     class Menyer
      {
 
         List<MenyItem> meny; // Lista på meny items 
@@ -50,9 +51,10 @@ namespace te16mono
 
         int defaultMenyState;
 
-        public void Menu (int defaultMenystate) // konstruktor som skapar en listan med menyvalen 
+        public  Menyer (int defaultMenystate) // konstruktor som skapar en listan med menyvalen 
         {
-
+            meny = new List<MenyItem>();
+            this.defaultMenyState = defaultMenystate;
 
 
         }
@@ -60,6 +62,17 @@ namespace te16mono
         public void AddItem(Texture2D itemTexture, int State) // lägger till meny valen i listan 
         {
 
+            // sätter höjden på föremplerna (item)
+            float X = 0;
+            float Y = 0 + currentheight;
+
+            // ändrar valets höjd + 20 pixlar för lite extra mellan rum ;)
+
+            currentheight += itemTexture.Height + 20;
+
+            MenyItem temp = new MenyItem(itemTexture, new Vector2(X, Y), State);
+
+            meny.Add(temp);
 
 
         }
@@ -68,9 +81,69 @@ namespace te16mono
         public int Update(GameTime gameTime) // fortsätt här 
         {
 
-            return 1;
+            KeyboardState keyboardState = Keyboard.GetState();
+
+            if (lastChange+130<gameTime.TotalGameTime.TotalMilliseconds)
+            {
+
+                if (keyboardState.IsKeyDown(Keys.Down))
+                {
+
+                    selected++;
+
+                    if (selected > meny.Count - 1)
+                        selected = 0;
+
+                }
+
+                if (keyboardState.IsKeyDown(Keys.Up))
+                {
+                    selected--;
+
+                    if (selected < 0)
+                        selected = meny.Count - 1; 
+                
+
+
+                }
+
+                lastChange = gameTime.TotalGameTime.TotalMilliseconds;
+
+                if (keyboardState.IsKeyDown(Keys.Enter))
+
+                    return meny[selected].State;
+
+
+
+               
+
+            }
+
+            return defaultMenyState; 
 
         }
+
+
+        public void Draw(SpriteBatch spritebatch)
+        { 
+            spritebatch.Begin();
+
+            for( int i = 0; i< meny.Count;i++)
+            {
+
+                if (i == selected)
+                    spritebatch.Draw(meny[i].Texture, meny[i].Position, Color.RosyBrown);
+
+                else
+                    spritebatch.Draw(meny[i].Texture, meny[i].Position, Color.White);
+
+
+            };
+
+            spritebatch.End();
+        }
+
+
 
 
      }

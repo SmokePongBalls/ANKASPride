@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace te16mono.WorldLoading
 {
-    //Filip
     class MenyItems
     {
     }

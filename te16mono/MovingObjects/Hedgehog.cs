@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace te16mono
 {
-    //Anton
     class Hedgehog : Katt
     {
         public Hedgehog(Texture2D texture, Vector2 position, bool walkLeft, float maxSpeed, float maxX, float minX) : base(texture, position, walkLeft, maxSpeed, maxX, minX)

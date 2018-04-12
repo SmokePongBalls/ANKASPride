@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace te16mono.Input
 {
-    //Anton
     static class TextInput
     {
         public static string CheckForInput(KeyboardState keyboard, KeyboardState lastKeyboard)
@@ -192,22 +191,6 @@ namespace te16mono.Input
                 return "-";
             }
             return "";
-        }
-
-        public static string CheckForBackSpace(string input, KeyboardState keyboardState, KeyboardState lastKeyboardState)
-        {
-            if (input.Length > 0 && keyboardState.IsKeyDown(Keys.Back) && lastKeyboardState.IsKeyDown(Keys.Back) == false)
-            {
-                if (keyboardState.IsKeyDown(Keys.LeftControl) || keyboardState.IsKeyDown(Keys.RightControl))
-                {
-                    return "";
-                }
-                else
-                {
-                    return input.Remove(input.Length - 1);
-                }
-            }
-            return input;
         }
     }
 }

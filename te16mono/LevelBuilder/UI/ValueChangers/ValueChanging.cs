@@ -6,7 +6,6 @@ using te16mono.Input;
 
 namespace te16mono.LevelBuilder.UI
 {
-    //Anton
     abstract class ValueChanging
     {
         protected List<string> options;
@@ -91,17 +90,16 @@ namespace te16mono.LevelBuilder.UI
         {
             KeyboardState keyboardState = MainLevelBuilder.keyboardState;
             KeyboardState lastKeyboardState = MainLevelBuilder.lastKeyboardState;
-            editString = TextInput.CheckForBackSpace(editString, keyboardState, lastKeyboardState);
 
-            if (keyboardState.IsKeyDown(Keys.Enter))
+            if (editString.Length > 0 && keyboardState.IsKeyDown(Keys.Back) && lastKeyboardState.IsKeyDown(Keys.Back) == false)
+            {
+                editString = editString.Remove(editString.Length - 1);
+            }
+            else if (keyboardState.IsKeyDown(Keys.Enter))
             {
                 isEditing = false;
             }
-            else
-            {
-                editString += TextInput.CheckNumbers(keyboardState, lastKeyboardState);
-            }
-            
+            editString += TextInput.CheckNumbers(keyboardState, lastKeyboardState);
         }
 
         public static Rectangle ExitRectangle
