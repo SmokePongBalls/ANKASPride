@@ -63,6 +63,16 @@ namespace te16mono
            
                 if (Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Space))
                 {
+
+                if(isWhammy)
+                {
+                    if (holdingJump == false)
+                    {
+                        whammy--;
+                    }
+                    holdingJump = true;                 
+                }
+                else
                 if (canJump == true && holdingJump == false)
                     if (holdingJump == false)
                     {
@@ -100,7 +110,14 @@ namespace te16mono
 
                 if (effect == "Whammy")
                 {
-                    isWhammy = true;
+                    if (whammy <= 0)
+                    {
+                        isWhammy = false;
+                        underEffect = false;
+                        whammy = 10;
+                    }
+                    else
+                        isWhammy = true;
 
                 }
 
