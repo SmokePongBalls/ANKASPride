@@ -13,11 +13,14 @@ namespace te16mono
         public int points;
         public int maxHealth = 10;
         public int immortalityTime = 5000;
+        private int shootCooldown;
+        private int whammy = 5;
         private Oriantation lastTouchedSurface;
         private bool holdingJump = true;
         public bool underEffect;
         public bool canBeDamaged = true;
-        private int shootCooldown;
+        public bool isWhammy = false;
+       
         public string effect;
         
         //kontroller
@@ -56,21 +59,25 @@ namespace te16mono
             if (pressedKeys.IsKeyDown(right))
                 velocity.X += acceleration;
 
-            if (Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Space))
-            {
-                if (canJump == true && holdingJump == false)
+            //Om man har fått whammy efekten på sig så blir caJump false och då går det icke att hoppa. Hugo F = just den if-satsen 
+           
+                if (Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Space))
                 {
-                    velocity.Y -= 30;
-                    canJump = false;
+                if (canJump == true && holdingJump == false)
+                    if (holdingJump == false)
+                    {
+                        velocity.Y -= 30;
+                        canJump = false;
+                    }
+                    holdingJump = true;
                 }
-                holdingJump = true;
-            }
-            else
-            {
-                holdingJump = false;
-            }
-
-            //kollar om player är under någon effect Hugo F
+                else
+                {
+                    holdingJump = false;
+                }
+            
+          
+            //kollar om player är under någon effect. Det är vad boolen är till för Hugo F
             if(underEffect == true)
             {
                 //kollar om player är under specifikt "Immortality" effekten
@@ -83,10 +90,17 @@ namespace te16mono
                     immortalityTime -= gameTime.ElapsedGameTime.Milliseconds;
                     if (immortalityTime <= 0)
                     {
+                        //sätter tillbaka så att player inte är under effect och kan bli skadad
                         underEffect = false;
-                        canBeDamaged = false;
+                        canBeDamaged = true;
                         immortalityTime = 5000;
                     }
+
+                }
+
+                if (effect == "Whammy")
+                {
+                    isWhammy = true;
 
                 }
 
@@ -126,6 +140,27 @@ namespace te16mono
 
         }
 
+        public override void ProjectileIntersect(Rectangle collided, int damage)
+        {
+            //overridear projectile intersect för player så att Immortality effecten kan användas. Hugo F
+            if (canBeDamaged)
+            {
+                if (Hitbox.Intersects(new Rectangle(collided.X - collided.Width, collided.Y, collided.Width, collided.Height)))
+                    velocity.X += 20 * damage;
+                //Om den är till höger
+                if (Hitbox.Intersects(new Rectangle(collided.X + collided.Width, collided.Y, collided.Width, collided.Height)))
+                    velocity.X -= 20 * damage;
+                //Om den är över
+                if (Hitbox.Intersects(new Rectangle(collided.X, collided.Y - collided.Height, collided.Width, collided.Height)))
+                    velocity.Y += 20 * damage;
+                //Om den är under
+                if (Hitbox.Intersects(new Rectangle(collided.X, collided.Y + collided.Height, collided.Width, collided.Height)))
+                    velocity.Y -= 20 * damage;
+
+                health -= damage;
+            }
+        }
+
         public override void Intersect(Rectangle collided,  Vector2 collidedVelocity, int damage, bool collidedCanStandOn)
         {
             //Ser till så att den inte krockat med sig själv
@@ -135,7 +170,7 @@ namespace te16mono
                 Oriantation oriantation = CheckCollision(collided);
 
                 //Om objektet har en damage
-                if (damage > 0 && canBeDamaged == true)
+                if (damage > 0 && canBeDamaged)
                 {
                     if (oriantation == Oriantation.Up && collidedCanStandOn)
                     {

@@ -186,7 +186,7 @@ namespace te16mono
             {
                 if (child.Name == "Health")
                 {
-                    int worth = 0;
+                    int worth = 1;
                     string texture = "pear";
                     float X = 0, Y = 0;
                     foreach (XmlNode childNode in child.ChildNodes)
@@ -201,13 +201,61 @@ namespace te16mono
                             Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
                     }
 
+
                     
-                    //Main.effects.Add(new Health(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
+                    Main.effects.Add(new Health(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
 
                 }
-                    if (child.Name == "Point")
+
+                if (child.Name == "Immortality")
                 {
-                    int worth = 0;
+                    int worth = 1;
+                    string texture = "shield";
+                    float X = 0, Y = 0;
+                    foreach (XmlNode childNode in child.ChildNodes)
+                    {
+                        if (childNode.Name == "Worth")
+                            worth = Convert.ToInt32(childNode.InnerXml);
+                        else if (childNode.Name == "Texture")
+                            texture = childNode.InnerXml;
+                        else if (childNode.Name == "X")
+                            X = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                        else if (childNode.Name == "Y")
+                            Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                    }
+
+
+
+                    Main.effects.Add(new Immortality(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
+
+                }
+
+                if (child.Name == "Whammy")
+                {
+                    int worth = 1;
+                    string texture = "iceblock";
+                    float X = 0, Y = 0;
+                    foreach (XmlNode childNode in child.ChildNodes)
+                    {
+                        if (childNode.Name == "Worth")
+                            worth = Convert.ToInt32(childNode.InnerXml);
+                        else if (childNode.Name == "Texture")
+                            texture = childNode.InnerXml;
+                        else if (childNode.Name == "X")
+                            X = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                        else if (childNode.Name == "Y")
+                            Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                    }
+
+
+
+                    Main.effects.Add(new Whammy(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
+
+                }
+
+                if (child.Name == "Point")
+                {
+                    int worth = 100;
                     string texture = "goldbag";
                     float X = 0, Y = 0;
                     foreach (XmlNode childNode in child.ChildNodes)

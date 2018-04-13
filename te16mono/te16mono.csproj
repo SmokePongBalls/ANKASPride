@@ -44,6 +44,7 @@
     <Compile Include="Effects\Immortality.cs" />
     <Compile Include="Effects\Point.cs" />
     <Compile Include="Effects\Health.cs" />
+    <Compile Include="Effects\Whammy.cs" />
     <Compile Include="Input\TextInput.cs" />
     <Compile Include="LevelBuilder\LevelBuilderDummy.cs" />
     <Compile Include="LevelBuilder\MainLevelBuilder.cs" />
