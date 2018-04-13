@@ -14,7 +14,7 @@ namespace te16mono
         public int maxHealth = 10;
         public int immortalityTime = 5000;
         private int shootCooldown;
-        private int whammy = 5;
+        private int whammy = 10;
         private Oriantation lastTouchedSurface;
         private bool holdingJump = true;
         public bool underEffect;

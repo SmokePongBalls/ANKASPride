@@ -253,6 +253,29 @@ namespace te16mono
 
                 }
 
+                if (child.Name == "HighGravity")
+                {
+                    int worth = 1;
+                    string texture = "weight";
+                    float X = 0, Y = 0;
+                    foreach (XmlNode childNode in child.ChildNodes)
+                    {
+                        if (childNode.Name == "Worth")
+                            worth = Convert.ToInt32(childNode.InnerXml);
+                        else if (childNode.Name == "Texture")
+                            texture = childNode.InnerXml;
+                        else if (childNode.Name == "X")
+                            X = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                        else if (childNode.Name == "Y")
+                            Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                    }
+
+
+
+                    Main.effects.Add(new HighGravity(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
+
+                }
+
                 if (child.Name == "Point")
                 {
                     int worth = 100;

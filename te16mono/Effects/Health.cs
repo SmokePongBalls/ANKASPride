@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace te16mono
@@ -23,7 +18,7 @@ namespace te16mono
             if (player.health < player.maxHealth)
                 //"worth" är då en int som används för alla objekten i XmlLoader. Just för health så används det för att öka player health med det värde worth har.
                 player.health += worth;
-            //ser till så att players "health" blir faktist ändrad. Den skickar tillbaka "player" och dess värden
+            //ser till så att players "health" blir faktist ändrad. Den skickar tillbaka "player" och dess värden och dess värden som är ändrade
             return player;
         }
     }
