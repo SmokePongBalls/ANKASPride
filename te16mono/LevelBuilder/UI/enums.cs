@@ -1,6 +1,4 @@
-﻿
-
-namespace te16mono.LevelBuilder.UI
+﻿namespace te16mono.LevelBuilder.UI
 {
     //Anton
     public enum SelectedObject
