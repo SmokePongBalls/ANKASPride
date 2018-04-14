@@ -9,7 +9,7 @@ namespace te16mono.LevelBuilder
     //Anton
     class Saving
     {
-        string toSave;
+        string toSave; //Stringen som bestämmer vilket namn filen kommer ha
 
         public Saving()
         {
@@ -18,17 +18,18 @@ namespace te16mono.LevelBuilder
         public void Update(KeyboardState keyboardState, KeyboardState lastKeyboardState)
         {
             //Om man trycker på knappen för att spara eller enter
-            if (keyboardState.IsKeyDown(Keys.Enter) && lastKeyboardState.IsKeyUp(Keys.Enter) || MainLevelBuilder.MouseHitbox.Intersects(Save) && MainLevelBuilder.lastMouse.LeftButton == ButtonState.Released && MainLevelBuilder.mouse.LeftButton == ButtonState.Pressed)
+            if (keyboardState.IsKeyDown(Keys.Enter) && lastKeyboardState.IsKeyUp(Keys.Enter) || MainLevelBuilder.MouseHitbox.Intersects(Save) && MainLevelBuilder.LeftClick())
             {
                 XmlSaver.Save(toSave);
                 MainLevelBuilder.state = LevelBuilderState.Main;
             }
             //Om man trycker på back knappen
-            else if (MainLevelBuilder.MouseHitbox.Intersects(Back) && MainLevelBuilder.lastMouse.LeftButton == ButtonState.Released && MainLevelBuilder.mouse.LeftButton == ButtonState.Pressed)
+            else if (MainLevelBuilder.MouseHitbox.Intersects(Back) && MainLevelBuilder.LeftClick())
             {
                 MainLevelBuilder.state = LevelBuilderState.Main;
                 Options.lastUpdate = false;
             }
+            //Annars ska det kolla ifall användaren försöker skriva något
             else
             {
                 toSave = TextInput.CheckForBackSpace(toSave, keyboardState, lastKeyboardState);
@@ -36,7 +37,7 @@ namespace te16mono.LevelBuilder
             }
             
         }
-        //Ritar ut 
+        //Ritar ut allt som behöver synas
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(MainLevelBuilder.square, BackgroundRectangle, Color.Black);
@@ -48,6 +49,7 @@ namespace te16mono.LevelBuilder
             spriteBatch.DrawString(MainLevelBuilder.spriteFont, "Save", new Vector2(1010, 350), Color.Black);
         }
 
+        //Rektanglarna som används
         static Rectangle ExitRectangle
         {
             get

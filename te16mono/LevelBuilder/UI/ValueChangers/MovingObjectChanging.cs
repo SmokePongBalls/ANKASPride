@@ -10,9 +10,10 @@ namespace te16mono.LevelBuilder.UI
     class MovingObjectChanging : ValueChanging
     {
         string currentMaxX, currentMinX, currentX, currentY, currentMaxSpeed;
-
+        //Konstruktorn
         public MovingObjectChanging(MovingObjects input)
         {
+            //Alla de olika sakerna man kan redigera
             options = new List<string>();
             options.Add("X");
             options.Add("Y");
@@ -26,12 +27,12 @@ namespace te16mono.LevelBuilder.UI
             currentX = Convert.ToString(input.position.X);
             currentY = Convert.ToString(input.position.Y);
         }
-
         //Målar ut alla de olika värdena
         protected override void DrawValues(SpriteBatch spriteBatch)
         {
+            //Sätter positionen
             position = new Vector2(1500, 140);
-
+            //Om man redigerar textboxen så byts färg och "|" är tilllagt i slutet
             if (editing != Editing.X)
             {
                 spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.White);
@@ -94,16 +95,16 @@ namespace te16mono.LevelBuilder.UI
             }
 
         }
-
-        //Kollar ifall den klickar på någon utav hitboxarna
+        //Kollar ifall användaren klickar på någon utav hitboxarna
         protected override bool CheckHitbox()
         {
             MouseState mouse = MainLevelBuilder.mouse;
-
-            if (mouse.LeftButton == ButtonState.Pressed)
+            //Körs endast om man trycker ner vänstermusknapp
+            if (MainLevelBuilder.LeftClick())
             {
+                //Sätter rätt position
                 position = new Vector2(1500, 100);
-
+                //Returnerar true ifall och byter state ifall användaren trycker på någon utav rektanglarna
                 if (BigSelectionRectangle.Intersects(MainLevelBuilder.MouseHitbox))
                 {
                     editing = Editing.X;
@@ -139,30 +140,28 @@ namespace te16mono.LevelBuilder.UI
                     return true;
                 }
             }
+            //Returnerar false om ingen var tryckt
             return false;
         }
-
-
         //Sparar värdena
         protected override void SetValues()
         {
+            //Gör ett temp movingobject för att ändra värdena på
             MovingObjects movingObject = MainLevelBuilder.selectedMovingObject;
-
             movingObject.maxX = (float)Convert.ToDouble(currentMaxX);
             movingObject.minX = (float)Convert.ToDouble(currentMinX);
             movingObject.position.X = (float)Convert.ToDouble(currentX);
             movingObject.position.Y = (float)Convert.ToDouble(currentY);
             movingObject.maxSpeed = (float)Convert.ToDouble(currentMaxSpeed);
-
             MainLevelBuilder.selectedMovingObject = movingObject;
         }
-
         //Kollar ifall man trycker på exit
         protected override void CheckForExit()
         {
-            if (MainLevelBuilder.mouse.LeftButton == ButtonState.Pressed && MainLevelBuilder.MouseHitbox.Intersects(ExitRectangle))
+            if (MainLevelBuilder.LeftClick() && MainLevelBuilder.MouseHitbox.Intersects(ExitRectangle))
                 Menu.DoneWithMovingObject();
         }
+        //Ändrar värdet på den sak som editas
         protected override void SetEdit()
         {
             if (editing == Editing.MaxSpeed)

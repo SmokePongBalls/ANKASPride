@@ -7,7 +7,7 @@ using System.Globalization;
 
 namespace te16mono
 {
-    //Anton
+    //Anton, Hugo F
     static class XmlLoader
     {
         public static void LoadMap(ContentManager Content, string mapName)
@@ -32,6 +32,7 @@ namespace te16mono
                 }
             }
         }
+        //Går igenom hela movingobject elementet
         static void LoadMovingObjects(ContentManager Content, XmlNode node)
         {
             foreach (XmlNode child in node.ChildNodes)
@@ -39,280 +40,349 @@ namespace te16mono
                 //Om det är en igelkott
                 if (child.Name == "Hedgehog")
                 {
-                    //Standardvärden ifall något går fel
-                    string texture = "hedgehog";
-                    float X = 0, Y = 0, maxSpeed = 0, minX = 0, maxX = 0;
-                    bool walkLeft = true;
-                    foreach (XmlNode childNode in child.ChildNodes)
-                    {
-                        if (childNode.Name == "Texture")
-                            texture = childNode.InnerXml;
-                        else if (childNode.Name == "X")
-                            X = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "Y")
-                            Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "MaxSpeed")
-                            maxSpeed = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "MaxX")
-                            maxX = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "MinX")
-                            minX = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "WalkLeft")
-                            walkLeft = bool.Parse(childNode.InnerXml);
-                    }
-
-                    Main.testObjects.Add(new Hedgehog(Content.Load<Texture2D>(texture), new Vector2(X, Y), walkLeft, maxSpeed, maxX, minX));
+                    AddHedgehog(Content, child);
                 }
                 //Om det är en fågel
                 if (child.Name == "Bird")
                 {
-                    //Standardvärden ifall något går fel
-                    string texture = "bird";
-                    float X = 500, Y = 0, maxSpeed = 0, maxX = 0, minX = 0;
-                    bool walkLeft = true;
-                    foreach (XmlNode childNode in child.ChildNodes)
-                    {
-                        if (childNode.Name == "Texture")
-                            texture = childNode.InnerXml;
-                        else if (childNode.Name == "X")
-                            X = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "Y")
-                            Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "MaxSpeed")
-                            maxSpeed = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "MaxX")
-                            maxX = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "MinX")
-                            minX = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "WalkLeft")
-                            walkLeft = bool.Parse(childNode.InnerXml);
-                    }
-
-                    Main.testObjects.Add(new Bird(Content.Load<Texture2D>(texture), new Vector2(X, Y), walkLeft, maxSpeed, maxX, minX));
+                    AddBird(Content, child);
                 }
                 //Ifall det är en groda
                 if (child.Name == "Frog")
                 {
-                    //Standardvärden ifall något går fel
-                    string texture = "frog";
-                    float X = 0, Y = 0, maxSpeed = 0, maxX = 0, minX = 0;
-                    bool walkLeft = true;
-                    foreach (XmlNode childNode in child.ChildNodes)
-                    {
-                        if (childNode.Name == "Texture")
-                            texture = childNode.InnerXml;
-                        else if (childNode.Name == "X")
-                            X = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "Y")
-                            Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "MaxSpeed")
-                            maxSpeed = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "MaxX")
-                            maxX = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "MinX")
-                            minX = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "WalkLeft")
-                            walkLeft = bool.Parse(childNode.InnerXml);
-                    }
-
-                    Main.testObjects.Add(new Frog(Content.Load<Texture2D>(texture), new Vector2(X, Y), walkLeft, maxSpeed, maxX, minX));
+                    AddFrog(Content, child);
                 }
                 //Ifall det är en groda
                 if (child.Name == "Katt")
                 {
-                    //Standardvärden ifall något går fel
-                    string texture = "katt";
-                    float X = 0, Y = 0, maxSpeed = 0, maxX = 0, minX = 0;
-                    bool walkLeft = true;
-                    foreach (XmlNode childNode in child.ChildNodes)
-                    {
-                        if (childNode.Name == "Texture")
-                            texture = childNode.InnerXml;
-                        else if (childNode.Name == "X")
-                            X = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "Y")
-                            Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "MaxSpeed")
-                            maxSpeed = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "MaxX")
-                            maxX = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "MinX")
-                            minX = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "WalkLeft")
-                            walkLeft = bool.Parse(childNode.InnerXml);
-                    }
-
-                    Main.testObjects.Add(new Katt(Content.Load<Texture2D>(texture), new Vector2(X, Y), walkLeft, maxSpeed, maxX, minX));
+                    AddKatt(Content, child);
                 }
             }
         }
-
+        //Går igenom hela blocks elementet
         static void LoadBlocks(ContentManager Content, XmlNode node)
         {
             foreach (XmlNode child in node.ChildNodes)
             {
-                //Om det är ett vanligt block
                 if (child.Name == "Block")
                 {
-                    string texture = "square";
-                    float X = 0, Y = 0, velocityY = 0, velocityX = 0;
-                    int width = 0, height = 0;
-                    foreach (XmlNode childNode in child.ChildNodes)
-                    {
-                        if (childNode.Name == "Texture")
-                            texture = childNode.InnerXml;
-                        else if (childNode.Name == "X")
-                            X = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "Y")
-                            Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "VelocityX")
-                            velocityX = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "VelocityY")
-                            velocityY = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "Width")
-                            width = Convert.ToInt32(childNode.InnerXml);
-                        else if (childNode.Name == "Height")
-                            height = Convert.ToInt32(childNode.InnerXml);
-
-                    }
-                    Main.testBlocks.Add(new Block(new Vector2(X, Y), width, height, new Vector2(velocityX, velocityY), Content.Load<Texture2D>(texture)));
+                    AddBlock(Content, child);
                 }
             }
         }
-
+        //Går igenom hela point elementet
         static void LoadPoints(ContentManager Content, XmlNode node)
         {
             foreach (XmlNode child in node.ChildNodes)
             {
                 if (child.Name == "Health")
                 {
-                    int worth = 1;
-                    string texture = "pear";
-                    float X = 0, Y = 0;
-                    foreach (XmlNode childNode in child.ChildNodes)
-                    {
-                        if (childNode.Name == "Worth")
-                            worth = Convert.ToInt32(childNode.InnerXml);
-                        else if (childNode.Name == "Texture")
-                            texture = childNode.InnerXml;
-                        else if (childNode.Name == "X")
-                            X = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "Y")
-                            Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                    }
-
-
-                    
-                    Main.effects.Add(new Health(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
-
+                    AddHealth(Content, child);
                 }
-
-                if (child.Name == "Immortality")
+                else if (child.Name == "Immortality")
                 {
-                    int worth = 1;
-                    string texture = "shield";
-                    float X = 0, Y = 0;
-                    foreach (XmlNode childNode in child.ChildNodes)
-                    {
-                        if (childNode.Name == "Worth")
-                            worth = Convert.ToInt32(childNode.InnerXml);
-                        else if (childNode.Name == "Texture")
-                            texture = childNode.InnerXml;
-                        else if (childNode.Name == "X")
-                            X = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "Y")
-                            Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                    }
-
-
-
-                    Main.effects.Add(new Immortality(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
+                    AddImmortality(Content, child);
 
                 }
 
                 if (child.Name == "Whammy")
                 {
-                    int worth = 1;
-                    string texture = "iceblock";
-                    float X = 0, Y = 0;
-                    foreach (XmlNode childNode in child.ChildNodes)
-                    {
-                        if (childNode.Name == "Worth")
-                            worth = Convert.ToInt32(childNode.InnerXml);
-                        else if (childNode.Name == "Texture")
-                            texture = childNode.InnerXml;
-                        else if (childNode.Name == "X")
-                            X = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "Y")
-                            Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                    }
-
-
-
-                    Main.effects.Add(new Whammy(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
+                    AddWhammy(Content, child);
 
                 }
 
                 if (child.Name == "HighGravity")
                 {
-                    int worth = 1;
-                    string texture = "weight";
-                    float X = 0, Y = 0;
-                    foreach (XmlNode childNode in child.ChildNodes)
-                    {
-                        if (childNode.Name == "Worth")
-                            worth = Convert.ToInt32(childNode.InnerXml);
-                        else if (childNode.Name == "Texture")
-                            texture = childNode.InnerXml;
-                        else if (childNode.Name == "X")
-                            X = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "Y")
-                            Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                    }
-
-
-
-                    Main.effects.Add(new HighGravity(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
+                    AddHighGravity(Content, child);
 
                 }
 
                 if (child.Name == "Point")
                 {
-                    int worth = 100;
-                    string texture = "goldbag";
-                    float X = 0, Y = 0;
-                    foreach (XmlNode childNode in child.ChildNodes)
-                    {
-                        if (childNode.Name == "Worth")
-                            worth = Convert.ToInt32(childNode.InnerXml);
-                        else if (childNode.Name == "Texture")
-                            texture = childNode.InnerXml;
-                        else if (childNode.Name == "X")
-                            X = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "Y")
-                            Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                    }
-                    Main.effects.Add(new Point(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
+                    AddPoint(Content, child);
                 }
                 if (child.Name == "Finish")
                 {
-                    int worth = 0;
-                    string texture = "finishFlag";
-                    float X = 0, Y = 0;
-                    foreach (XmlNode childNode in child.ChildNodes)
-                    {
-                        if (childNode.Name == "Worth")
-                            worth = Convert.ToInt32(childNode.InnerXml);
-                        else if (childNode.Name == "Texture")
-                            texture = childNode.InnerXml;
-                        else if (childNode.Name == "X")
-                            X = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                        else if (childNode.Name == "Y")
-                            Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
-                    }
-                    Main.effects.Add(new FinishLine(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
+                    AddFinish(Content, child);
                 }
             }
+        }
+
+        //Om det är en finishflagga som ska läggas till
+        static void AddFinish(ContentManager Content, XmlNode child)
+        {
+            //Standardvärden ifall något går fel
+            int worth = 0;
+            string texture = "finishFlag";
+            float X = 0, Y = 0;
+            //Kollar om något ska ändras
+            foreach (XmlNode childNode in child.ChildNodes)
+            {
+                if (childNode.Name == "Worth")
+                    worth = Convert.ToInt32(childNode.InnerXml);
+                else if (childNode.Name == "Texture")
+                    texture = childNode.InnerXml;
+                else if (childNode.Name == "X")
+                    X = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                else if (childNode.Name == "Y")
+                    Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+            }
+            //Lägger till objektet i listan
+            Main.effects.Add(new FinishLine(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
+        }
+        //Om det är ett poäng som ska läggas till
+        static void AddPoint(ContentManager Content, XmlNode child)
+        {
+            int worth = 100;
+            string texture = "goldbag";
+            float X = 0, Y = 0;
+            //Kollar ifall några värden ska ändras
+            foreach (XmlNode childNode in child.ChildNodes)
+            {
+                if (childNode.Name == "Worth")
+                    worth = Convert.ToInt32(childNode.InnerXml);
+                else if (childNode.Name == "Texture")
+                    texture = childNode.InnerXml;
+                else if (childNode.Name == "X")
+                    X = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                else if (childNode.Name == "Y")
+                    Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+            }
+            //Lägger till objektet i listan
+            Main.effects.Add(new Point(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
+        }
+        //Om det är HighGravity som ska läggas till
+        static void AddHighGravity(ContentManager Content, XmlNode child)
+        {
+            //Standard värden ifall något går fel
+            int worth = 1;
+            string texture = "weight";
+            float X = 0, Y = 0;
+            //Kollar ifall några värden ska ändras
+            foreach (XmlNode childNode in child.ChildNodes)
+            {
+                if (childNode.Name == "Worth")
+                    worth = Convert.ToInt32(childNode.InnerXml);
+                else if (childNode.Name == "Texture")
+                    texture = childNode.InnerXml;
+                else if (childNode.Name == "X")
+                    X = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                else if (childNode.Name == "Y")
+                    Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+            }
+            //Lägger till objektet i listan
+            Main.effects.Add(new HighGravity(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
+        }
+        //Om det är whammy som ska läggas till
+        static void AddWhammy(ContentManager Content, XmlNode child)
+        {
+            //Standardvärden ifall att något går fel
+            int worth = 1;
+            string texture = "iceblock";
+            float X = 0, Y = 0;
+            //Kollar ifall något ska ändras
+            foreach (XmlNode childNode in child.ChildNodes)
+            {
+                if (childNode.Name == "Worth")
+                    worth = Convert.ToInt32(childNode.InnerXml);
+                else if (childNode.Name == "Texture")
+                    texture = childNode.InnerXml;
+                else if (childNode.Name == "X")
+                    X = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                else if (childNode.Name == "Y")
+                    Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+            }
+            //Lägger till objektet i listan
+            Main.effects.Add(new Whammy(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
+        }
+        //Om det är immortality som ska läggas till
+        static void AddImmortality(ContentManager Content, XmlNode child)
+        {
+            //Standardvärden ifall något går fel
+            int worth = 1;
+            string texture = "shield";
+            float X = 0, Y = 0;
+            //Kollar ifall något ska ändras
+            foreach (XmlNode childNode in child.ChildNodes)
+            {
+                if (childNode.Name == "Worth")
+                    worth = Convert.ToInt32(childNode.InnerXml);
+                else if (childNode.Name == "Texture")
+                    texture = childNode.InnerXml;
+                else if (childNode.Name == "X")
+                    X = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                else if (childNode.Name == "Y")
+                    Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+            }
+            //Lägger till objektet i listan
+            Main.effects.Add(new Immortality(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
+        }
+        //Om det är health som ska läggas till
+        static void AddHealth(ContentManager Content, XmlNode child)
+        {
+            //Standard värden ifall något går fel
+            int worth = 1;
+            string texture = "pear";
+            float X = 0, Y = 0;
+            //Kollar ifall några värden ska ändras
+            foreach (XmlNode childNode in child.ChildNodes)
+            {
+                if (childNode.Name == "Worth")
+                    worth = Convert.ToInt32(childNode.InnerXml);
+                else if (childNode.Name == "Texture")
+                    texture = childNode.InnerXml;
+                else if (childNode.Name == "X")
+                    X = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                else if (childNode.Name == "Y")
+                    Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+            }
+            //Lägger till objektet i listan
+            Main.effects.Add(new Health(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
+        }
+        //Om det är ett block som ska läggas till
+        static void AddBlock(ContentManager Content, XmlNode child)
+        {
+            //Om det är ett vanligt block
+            if (child.Name == "Block")
+            {
+                //Standard värden ifall att något går fel
+                string texture = "square";
+                float X = 0, Y = 0, velocityY = 0, velocityX = 0;
+                int width = 0, height = 0;
+                //Kollar igenom ifall några värden ska ändras
+                foreach (XmlNode childNode in child.ChildNodes)
+                {
+                    if (childNode.Name == "Texture")
+                        texture = childNode.InnerXml;
+                    else if (childNode.Name == "X")
+                        X = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                    else if (childNode.Name == "Y")
+                        Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                    else if (childNode.Name == "VelocityX")
+                        velocityX = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                    else if (childNode.Name == "VelocityY")
+                        velocityY = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                    else if (childNode.Name == "Width")
+                        width = Convert.ToInt32(childNode.InnerXml);
+                    else if (childNode.Name == "Height")
+                        height = Convert.ToInt32(childNode.InnerXml);
+
+                }
+                //Lägger till objektet i listan
+                Main.testBlocks.Add(new Block(new Vector2(X, Y), width, height, new Vector2(velocityX, velocityY), Content.Load<Texture2D>(texture)));
+            }
+        }
+        //Om det är en katt som ska läggas till
+        static void AddKatt(ContentManager Content, XmlNode child)
+        {
+            //Standardvärden ifall något går fel
+            string texture = "katt";
+            float X = 0, Y = 0, maxSpeed = 0, maxX = 0, minX = 0;
+            bool walkLeft = true;
+            //Går igenom för att se ifall några värden ska ändras
+            foreach (XmlNode childNode in child.ChildNodes)
+            {
+                if (childNode.Name == "Texture")
+                    texture = childNode.InnerXml;
+                else if (childNode.Name == "X")
+                    X = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                else if (childNode.Name == "Y")
+                    Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                else if (childNode.Name == "MaxSpeed")
+                    maxSpeed = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                else if (childNode.Name == "MaxX")
+                    maxX = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                else if (childNode.Name == "MinX")
+                    minX = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                else if (childNode.Name == "WalkLeft")
+                    walkLeft = bool.Parse(childNode.InnerXml);
+            }
+            //Lägger till objektet i listan
+            Main.testObjects.Add(new Katt(Content.Load<Texture2D>(texture), new Vector2(X, Y), walkLeft, maxSpeed, maxX, minX));
+        }
+        //Om det är en groda som ska läggas till
+        static void AddFrog(ContentManager Content, XmlNode child)
+        {
+            //Standardvärden ifall något går fel
+            string texture = "frog";
+            float X = 0, Y = 0, maxSpeed = 0, maxX = 0, minX = 0;
+            bool walkLeft = true;
+            //Går igenom för att se ifall några värden ska ändras
+            foreach (XmlNode childNode in child.ChildNodes)
+            {
+                if (childNode.Name == "Texture")
+                    texture = childNode.InnerXml;
+                else if (childNode.Name == "X")
+                    X = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                else if (childNode.Name == "Y")
+                    Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                else if (childNode.Name == "MaxSpeed")
+                    maxSpeed = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                else if (childNode.Name == "MaxX")
+                    maxX = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                else if (childNode.Name == "MinX")
+                    minX = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                else if (childNode.Name == "WalkLeft")
+                    walkLeft = bool.Parse(childNode.InnerXml);
+            }
+            //Lägger till objektet i listan
+            Main.testObjects.Add(new Frog(Content.Load<Texture2D>(texture), new Vector2(X, Y), walkLeft, maxSpeed, maxX, minX));
+        }
+        //Om det är en fågel som ska läggas till
+        static void AddBird(ContentManager Content, XmlNode child)
+        {
+            //Standardvärden ifall något går fel
+            string texture = "bird";
+            float X = 500, Y = 0, maxSpeed = 0, maxX = 0, minX = 0;
+            bool walkLeft = true;
+            //går igenom för att se ifall några värden ska ändras
+            foreach (XmlNode childNode in child.ChildNodes)
+            {
+                if (childNode.Name == "Texture")
+                    texture = childNode.InnerXml;
+                else if (childNode.Name == "X")
+                    X = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                else if (childNode.Name == "Y")
+                    Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                else if (childNode.Name == "MaxSpeed")
+                    maxSpeed = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                else if (childNode.Name == "MaxX")
+                    maxX = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                else if (childNode.Name == "MinX")
+                    minX = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                else if (childNode.Name == "WalkLeft")
+                    walkLeft = bool.Parse(childNode.InnerXml);
+            }
+            //Lägger till objektet i listan
+            Main.testObjects.Add(new Bird(Content.Load<Texture2D>(texture), new Vector2(X, Y), walkLeft, maxSpeed, maxX, minX));
+        }
+        //Om det är en igelkott som ska läggas till
+        static void AddHedgehog(ContentManager Content, XmlNode child)
+        {
+            //Standardvärden ifall något går fel
+            string texture = "hedgehog";
+            float X = 0, Y = 0, maxSpeed = 0, minX = 0, maxX = 0;
+            bool walkLeft = true;
+            //Kollar om några värden ska ändras
+            foreach (XmlNode childNode in child.ChildNodes)
+            {
+                if (childNode.Name == "Texture")
+                    texture = childNode.InnerXml;
+                else if (childNode.Name == "X")
+                    X = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                else if (childNode.Name == "Y")
+                    Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                else if (childNode.Name == "MaxSpeed")
+                    maxSpeed = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                else if (childNode.Name == "MaxX")
+                    maxX = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                else if (childNode.Name == "MinX")
+                    minX = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
+                else if (childNode.Name == "WalkLeft")
+                    walkLeft = bool.Parse(childNode.InnerXml);
+            }
+            //Lägger till objektet i listan
+            Main.testObjects.Add(new Hedgehog(Content.Load<Texture2D>(texture), new Vector2(X, Y), walkLeft, maxSpeed, maxX, minX));
         }
     }
 }

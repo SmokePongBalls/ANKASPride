@@ -12,14 +12,14 @@ namespace te16mono.LevelBuilder.UI
         static Texture2D square;
         static ValueChanging valueChanging;
         public static bool gridEnabled;
-
+        //Sätter allting till sin standard
         public static void Load(ContentManager Content)
         {
             square = Content.Load<Texture2D>("square");
             Options.Initialize();
             gridEnabled = true;
         }
-
+        //Update
         public static void Update()
         {
             //Kollar vilken sorts menu som är vald nu
@@ -37,13 +37,14 @@ namespace te16mono.LevelBuilder.UI
             }
                 
         }
-
+        //Målar ut menyerna
         public static void Draw(SpriteBatch spriteBatch)
         {
             // Om grid ska målas ut
             if (gridEnabled)
             HelpLines.Draw(MainLevelBuilder.position, spriteBatch);
 
+            //Målar ut rätt meny
             if (menu == MenuType.Options)
             {
                 Options.Draw(spriteBatch);
@@ -53,7 +54,6 @@ namespace te16mono.LevelBuilder.UI
             else if (menu == MenuType.ValueChanging)
                 valueChanging.Draw(spriteBatch);
         }
-
         //Initiera och byter meny till MovingObjectsChanging
         public static void ChangeMovingObject(MovingObjects input)
         {
@@ -103,8 +103,10 @@ namespace te16mono.LevelBuilder.UI
             MainLevelBuilder.placementAllowed = true;
             LevelBuilderDummy.DummyValues();
         }
+        //Om man vill gå över till optionsmenyn
         public static void StartOptions()
         {
+            //Ändrar så att man inte kan välja eller placera ut objekt
             MainLevelBuilder.placementAllowed = false;
             MainLevelBuilder.selectionAllowed = false;
             menu = MenuType.Options;
@@ -144,7 +146,5 @@ namespace te16mono.LevelBuilder.UI
                 return square;
             }
         }
-
-        
     }
 }

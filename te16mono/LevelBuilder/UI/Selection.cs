@@ -10,8 +10,8 @@ namespace te16mono.LevelBuilder.UI
     class Selection
     {
         
-        static Vector2 position;
-        static string[] options = new string[] { "None", "Block", "Cat", "Frog", "Point", "Hedgehog", "Finishline", "Bird" };
+        static Vector2 position; //Position som används för att lättare sätta ut rektanglarna
+        static string[] options = new string[] { "None", "Block", "Cat", "Frog", "Point", "Hedgehog", "Finishline", "Bird" }; //Alternativen av objekt man kan välja mellan
 
         public static void Update()
         {
@@ -21,6 +21,7 @@ namespace te16mono.LevelBuilder.UI
         }
         public static void Draw(SpriteBatch spriteBatch)
         {
+            //Sätter rätt position för att rita ut options
             position = new Vector2(1500, 100);
 
             spriteBatch.Draw(Menu.Square, Menu.MenuRectangle, Color.Gray);
@@ -35,6 +36,7 @@ namespace te16mono.LevelBuilder.UI
 
             for (int i = 0; i < options.Length; i++)
             {
+                //Om objektet är valt ska det ritas ut med en annan färg
                 if (i == Convert.ToInt32(MainLevelBuilder.selectedObject))
                 {
                     spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.DarkTurquoise);
@@ -52,9 +54,10 @@ namespace te16mono.LevelBuilder.UI
         //Kollar ifall man trycker på en knapp
         static SelectedObject CheckForInteraction()
         {
+            //sätter positionen så att den börjar på rätt ställe
             position = new Vector2(1500, 100);
             //Kollar om vänstermusknapp är nertryckt
-            if (MainLevelBuilder.mouse.LeftButton == ButtonState.Pressed && MainLevelBuilder.lastMouse.LeftButton == ButtonState.Released)
+            if (MainLevelBuilder.LeftClick())
             {
                 //Kollar ifall man trycker på någon utav rectanglarna
                 if (SelectionRectangle.Intersects(MainLevelBuilder.MouseHitbox))
@@ -117,7 +120,7 @@ namespace te16mono.LevelBuilder.UI
             MouseState lastMouse = MainLevelBuilder.lastMouse;
 
             //Kollar ifall vänstermusknapp är nertryckt
-            if (mouse.LeftButton == ButtonState.Pressed && lastMouse.LeftButton != ButtonState.Pressed)
+            if (MainLevelBuilder.LeftClick())
             {
                 //Om man trycker på options
                 if (MainLevelBuilder.MouseHitbox.Intersects(OptionsRectangle))
