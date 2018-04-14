@@ -1,4 +1,6 @@
-﻿namespace te16mono.LevelBuilder.UI
+﻿
+
+namespace te16mono.LevelBuilder.UI
 {
     //Anton
     public enum SelectedObject
@@ -9,8 +11,8 @@
         Frog,
         Point,
         Hedgehog,
-        Bird,
-        FinishLine
+        FinishLine,
+        Bird
     }
     public enum MenuType
     {

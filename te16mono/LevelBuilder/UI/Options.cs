@@ -6,10 +6,11 @@ using Microsoft.Xna.Framework.Input;
 
 namespace te16mono.LevelBuilder.UI
 {
-    class Options
+    //Anton
+    static class Options
     {
         static List<string> options = new List<string>();
-        static bool lastUpdate;
+        public static bool lastUpdate;
         static Vector2 position;
         public static void Initialize()
         {
@@ -28,19 +29,22 @@ namespace te16mono.LevelBuilder.UI
             }
             else
             {
+                //Kollar om vänstermusknapp är nedtryckt
                 if (MainLevelBuilder.mouse.LeftButton == ButtonState.Pressed && MainLevelBuilder.lastMouse.LeftButton != ButtonState.Pressed)
                 {
                     int selectedOption = -1;
                     position = new Vector2(810, 300);
-
+                    
                     for (int i = 0; i < options.Count; i++)
                     {
+                        //Kollar om den intersectar med någon utav rectanglarna
                         if (MainLevelBuilder.MouseHitbox.Intersects(SelectionRectangle))
                         {
                             selectedOption = i;
                         }
                         position.Y += 50;
                     }
+                    //Om den intersectade med någon utav dem
                     if (selectedOption != -1)
                     {
                         if (selectedOption == 0)
@@ -103,6 +107,8 @@ namespace te16mono.LevelBuilder.UI
         {
             lastUpdate = true;
         }
+
+        //Rektanglarna som används
         static Rectangle SelectionRectangle
         {
             get

@@ -52,6 +52,7 @@
     <Compile Include="LevelBuilder\ObjectEditing\ObjectPlacing.cs" />
     <Compile Include="LevelBuilder\Saving.cs" />
     <Compile Include="LevelBuilder\UI\enums.cs" />
+    <Compile Include="LevelBuilder\UI\HelpLines.cs" />
     <Compile Include="LevelBuilder\UI\Menu.cs" />
     <Compile Include="LevelBuilder\UI\Options.cs" />
     <Compile Include="LevelBuilder\UI\ValueChangers\BlockChanging.cs" />

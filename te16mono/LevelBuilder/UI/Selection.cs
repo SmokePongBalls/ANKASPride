@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-
+using System;
 
 namespace te16mono.LevelBuilder.UI
 {
@@ -26,15 +26,8 @@ namespace te16mono.LevelBuilder.UI
             spriteBatch.Draw(Menu.Square, Menu.MenuRectangle, Color.Gray);
             DrawOptions(spriteBatch);
             DrawOption(spriteBatch);
+            DrawGridButton(spriteBatch);
 
-        }
-
-        static Rectangle SelectionRectangle
-        {
-            get
-            {
-                return new Rectangle((int)position.X - 10, (int)position.Y - 3, 300, 30);
-            }
         }
         //Ritar ut de olika alternativen
         static void DrawOptions(SpriteBatch spriteBatch)
@@ -42,8 +35,16 @@ namespace te16mono.LevelBuilder.UI
 
             for (int i = 0; i < options.Length; i++)
             {
-                spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.LightSeaGreen);
-                spriteBatch.DrawString(MainLevelBuilder.spriteFont, options[i], position, Color.Black);
+                if (i == Convert.ToInt32(MainLevelBuilder.selectedObject))
+                {
+                    spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.DarkTurquoise);
+                    spriteBatch.DrawString(MainLevelBuilder.spriteFont, options[i], position, Color.Black);
+                }
+                else
+                {
+                    spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.LightSeaGreen);
+                    spriteBatch.DrawString(MainLevelBuilder.spriteFont, options[i], position, Color.Black);
+                }
                 position.Y += 40;
             }
         }
@@ -52,8 +53,10 @@ namespace te16mono.LevelBuilder.UI
         static SelectedObject CheckForInteraction()
         {
             position = new Vector2(1500, 100);
-            if (MainLevelBuilder.mouse.LeftButton == ButtonState.Pressed)
+            //Kollar om vänstermusknapp är nertryckt
+            if (MainLevelBuilder.mouse.LeftButton == ButtonState.Pressed && MainLevelBuilder.lastMouse.LeftButton == ButtonState.Released)
             {
+                //Kollar ifall man trycker på någon utav rectanglarna
                 if (SelectionRectangle.Intersects(MainLevelBuilder.MouseHitbox))
                     return SelectedObject.Null;
                 position.Y += 40;
@@ -82,14 +85,8 @@ namespace te16mono.LevelBuilder.UI
             return MainLevelBuilder.selectedObject;
         }
 
-        public static Rectangle OptionsRectangle
-        {
-            get
-            {
-                return new Rectangle(1500, 1000 - 20, 300, 50);
-            }
-        }
-
+        
+        //Ritar ut optionknappen
         private static void DrawOption(SpriteBatch spriteBatch)
         {
             
@@ -97,20 +94,64 @@ namespace te16mono.LevelBuilder.UI
             spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.Red);
             spriteBatch.DrawString(MainLevelBuilder.spriteFont, "OPTIONS", position, Color.Black);
         }
+        //Ritar ut gridknappen
+        private static void DrawGridButton(SpriteBatch spriteBatch)
+        {
+            position = new Vector2(1500, 950);
+            spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.Red);
+            //Olika text beroende på ifall grid är aktiverat eller inte
+            if (Menu.gridEnabled)
+            {
+                spriteBatch.DrawString(MainLevelBuilder.spriteFont, "HIDE GRID", position, Color.Black);
+            }
+            else
+            {
+                spriteBatch.DrawString(MainLevelBuilder.spriteFont, "SHOW GRID", position, Color.Black);
+            }
+                
+        }
 
         private static void CheckMenuButtons()
         {
             MouseState mouse = MainLevelBuilder.mouse;
             MouseState lastMouse = MainLevelBuilder.lastMouse;
 
+            //Kollar ifall vänstermusknapp är nertryckt
             if (mouse.LeftButton == ButtonState.Pressed && lastMouse.LeftButton != ButtonState.Pressed)
             {
+                //Om man trycker på options
                 if (MainLevelBuilder.MouseHitbox.Intersects(OptionsRectangle))
                 {
                     Menu.StartOptions();
                 }
+                //Om man trycker på gridknappen
+                else if (MainLevelBuilder.MouseHitbox.Intersects(GridRectangle))
+                {
+                    Menu.GridToggle();
+                }
             }
         }
-
+        //Alla rektangel
+        static Rectangle SelectionRectangle
+        {
+            get
+            {
+                return new Rectangle((int)position.X - 10, (int)position.Y - 3, 300, 30);
+            }
+        }
+        public static Rectangle OptionsRectangle
+        {
+            get
+            {
+                return new Rectangle(1500, 1000 - 20, 300, 50);
+            }
+        }
+        public static Rectangle GridRectangle
+        {
+            get
+            {
+                return new Rectangle(1500, 950 - 20, 300, 50);
+            }
+        }
     }
 }

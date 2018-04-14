@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace te16mono.LevelBuilder.UI
 {
+    //Anton
     class BlockChanging : ValueChanging
     {
         string currentX, currentY, currentWidth, currentHeight, currentVelocityY, currentVelocityX;

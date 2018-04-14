@@ -48,7 +48,7 @@ namespace te16mono
             Main.currentState = Main.State.Meny;
             Main.Initialize(Content);
             MainLevelBuilder.Initialize(Content, GraphicsDevice);
-            gameSection = GameSection.CoreGame;
+            gameSection = GameSection.LevelBuilding;
 
             IsMouseVisible = true;
 
