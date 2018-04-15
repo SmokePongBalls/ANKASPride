@@ -48,7 +48,11 @@ namespace te16mono.LevelBuilder
             hedgehog,
             square,
             frog,
-            finishFlag;
+            finishFlag,
+            weight,
+            iceblock,
+            shield,
+            goldBag;
 
         public static void Initialize(ContentManager Content, GraphicsDevice graphicsDevice)
         {
@@ -228,6 +232,10 @@ namespace te16mono.LevelBuilder
             square = Content.Load<Texture2D>("square");
             finishFlag = Content.Load<Texture2D>("finishFlag");
             frog = Content.Load<Texture2D>("frog");
+            shield = Content.Load<Texture2D>("sheild");
+            weight = Content.Load<Texture2D>("weight");
+            iceblock = Content.Load<Texture2D>("iceblock");
+            goldBag = Content.Load<Texture2D>("goldbag");
         }
 
         

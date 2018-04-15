@@ -57,6 +57,14 @@ namespace te16mono.LevelBuilder.ObjectEditing
                     return new Rectangle((int)mousePosition.X, (int)mousePosition.Y, 56, 64);
                 if (MainLevelBuilder.selectedObject == SelectedObject.Bird)
                     return new Rectangle((int)mousePosition.X, (int)mousePosition.Y, 80, 60);
+                if (MainLevelBuilder.selectedObject == SelectedObject.HighGravity)
+                    return new Rectangle((int)mousePosition.X, (int)mousePosition.Y, 54, 54);
+                if (MainLevelBuilder.selectedObject == SelectedObject.Whammy)
+                    return new Rectangle((int)mousePosition.X, (int)mousePosition.Y, 54, 54);
+                if (MainLevelBuilder.selectedObject == SelectedObject.Health)
+                    return new Rectangle((int)mousePosition.X, (int)mousePosition.Y, 54, 54);
+
+
 
                 return new Rectangle((int)mousePosition.X, (int)mousePosition.Y, 0, 0);
             }
@@ -91,7 +99,23 @@ namespace te16mono.LevelBuilder.ObjectEditing
             }
             else if (MainLevelBuilder.selectedObject == SelectedObject.Point)
             {
+                MainLevelBuilder.effects.Add(new Point(MainLevelBuilder.MousePosition, MainLevelBuilder.goldBag, 100));
+            }
+            else if (MainLevelBuilder.selectedObject == SelectedObject.HighGravity)
+            {
+                MainLevelBuilder.effects.Add(new Point(MainLevelBuilder.MousePosition, MainLevelBuilder.weight, 100));
+            }
+            else if (MainLevelBuilder.selectedObject == SelectedObject.Whammy)
+            {
+                MainLevelBuilder.effects.Add(new Point(MainLevelBuilder.MousePosition, MainLevelBuilder.iceblock, 100));
+            }
+            else if (MainLevelBuilder.selectedObject == SelectedObject.Health)
+            {
                 MainLevelBuilder.effects.Add(new Point(MainLevelBuilder.MousePosition, MainLevelBuilder.pear, 100));
+            }
+            else if (MainLevelBuilder.selectedObject == SelectedObject.Immortality)
+            {
+                MainLevelBuilder.effects.Add(new Point(MainLevelBuilder.MousePosition, MainLevelBuilder.shield, 100));
             }
         }
     }

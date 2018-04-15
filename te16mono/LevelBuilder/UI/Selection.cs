@@ -11,7 +11,7 @@ namespace te16mono.LevelBuilder.UI
     {
         
         static Vector2 position; //Position som används för att lättare sätta ut rektanglarna
-        static string[] options = new string[] { "None", "Block", "Cat", "Frog", "Point", "Hedgehog", "Finishline", "Bird" }; //Alternativen av objekt man kan välja mellan
+        static string[] options = new string[] { "None", "Block", "Cat", "Frog", "Point", "Hedgehog", "Finishline", "Bird", "Health", "HighGravity", "Whammy", "Immortality" }; //Alternativen av objekt man kan välja mellan
 
         public static void Update()
         {
@@ -83,6 +83,19 @@ namespace te16mono.LevelBuilder.UI
                 position.Y += 40;
                 if (SelectionRectangle.Intersects(MainLevelBuilder.MouseHitbox))
                     return SelectedObject.Bird;
+                position.Y += 40;
+                if (SelectionRectangle.Intersects(MainLevelBuilder.MouseHitbox))
+                    return SelectedObject.Health;
+                position.Y += 40;
+                if (SelectionRectangle.Intersects(MainLevelBuilder.MouseHitbox))
+                    return SelectedObject.HighGravity;
+                position.Y += 40;
+                if (SelectionRectangle.Intersects(MainLevelBuilder.MouseHitbox))
+                    return SelectedObject.Whammy;
+                position.Y += 40;
+                if (SelectionRectangle.Intersects(MainLevelBuilder.MouseHitbox))
+                    return SelectedObject.Immortality;
+
             }
             
             return MainLevelBuilder.selectedObject;
