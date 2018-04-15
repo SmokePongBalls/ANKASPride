@@ -95,7 +95,7 @@ namespace te16mono.LevelBuilder.UI
             }
 
         }
-        //Kollar ifall användaren klickar på någon utav hitboxarna
+        //Kollar ifall användaren klickar på någon utav hitboxarna och byter värde på editString.
         protected override bool CheckHitbox()
         {
             MouseState mouse = MainLevelBuilder.mouse;
@@ -137,6 +137,44 @@ namespace te16mono.LevelBuilder.UI
                 {
                     editing = Editing.MaxSpeed;
                     editString = currentMaxSpeed;
+                    return true;
+                }
+            }
+            //Returnerar false om ingen var tryckt
+            return false;
+        }
+        //Kollar ifall användaren klickar på någon utav hitboxarna
+        protected override bool CheckForChange()
+        {
+            MouseState mouse = MainLevelBuilder.mouse;
+            //Körs endast om man trycker ner vänstermusknapp
+            if (MainLevelBuilder.LeftClick())
+            {
+                //Sätter rätt position
+                position = new Vector2(1500, 100);
+                //Returnerar true ifall och byter state ifall användaren trycker på någon utav rektanglarna
+                if (BigSelectionRectangle.Intersects(MainLevelBuilder.MouseHitbox))
+                {
+                    return true;
+                }
+                position.Y += 80;
+                if (BigSelectionRectangle.Intersects(MainLevelBuilder.MouseHitbox))
+                {
+                    return true;
+                }
+                position.Y += 80;
+                if (BigSelectionRectangle.Intersects(MainLevelBuilder.MouseHitbox))
+                {
+                    return true;
+                }
+                position.Y += 80;
+                if (BigSelectionRectangle.Intersects(MainLevelBuilder.MouseHitbox))
+                {
+                    return true;
+                }
+                position.Y += 80;
+                if (BigSelectionRectangle.Intersects(MainLevelBuilder.MouseHitbox))
+                {
                     return true;
                 }
             }

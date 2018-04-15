@@ -19,6 +19,7 @@ namespace te16mono.LevelBuilder.UI
         protected abstract bool CheckHitbox();
         protected abstract void CheckForExit();
         protected abstract void SetValues();
+        protected abstract bool CheckForChange();
         protected abstract void DrawValues(SpriteBatch spriteBatch);
         public void Update()
         {
@@ -27,12 +28,23 @@ namespace te16mono.LevelBuilder.UI
             {
                 Edit();
                 SetEdit();
+
                 if (isEditing == false)
                 {
-                    SetValues();
                     editing = Editing.Null;
+                    SetValues();
                 }
-
+                else if (CheckForChange())
+                {
+                    if (editString.Length == 0)
+                    {
+                        editString = "0";
+                    }
+                    SetEdit();
+                    SetValues();
+                    CheckHitbox();
+                }
+                
             }
             else
             {
