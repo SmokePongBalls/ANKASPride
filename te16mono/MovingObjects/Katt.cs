@@ -31,25 +31,7 @@ namespace te16mono
         {
 
             // Om den inte har uppnåt maxfart
-            if (acceleration < maxSpeed && acceleration > -maxSpeed)
-            {
-                //Om den ska gå åt vänster
-                if (!walkLeft)
-                {
-                        acceleration += (float)0.01;
-                }
-            //Om den ska åka höger
-                else
-                {
-                    acceleration -= (float)0.01;
-                }
-
-                velocity.X += acceleration;
-            }
-            velocity.Y += Program.Gravity;
-
-            position.Y += velocity.Y;
-            position.X += velocity.X;
+            
 
 
             //Om den har nått sin maxposition på X
