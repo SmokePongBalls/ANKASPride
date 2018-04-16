@@ -126,22 +126,22 @@ namespace te16mono
             //<summary>De som kollar ifall man trycker på skjutknapparna</summary>
             if (Keyboard.GetState().IsKeyDown(Keys.Left) && shootCooldown <= 0)
             {
-                Main.Shoot("regular", new Vector2(-10 + velocity.X, velocity.Y / 4 + 0), new Vector2(position.X - 21, position.Y), 1, 100000);
+                Main.Shoot("regular", new Vector2(-10 + velocity.X/2, 0), new Vector2(position.X - 21, position.Y), 1, 100000);
                 shootCooldown = 500;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.Up) && shootCooldown <= 0)
             {
-                Main.Shoot("regular", new Vector2(0 + velocity.X / 4,velocity.Y -10), new Vector2(position.X , position.Y - 21), 1, 100000);
+                Main.Shoot("regular", new Vector2(0 + velocity.X / 4,velocity.Y/2 -10), new Vector2(position.X , position.Y - 21), 1, 100000);
                 shootCooldown = 500;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.Right) && shootCooldown <= 0)
             {
-                Main.Shoot("regular", new Vector2(+10 + velocity.X, velocity.Y/4 + 0), new Vector2(position.X + texture.Width + 1, position.Y), 1, 100000);
+                Main.Shoot("regular", new Vector2(+10 + velocity.X/2, 0), new Vector2(position.X + texture.Width + 1, position.Y), 1, 100000);
                 shootCooldown = 500;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.Down) && shootCooldown <= 0)
             {
-                Main.Shoot("regular", new Vector2(velocity.X/4, velocity.Y + 10), new Vector2(position.X + texture.Width/2, position.Y + texture.Height), 1, 100000);
+                Main.Shoot("regular", new Vector2(velocity.X/4, velocity.Y/2 + 10), new Vector2(position.X + texture.Width/2, position.Y + texture.Height), 1, 100000);
                 shootCooldown = 500;
             }
             else
