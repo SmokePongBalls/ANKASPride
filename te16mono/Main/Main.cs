@@ -239,7 +239,7 @@ namespace te16mono
             spriteBatch.End();
         }
 
-        public static State PauseUpdate()
+        public static void PauseUpdate()
         {
             KeyboardState keyboard = Keyboard.GetState();
 
@@ -248,8 +248,6 @@ namespace te16mono
 
             if (keyboard.IsKeyDown(Keys.Q))
                 currentState = State.Quit;
-
-            return State.Pause;
         }
 
         public static void PauseDraw()
