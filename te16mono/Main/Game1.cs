@@ -107,7 +107,7 @@ namespace te16mono
                         break;
 
                     case Main.State.Quit:
-                        this.Exit();
+                        Exit();
                         break;
                     
                 case Main.State.Pause:Main.PauseUpdate();
