@@ -4,18 +4,19 @@ using Microsoft.Xna.Framework.Input;
 
 namespace te16mono.LevelBuilder.ObjectEditing
 {
-    //Anton
     static class ObjectPlacing
     {
-        //Gör ett nytt objekt
         public static void Create()
-        {   
-            if (CheckPosition() == false && MainLevelBuilder.LeftClick())
+        {
+
+            bool canPlace = CheckPosition();
+            if (canPlace == false && MainLevelBuilder.mouse.LeftButton == ButtonState.Pressed && MainLevelBuilder.lastMouse.LeftButton != ButtonState.Pressed)
             {
                 Place();
             }
+            
         }
-        //Kollar ifall rektangeln som ska placeras ut kolliderar med något. Returnerar true ifall det gör det
+
         public static bool CheckPosition()
         {
             Rectangle checkRectangle = CheckRectangle;
@@ -36,13 +37,13 @@ namespace te16mono.LevelBuilder.ObjectEditing
             }
             return false;
         }
-        //Retunerar en rektangel 
+
         static Rectangle CheckRectangle
         {
             get
             {
                 Vector2 mousePosition = MainLevelBuilder.MousePosition;
-                //Kollar vilket objekt det är och retunerar en rektangel i den storleken
+
                 if (MainLevelBuilder.selectedObject == SelectedObject.Block)
                     return new Rectangle((int)mousePosition.X, (int)mousePosition.Y, 50, 50);
                 if (MainLevelBuilder.selectedObject == SelectedObject.Cat)
@@ -57,22 +58,13 @@ namespace te16mono.LevelBuilder.ObjectEditing
                     return new Rectangle((int)mousePosition.X, (int)mousePosition.Y, 56, 64);
                 if (MainLevelBuilder.selectedObject == SelectedObject.Bird)
                     return new Rectangle((int)mousePosition.X, (int)mousePosition.Y, 80, 60);
-                if (MainLevelBuilder.selectedObject == SelectedObject.HighGravity)
-                    return new Rectangle((int)mousePosition.X, (int)mousePosition.Y, 54, 54);
-                if (MainLevelBuilder.selectedObject == SelectedObject.Whammy)
-                    return new Rectangle((int)mousePosition.X, (int)mousePosition.Y, 54, 54);
-                if (MainLevelBuilder.selectedObject == SelectedObject.Health)
-                    return new Rectangle((int)mousePosition.X, (int)mousePosition.Y, 54, 54);
-
-
 
                 return new Rectangle((int)mousePosition.X, (int)mousePosition.Y, 0, 0);
             }
         }
-        //Placerar ut objektet
+
         static void Place()
         {
-            //Kollar vilket objekt som ska placeras ut
             if (MainLevelBuilder.selectedObject == SelectedObject.Block)
             {
                 MainLevelBuilder.blocks.Add(new Block(MainLevelBuilder.MousePosition, 50, 50, new Vector2(0), MainLevelBuilder.square));
@@ -99,24 +91,11 @@ namespace te16mono.LevelBuilder.ObjectEditing
             }
             else if (MainLevelBuilder.selectedObject == SelectedObject.Point)
             {
-                MainLevelBuilder.effects.Add(new Point(MainLevelBuilder.MousePosition, MainLevelBuilder.goldBag, 100));
-            }
-            else if (MainLevelBuilder.selectedObject == SelectedObject.HighGravity)
-            {
-                MainLevelBuilder.effects.Add(new Point(MainLevelBuilder.MousePosition, MainLevelBuilder.weight, 100));
-            }
-            else if (MainLevelBuilder.selectedObject == SelectedObject.Whammy)
-            {
-                MainLevelBuilder.effects.Add(new Point(MainLevelBuilder.MousePosition, MainLevelBuilder.iceblock, 100));
-            }
-            else if (MainLevelBuilder.selectedObject == SelectedObject.Health)
-            {
                 MainLevelBuilder.effects.Add(new Point(MainLevelBuilder.MousePosition, MainLevelBuilder.pear, 100));
             }
-            else if (MainLevelBuilder.selectedObject == SelectedObject.Immortality)
-            {
-                MainLevelBuilder.effects.Add(new Point(MainLevelBuilder.MousePosition, MainLevelBuilder.shield, 100));
-            }
         }
+
+        
+
     }
 }

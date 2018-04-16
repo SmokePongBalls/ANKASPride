@@ -71,32 +71,15 @@
     <Point>
       <Texture>goldbag</Texture>
       <X>550</X>
-      <Y>700</Y>
+      <Y>500</Y>
       <Worth>100</Worth>
     </Point>
     <Health>
       <Texture>pear</Texture>
-      <X>650</X>
-      <Y>500</Y>
-      <Worth>1</Worth>
-    </Health>
-    <Immortality>
-      <Texture>sheild</Texture>
       <X>450</X>
       <Y>500</Y>
       <Worth>1</Worth>
-    </Immortality>
-     <Whammy>
-      <Texture>iceblock</Texture>
-      <X>350</X>
-      <Y>500</Y>
-      <Worth>1</Worth>
-    </Whammy>
-    <HighGravity>
-      <Texture>weight</Texture>
-      <X>850</X>
-      <Y>500</Y>
-    </HighGravity>
+    </Health>
     <Finish>
       <Texture>finishFlag</Texture>
       <X>3750</X>

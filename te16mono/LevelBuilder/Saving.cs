@@ -1,15 +1,18 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using te16mono.Input;
-using te16mono.LevelBuilder.UI;
 
 namespace te16mono.LevelBuilder
 {
-    //Anton
     class Saving
     {
-        string toSave; //Stringen som bestämmer vilket namn filen kommer ha
+        string toSave;
 
         public Saving()
         {
@@ -17,66 +20,39 @@ namespace te16mono.LevelBuilder
         }
         public void Update(KeyboardState keyboardState, KeyboardState lastKeyboardState)
         {
-            //Om man trycker på knappen för att spara eller enter
-            if (keyboardState.IsKeyDown(Keys.Enter) && lastKeyboardState.IsKeyUp(Keys.Enter) || MainLevelBuilder.MouseHitbox.Intersects(Save) && MainLevelBuilder.LeftClick())
+            if (keyboardState.IsKeyDown(Keys.Enter) && lastKeyboardState.IsKeyUp(Keys.Enter))
             {
                 XmlSaver.Save(toSave);
                 MainLevelBuilder.state = LevelBuilderState.Main;
             }
-            //Om man trycker på back knappen
-            else if (MainLevelBuilder.MouseHitbox.Intersects(Back) && MainLevelBuilder.LeftClick())
+            else if (keyboardState.IsKeyDown(Keys.Back) && lastKeyboardState.IsKeyUp(Keys.Back) && toSave.Length > 0)
             {
-                MainLevelBuilder.state = LevelBuilderState.Main;
-                Options.lastUpdate = false;
+                toSave.Remove(toSave.Length - 1);
             }
-            //Annars ska det kolla ifall användaren försöker skriva något
             else
             {
-                toSave = TextInput.CheckForBackSpace(toSave, keyboardState, lastKeyboardState);
                 toSave += TextInput.CheckForInput(keyboardState, lastKeyboardState);
             }
-            
         }
-        //Ritar ut allt som behöver synas
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(MainLevelBuilder.square, BackgroundRectangle, Color.Black);
             spriteBatch.Draw(MainLevelBuilder.square, ExitRectangle, Color.White);
             spriteBatch.DrawString(MainLevelBuilder.spriteFont, toSave + "|", new Vector2(810, 300), Color.Black);
-            spriteBatch.Draw(MainLevelBuilder.square, Back, Color.White);
-            spriteBatch.Draw(MainLevelBuilder.square, Save, Color.White);
-            spriteBatch.DrawString(MainLevelBuilder.spriteFont, "Back", new Vector2(810, 350), Color.Black);
-            spriteBatch.DrawString(MainLevelBuilder.spriteFont, "Save", new Vector2(1010, 350), Color.Black);
         }
 
-        //Rektanglarna som används
-        static Rectangle ExitRectangle
+        public static Rectangle ExitRectangle
         {
             get
             {
                 return new Rectangle(810, 300, 300, 30);
             }
         }
-        static Rectangle Back
-        {
-            get
-            {
-                return new Rectangle(810, 350, 100, 30);
-            }
-        }
-        static Rectangle Save
-        {
-            get
-            {
-                return new Rectangle(1010, 350, 100, 30);
-            }
-        }
-
         static Rectangle BackgroundRectangle
         {
             get
             {
-                return new Rectangle(790, 285, 340, 110);
+                return new Rectangle(790, 285, 340, 60);
             }
         }
     }

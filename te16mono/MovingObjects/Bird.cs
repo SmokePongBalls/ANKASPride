@@ -30,8 +30,23 @@ namespace te16mono
         public override void Update(GameTime gameTime)
         {
 
-            //Ändrar position
-            Move();
+            // Om den inte har uppnåt maxfart
+            if (acceleration < maxSpeed && acceleration > -maxSpeed)
+            {
+                //Om den ska gå åt vänster
+                if (!walkLeft)
+                {
+                    acceleration += (float)0.01;
+                }
+                //Om den ska åka höger
+                else
+                {
+                    acceleration -= (float)0.01;
+                }
+
+                velocity.X += acceleration;
+            }
+            position.X += velocity.X;
 
 
             //Om den har nått sin maxposition på X
@@ -57,34 +72,12 @@ namespace te16mono
             timeToShoot -= gameTime.ElapsedGameTime.Milliseconds;
             if (timeToShoot <= 0)
             {
-                Main.Shoot("regular", new Vector2(0, 5), new Vector2(position.X + texture.Width / 2, position.Y + texture.Height + 1), 1, 100000);
+                Main.Shoot("regular", new Vector2(0, 5), new Vector2(position.X + texture.Width/2, position.Y + texture.Height + 1), 1, 100000);
                 timeToShoot = 500;
             }
             velocity.Y = 0;
         }
 
-        protected override void Move()
-        {
-            // Om den inte har uppnåt maxfart
-            if (acceleration < maxSpeed && acceleration > -maxSpeed)
-            {
-                //Om den ska gå åt vänster
-                if (!walkLeft)
-                {
-                    acceleration += (float)0.01;
-                }
-                //Om den ska åka höger
-                else
-                {
-                    acceleration -= (float)0.01;
-                }
-
-                velocity.X += acceleration;
-            }
-            position.X += velocity.X;
-        }
-
-        //Om den krockar med ett objekt (OBS INTE PROJECTILES)
         public override void Intersect(Rectangle collided, Vector2 collidedVelocity, int damage, bool collidedCanStandOn)
         {
             //Ser till så att den inte krockat med sig själv
@@ -123,11 +116,7 @@ namespace te16mono
                 }
             }
         }
-        //Om objektet blir träffad av en projektil
-        public override void ProjectileIntersect(Rectangle collided, int damage)
-        {
-            health -= damage;
-        }
+
     }
 
 }
