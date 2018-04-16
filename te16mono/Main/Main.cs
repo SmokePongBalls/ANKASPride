@@ -112,8 +112,10 @@ namespace te16mono
 
         public static State RunUpdate(GameTime gameTime)
         {
-            //Testkatten
 
+            player.Update(gameTime);
+
+            //Testkatten
             foreach (Block testBlock in testBlocks.ToArray())
             {
                 if (player.Hitbox.Intersects(testBlock.Hitbox))
@@ -207,7 +209,7 @@ namespace te16mono
             }
 
             countdown -= gameTime.ElapsedGameTime.TotalMilliseconds;
-            player.Update(gameTime);
+            
 
 
             if (player.health <= 0)
@@ -245,11 +247,20 @@ namespace te16mono
             spriteBatch.End();
         }
 
+<<<<<<< HEAD
         public static State PauseUpdate(GameTime gameTime)
+=======
+        public static void PauseUpdate()
+>>>>>>> 0bbe960c104c1241a13967b456bcf1289fe14652
         {
 
             return (State)pauseMeny.Update(gameTime);
 
+<<<<<<< HEAD
+=======
+            if (keyboard.IsKeyDown(Keys.Q))
+                currentState = State.Quit;
+>>>>>>> 0bbe960c104c1241a13967b456bcf1289fe14652
         }
 
         public static void PauseDraw()

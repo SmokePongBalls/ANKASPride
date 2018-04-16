@@ -11,8 +11,12 @@ namespace te16mono.LevelBuilder.UI
         Frog,
         Point,
         Hedgehog,
+        FinishLine,
         Bird,
-        FinishLine
+        Health,
+        HighGravity,
+        Whammy,
+        Immortality
     }
     public enum MenuType
     {
