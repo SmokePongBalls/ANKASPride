@@ -26,7 +26,7 @@ namespace te16mono
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         public static GameSection gameSection;
-
+        KeyboardState keyboard, lastKeyboard;
 
 
         public Game1()
@@ -37,14 +37,7 @@ namespace te16mono
 
         protected override void Initialize()
         {
-            //Fullscreen Hugo F --
-            //Gör så att spelet fyller hela skärmen.
-            graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
-            graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
-            //Är false för att spelet buggar lite om man tabbar ur det när det är fullscreen. måste fixas. (kanske om man gör en "if-sats" som kollar om "alt" och "tab" trycks samtidigt. Då så går det ur fullscreen?) Hugo F
-            graphics.IsFullScreen = false;
-            graphics.ApplyChanges();
-            //--
+            Fullscreen();
             Main.currentState = Main.State.Meny;
             Main.Initialize(Content);
             MainLevelBuilder.Initialize(Content, GraphicsDevice);
@@ -53,6 +46,30 @@ namespace te16mono
             IsMouseVisible = true;
 
             base.Initialize();
+        }
+
+        private void Fullscreen()
+        {
+            //Fullscreen Hugo F --
+            //Gör så att spelet fyller hela skärmen.
+            graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
+            graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
+            //Är false för att spelet buggar lite om man tabbar ur det när det är fullscreen. måste fixas. (kanske om man gör en "if-sats" som kollar om "alt" och "tab" trycks samtidigt. Då så går det ur fullscreen?) Hugo F
+            graphics.IsFullScreen = false;
+            graphics.ApplyChanges();
+            //--
+<<<<<<< HEAD
+            Main.currentState = Main.State.Meny;
+            Main.Initialize(Content);
+            MainLevelBuilder.Initialize(Content, GraphicsDevice);
+            gameSection = GameSection.CoreGame;
+            keyboard = new KeyboardState();
+            lastKeyboard = new KeyboardState();
+            IsMouseVisible = true;
+
+            base.Initialize();
+=======
+>>>>>>> 0bbe960c104c1241a13967b456bcf1289fe14652
         }
 
         /// <summary>
@@ -83,7 +100,7 @@ namespace te16mono
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-
+            Main.keyboard = Keyboard.GetState();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Main.currentState = Main.State.Pause;
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Q))
@@ -100,40 +117,67 @@ namespace te16mono
 
             if (gameSection == GameSection.CoreGame)
             {
-                switch (Main.currentState)
+                Menus(gameTime);
+            }
+            else if (gameSection == GameSection.LevelBuilding)
                 {
+<<<<<<< HEAD
                     case Main.State.Run:
                         Main.RunUpdate(gameTime);// kör själva spelet 
                         break;
 
+
+
                     case Main.State.Quit:
                         Exit();
                         break;
-                    
-                case Main.State.Pause:Main.PauseUpdate();
+
+
+
+
+                    case Main.State.Pause:
+                        Main.currentState = Main.PauseUpdate(gameTime);
+                        break;
+=======
+                MainLevelBuilder.Update(GraphicsDevice);
+                if (gameSection == GameSection.CoreGame)
+                    MainLevelBuilder.Reset();
+                }
+            base.Update(gameTime);
+        }
+
+        private void Menus(GameTime gameTime)
+        {
+            switch (Main.currentState)
+            {
+                case Main.State.Run:
+                    Main.RunUpdate(gameTime);// kör själva spelet 
+                    break;
+>>>>>>> 0bbe960c104c1241a13967b456bcf1289fe14652
+
+                case Main.State.Quit:
+                    this.Exit();
                     break;
 
-                    case Main.State.Finish:
-                        Main.FinishUpdate();
-                        if (Main.currentState == Main.State.Run)
-                            Main.LoadMap();
-                        break;
+                case Main.State.Pause:
+                    Main.PauseUpdate();
+                    break;
+
+                case Main.State.Finish:
+                    Main.FinishUpdate();
+                    if (Main.currentState == Main.State.Run)
+                        Main.LoadMap();
+                    break;
 
 
-                    case Main.State.GameOver:
-                        Main.GameOverUpdate();
-                        if (Main.currentState == Main.State.Run)
-                            Main.LoadMap();
-                        break;
+                case Main.State.GameOver:
+                    Main.GameOverUpdate();
+                    if (Main.currentState == Main.State.Run)
+                        Main.LoadMap();
+                    break;
 
 
-                    default:
-                        Main.currentState = Main.MenyUpdate(gameTime);
-                        if (Main.currentState == Main.State.Run)
-                            Main.LoadMap();
-                        break;
-
-
+<<<<<<< HEAD
                     }
                 }
                 else if (gameSection == GameSection.LevelBuilding)
@@ -142,9 +186,20 @@ namespace te16mono
                 if (gameSection == GameSection.CoreGame)
                     MainLevelBuilder.Reset();
                 }
+            Main.lastKeyboard = keyboard;
             base.Update(gameTime);
+=======
+                default:
+                    Main.currentState = Main.MenyUpdate(gameTime);
+                    if (Main.currentState == Main.State.Run)
+                        Main.LoadMap();
+                    break;
+
+
+            }
+>>>>>>> 0bbe960c104c1241a13967b456bcf1289fe14652
         }
-  
+
 
         /// <summary>
         /// This is called when the game should draw itself.
@@ -157,27 +212,7 @@ namespace te16mono
             GraphicsDevice.Clear(Color.CornflowerBlue); // Rensar skärmen 
             if (gameSection == GameSection.CoreGame)
             {
-                switch (Main.currentState)
-                {
-
-                    default:
-                        Main.MenyDraw();
-                        break;
-
-                case Main.State.Run: Main.RunDraw(GraphicsDevice, gameTime);
-                    break;
-
-                case Main.State.Pause: Main.PauseDraw();
-                break;
-                    case Main.State.Finish:
-                        Main.FinishDraw(GraphicsDevice);
-                        break;
-
-                    case Main.State.GameOver:
-                        Main.GameOverDraw(GraphicsDevice);
-                        break;
-
-                }
+                DrawMenus(gameTime);
             }
             else if (gameSection == GameSection.LevelBuilding)
             {
@@ -189,6 +224,32 @@ namespace te16mono
             base.Draw(gameTime);
         }
 
+        private void DrawMenus(GameTime gameTime)
+        {
+            switch (Main.currentState)
+            {
+
+                default:
+                    Main.MenyDraw();
+                    break;
+
+                case Main.State.Run:
+                    Main.RunDraw(GraphicsDevice, gameTime);
+                    break;
+
+                case Main.State.Pause:
+                    Main.PauseDraw();
+                    break;
+                case Main.State.Finish:
+                    Main.FinishDraw(GraphicsDevice);
+                    break;
+
+                case Main.State.GameOver:
+                    Main.GameOverDraw(GraphicsDevice);
+                    break;
+
+            }
+        }
     }
 
 }
