@@ -105,43 +105,9 @@ namespace te16mono
 
             if (gameSection == GameSection.CoreGame)
             {
-                switch (Main.currentState)
-                {
-                    case Main.State.Run:
-                        Main.RunUpdate(gameTime);// kör själva spelet 
-                        break;
-
-                    case Main.State.Quit:
-                        this.Exit();
-                        break;
-                    
-                case Main.State.Pause:Main.PauseUpdate();
-                    break;
-
-                    case Main.State.Finish:
-                        Main.FinishUpdate();
-                        if (Main.currentState == Main.State.Run)
-                            Main.LoadMap();
-                        break;
-
-
-                    case Main.State.GameOver:
-                        Main.GameOverUpdate();
-                        if (Main.currentState == Main.State.Run)
-                            Main.LoadMap();
-                        break;
-
-
-                    default:
-                        Main.currentState = Main.MenyUpdate(gameTime);
-                        if (Main.currentState == Main.State.Run)
-                            Main.LoadMap();
-                        break;
-
-
-                    }
-                }
-                else if (gameSection == GameSection.LevelBuilding)
+                Menus(gameTime);
+            }
+            else if (gameSection == GameSection.LevelBuilding)
                 {
                 MainLevelBuilder.Update(GraphicsDevice);
                 if (gameSection == GameSection.CoreGame)
@@ -149,7 +115,47 @@ namespace te16mono
                 }
             base.Update(gameTime);
         }
-  
+
+        private void Menus(GameTime gameTime)
+        {
+            switch (Main.currentState)
+            {
+                case Main.State.Run:
+                    Main.RunUpdate(gameTime);// kör själva spelet 
+                    break;
+
+                case Main.State.Quit:
+                    this.Exit();
+                    break;
+
+                case Main.State.Pause:
+                    Main.PauseUpdate();
+                    break;
+
+                case Main.State.Finish:
+                    Main.FinishUpdate();
+                    if (Main.currentState == Main.State.Run)
+                        Main.LoadMap();
+                    break;
+
+
+                case Main.State.GameOver:
+                    Main.GameOverUpdate();
+                    if (Main.currentState == Main.State.Run)
+                        Main.LoadMap();
+                    break;
+
+
+                default:
+                    Main.currentState = Main.MenyUpdate(gameTime);
+                    if (Main.currentState == Main.State.Run)
+                        Main.LoadMap();
+                    break;
+
+
+            }
+        }
+
 
         /// <summary>
         /// This is called when the game should draw itself.
@@ -162,27 +168,7 @@ namespace te16mono
             GraphicsDevice.Clear(Color.CornflowerBlue); // Rensar skärmen 
             if (gameSection == GameSection.CoreGame)
             {
-                switch (Main.currentState)
-                {
-
-                    default:
-                        Main.MenyDraw();
-                        break;
-
-                case Main.State.Run: Main.RunDraw(GraphicsDevice, gameTime);
-                    break;
-
-                case Main.State.Pause: Main.PauseDraw();
-                break;
-                    case Main.State.Finish:
-                        Main.FinishDraw(GraphicsDevice);
-                        break;
-
-                    case Main.State.GameOver:
-                        Main.GameOverDraw(GraphicsDevice);
-                        break;
-
-                }
+                DrawMenus(gameTime);
             }
             else if (gameSection == GameSection.LevelBuilding)
             {
@@ -194,6 +180,32 @@ namespace te16mono
             base.Draw(gameTime);
         }
 
+        private void DrawMenus(GameTime gameTime)
+        {
+            switch (Main.currentState)
+            {
+
+                default:
+                    Main.MenyDraw();
+                    break;
+
+                case Main.State.Run:
+                    Main.RunDraw(GraphicsDevice, gameTime);
+                    break;
+
+                case Main.State.Pause:
+                    Main.PauseDraw();
+                    break;
+                case Main.State.Finish:
+                    Main.FinishDraw(GraphicsDevice);
+                    break;
+
+                case Main.State.GameOver:
+                    Main.GameOverDraw(GraphicsDevice);
+                    break;
+
+            }
+        }
     }
 
 }

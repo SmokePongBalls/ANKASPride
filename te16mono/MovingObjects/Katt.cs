@@ -31,7 +31,7 @@ namespace te16mono
         {
 
             // Om den inte har uppnåt maxfart
-            
+            Move();
 
 
             //Om den har nått sin maxposition på X
