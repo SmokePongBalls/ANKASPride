@@ -12,9 +12,10 @@ namespace te16mono
         
         public int points;
         public int maxHealth = 10;
-        public int immortalityTime = 5000;
+        public int Time = 5000;
         private int shootCooldown;
         private int whammy = 10;
+        private double gravity = Program.Gravity;
         private Oriantation lastTouchedSurface;
         private bool holdingJump = true;
         public bool underEffect;
@@ -40,7 +41,7 @@ namespace te16mono
             holdingJump = false;
             shootCooldown = 0;
             rng = new Random(seed);
-
+            
             //Initiera värden
         }
 
@@ -48,7 +49,7 @@ namespace te16mono
         {
 
             velocity = velocity * (float)0.95;
-            velocity.Y += Program.Gravity;
+            velocity.Y += (float)gravity;
             //Spellogik
             pressedKeys = Keyboard.GetState();
 
@@ -85,25 +86,25 @@ namespace te16mono
                 {
                     holdingJump = false;
                 }
-            
-          
+
+
             //kollar om player är under någon effect. Det är vad boolen är till för Hugo F
-            if(underEffect == true)
+            if (underEffect == true)
             {
                 //kollar om player är under specifikt "Immortality" effekten
-                if(effect == "Immortality")
+                if (effect == "Immortality")
                 {
                     //player kan inte bli skadade om detta är false
                     canBeDamaged = false;
 
                     //ser till så att man är odödlig under en specifik tid och inte längre
-                    immortalityTime -= gameTime.ElapsedGameTime.Milliseconds;
-                    if (immortalityTime <= 0)
+                    Time -= gameTime.ElapsedGameTime.Milliseconds;
+                    if (Time <= 0)
                     {
                         //sätter tillbaka så att player inte är under effect och kan bli skadad
                         underEffect = false;
                         canBeDamaged = true;
-                        immortalityTime = 5000;
+                        Time = 5000;
                     }
 
                 }
@@ -120,6 +121,7 @@ namespace te16mono
                         isWhammy = true;
 
                 }
+                NewMethod(gameTime);
 
             }
 
@@ -155,6 +157,25 @@ namespace te16mono
 
                 position += velocity;
 
+        }
+
+        private void NewMethod(GameTime gameTime)
+        {
+            if (effect == "HighGravity")
+            {
+                //höjer gravity så att player inte kan hoppa lika högt och åker ner snabbare
+                gravity = 1;
+                //ser till så att man är påverkad av ökad gravitation under en specifik tid och inte längre
+                Time -= gameTime.ElapsedGameTime.Milliseconds;
+                if (Time <= 0)
+                {
+                    //sätter tillbaka så att player inte är under effect och kan hoppa som vanligt. Dessutom så sätts timern tillbaka till 5000 milisekunder
+                    underEffect = false;
+                    gravity = 0.5;
+                    Time = 5000;
+                }
+
+            }
         }
 
         public override void ProjectileIntersect(Rectangle collided, int damage)
