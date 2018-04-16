@@ -32,12 +32,12 @@ namespace te16mono
         public static List<Point> effects;
         //TestKatten
         public static List<MovingObjects> testObjects;
-        public static KeyboardState keyboard, lastKeyboard;
+
 
 
 
         static Menyer meny;
-        static PauseMeny pauseMeny;
+
 
 
         static public void Initialize(ContentManager content)
@@ -65,15 +65,7 @@ namespace te16mono
             meny = new Menyer((int)State.Meny);
             meny.AddItem(Content.Load<Texture2D>("Start"),(int)State.Run);
             meny.AddItem(Content.Load<Texture2D>("Quit"),(int)State.Quit );
-
-            pauseMeny = new PauseMeny((int)State.Pause);
-            pauseMeny.AddItem(Content.Load<Texture2D>("Meny"),(int)State.);
-            pauseMeny.AddItem(Content.Load<Texture2D>("Quit"), (int)State.Quit);
-
-
-            keyboard = new KeyboardState();
-            lastKeyboard = new KeyboardState();
-
+            
 
             //Hugo F
             font = Content.Load<SpriteFont>("Font");
@@ -112,8 +104,10 @@ namespace te16mono
 
         public static State RunUpdate(GameTime gameTime)
         {
-            //Testkatten
 
+            player.Update(gameTime);
+
+            //Testkatten
             foreach (Block testBlock in testBlocks.ToArray())
             {
                 if (player.Hitbox.Intersects(testBlock.Hitbox))
@@ -207,7 +201,7 @@ namespace te16mono
             }
 
             countdown -= gameTime.ElapsedGameTime.TotalMilliseconds;
-            player.Update(gameTime);
+            
 
 
             if (player.health <= 0)
@@ -245,19 +239,25 @@ namespace te16mono
             spriteBatch.End();
         }
 
-        public static State PauseUpdate(GameTime gameTime)
+        public static void PauseUpdate()
         {
+            KeyboardState keyboard = Keyboard.GetState();
 
-            return (State)pauseMeny.Update(gameTime);
+            if (keyboard.IsKeyDown(Keys.S)) // Resume på pause meny fixar detta sen 
+                currentState = State.Run;
 
+            if (keyboard.IsKeyDown(Keys.Q))
+                currentState = State.Quit;
         }
 
         public static void PauseDraw()
         {
 
-            pauseMeny.Draw(spriteBatch);
-
+            spriteBatch.Begin();
             
+            spriteBatch.End();
+
+
         }
 
 

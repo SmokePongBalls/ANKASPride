@@ -1,5 +1,4 @@
-﻿
-<Map>
+﻿<Map>
   <MovingObjects>
     <Bird>
       <Texture>bird</Texture>
@@ -105,7 +104,6 @@
   </Blocks>
   <Effects>
     <Point>
-      <Texture>pear</Texture>
       <X>550</X>
       <Y>-1035</Y>
       <Worth>100</Worth>

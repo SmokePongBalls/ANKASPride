@@ -28,34 +28,9 @@ namespace te16mono
         public override void Update(GameTime gameTime)
         {
 
+            TryJump();
             // Om den inte har uppnåt maxfart
-            if (acceleration < maxSpeed && acceleration > -maxSpeed)
-            {
-                //Om den ska gå åt vänster
-                if (!walkLeft)
-                {
-                    acceleration += (float)0.01;
-                }
-                //Om den ska åka höger
-                else
-                {
-                    acceleration -= (float)0.01;
-                }
-
-                velocity.X += acceleration;
-            }
-
-            //Om den ska hoppa
-            if (canJump == true)
-            {
-                velocity.Y -= 20;
-                canJump = false;
-            }
-
-            velocity.Y += Program.Gravity;
-
-            position.Y += velocity.Y;
-            position.X += velocity.X;
+            Move();
 
 
             //Om den har nått sin maxposition på X
@@ -76,6 +51,15 @@ namespace te16mono
                 walkLeft = false;
                 acceleration = 0;
                 velocity.X = acceleration;
+            }
+        }
+        void TryJump()
+        {
+            //Om den ska hoppa
+            if (canJump == true)
+            {
+                velocity.Y -= 20;
+                canJump = false;
             }
         }
         //Gammal intersect

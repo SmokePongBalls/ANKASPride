@@ -28,7 +28,7 @@ namespace te16mono
             this.currentState = currentState;
 
 
-
+            
         }
 
         public Texture2D Texture { get { return texture; } }
@@ -109,17 +109,16 @@ namespace te16mono
 
                 lastChange = gameTime.TotalGameTime.TotalMilliseconds;
 
-                
+                if (keyboardState.IsKeyDown(Keys.Enter))
+
+                    return meny[selected].State;
 
 
 
                
 
             }
-            if (keyboardState.IsKeyDown(Keys.Enter) && Main.lastKeyboard.IsKeyUp(Keys.Enter))
 
-                return meny[selected].State;
-            else
             return defaultMenyState; 
 
         }
@@ -144,35 +143,10 @@ namespace te16mono
             spritebatch.End();
         }
 
-     
 
 
 
      }
-
-    class PauseMenyItem : MenyItem
-    {
-        public PauseMenyItem(Texture2D texture, Vector2 position, int currentState) : base(texture, position, currentState)
-        {
-
-            
-
-
-
-
-        }
-
-
-    }
-
-
-    class PauseMeny : Menyer
-    {
-        public PauseMeny(int defaultMenystate) : base(defaultMenystate)
-        {
-        }
-    }
-
 
 
 

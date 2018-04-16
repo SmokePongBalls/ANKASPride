@@ -12,31 +12,35 @@ namespace te16mono.LevelBuilder
 {
     //Anton
 
-    public enum LevelBuilderState {Main, Saving}
+    public enum LevelBuilderState { Main, Saving }
     static class MainLevelBuilder
     {
 
-        static ContentManager Content;
-        static Vector2 position;
-        static SpriteBatch spriteBatch;
-        static bool showError;
-        static Saving saving;
-        static float zoom;
-        static float testScroll;
+        static ContentManager Content; //Contentmanagern för att ladda in filer
+        static SpriteBatch spriteBatch; //Spritebatchen för att rita ut saker
+        static bool showError; // Är true ifall ett kryss ska visas vid muspekaren
+        static Saving saving; //Saving klassen som används när filer ska sparas
 
-        public static bool placementAllowed, selectionAllowed;
+        public static Vector2 position; //Används för att veta vilken position kameran och muspekaren har
+        public static bool placementAllowed, selectionAllowed; // Ifall man får placera ut och ifall man får välja objekt
         public static MouseState mouse, lastMouse;
-        public static KeyboardState keyboardState, lastKeyboardState;
-        public static SelectedObject selectedObject;
-        public static SpriteFont spriteFont;
-        public static LevelBuilderState state;
+        public static KeyboardState keyboardState { get; private set; }
+        public static KeyboardState lastKeyboardState { get; private set; }
+        public static SelectedObject selectedObject; //Vilken typ utav objekt som är valt
+        public static SpriteFont spriteFont { get; private set; }
+        public static LevelBuilderState state; //Vilken state det körs i just nu 
+        //Ett objekt flyttas till en av de här när det ska redigeras
         public static MovingObjects selectedMovingObject;
         public static Block selectedBlock;
         public static Point selectedEffect;
-        public static Player player;
+
+        public static Player player; //Används så att användaren ska se vart spelaren börjar
+
+        //Listorna med saker man har placerat ut 
         public static List<Block> blocks;
         public static List<MovingObjects> movingObjects;
         public static List<Point> effects;
+        //Alla textures som används
         public static Texture2D
             cat,
             pear,
@@ -44,7 +48,11 @@ namespace te16mono.LevelBuilder
             hedgehog,
             square,
             frog,
-            finishFlag;
+            finishFlag,
+            weight,
+            iceblock,
+            shield,
+            goldBag;
 
         public static void Initialize(ContentManager Content, GraphicsDevice graphicsDevice)
         {
@@ -62,7 +70,6 @@ namespace te16mono.LevelBuilder
             spriteFont = Content.Load<SpriteFont>("font");
             lastMouse = Mouse.GetState();
             lastKeyboardState = Keyboard.GetState();
-            zoom = 1;
 
             selectionAllowed = true;
             saving = new Saving();
@@ -83,69 +90,81 @@ namespace te16mono.LevelBuilder
 
             if (state == LevelBuilderState.Main)
             {
-                //Ska endast ifall muspekaren inte är över menyn
-                if (mouse.X < 1440)
-                {
-                    //Kollar om man väljer ett objekt
-                    if (selectionAllowed)
-                    {
-                        foreach (MovingObjects movingObject in movingObjects.ToArray())
-                        {
-                            if (movingObject.Hitbox.Intersects(AbsoluteMouseHitbox) && mouse.LeftButton == ButtonState.Pressed && lastMouse.LeftButton == ButtonState.Released)
-                            {
-                                MovingObjectSelected(movingObject);
-                            }
-                        }
-                        foreach (Block block in blocks.ToArray())
-                        {
-                            if (block.Hitbox.Intersects(AbsoluteMouseHitbox) && mouse.LeftButton == ButtonState.Pressed && lastMouse.LeftButton == ButtonState.Released)
-                            {
-                                BlockSelected(block);
-                            }
-                        }
-                        foreach (Point effect in effects.ToArray())
-                        {
-                            if (effect.Hitbox.Intersects(AbsoluteMouseHitbox) && mouse.LeftButton == ButtonState.Pressed && lastMouse.LeftButton == ButtonState.Released)
-                            {
-                                EffectSelected(effect);
-                            }
-                        }
-                    }
-
-                    //Placerar ut block
-                    if (mouse.LeftButton == ButtonState.Pressed && lastMouse.LeftButton == ButtonState.Released && placementAllowed)
-                        ObjectPlacing.Create();
-
-                    //Flyttar runt kameran
-                    if (mouse.RightButton == ButtonState.Pressed)
-                    {
-                        if (lastMouse.RightButton == ButtonState.Pressed)
-                        {
-                            position.X += lastMouse.X - mouse.X;
-                            position.Y += lastMouse.Y - mouse.Y;
-                        }
-
-                    }
-                    //Zoomar kameran
-                }
-
-                if (keyboardState.IsKeyDown(Keys.PageDown) && lastKeyboardState.IsKeyUp(Keys.PageDown) && zoom > 0)
-                {
-                    zoom -= 0.1f;
-                }
-                else if (keyboardState.IsKeyDown(Keys.PageUp) && lastKeyboardState.IsKeyUp(Keys.PageUp) && zoom < 5)
-                {
-                    zoom += 0.1f;
-                }
-                Menu.Update();
+                UpdateMain();
             }
+            //Om den är i sparar stadiet
             else if (state == LevelBuilderState.Saving)
             {
                 saving.Update(keyboardState, lastKeyboardState);
             }
 
+            //Sparar mus och keyboard staten till sina laststate
             lastMouse = mouse;
             lastKeyboardState = keyboardState;
+        }
+
+        //Update ifall state == Main
+        private static void UpdateMain()
+        {
+            //Ska endast ifall muspekaren inte är över menyn
+            if (mouse.X < 1440)
+            {
+                //Saker som endast ska köras ifall vänster musknapp trycks ner för första gånger
+                if (LeftClick())
+                {
+                    //Ifall man får välja ett utav objekten
+                    if (selectionAllowed)
+                    {
+                        CheckForSelection();
+                    }
+
+                    //Placerar ut block
+                    if (placementAllowed)
+                        ObjectPlacing.Create();
+                }
+                //Flyttar runt kameran
+                CameraMovement();
+            }
+
+            Menu.Update();
+        }
+        //Om man håller ner högermusknapp så flyttas kameran
+        private static void CameraMovement()
+        {
+            if (mouse.RightButton == ButtonState.Pressed && lastMouse.RightButton == ButtonState.Pressed)
+            {
+                position.X += lastMouse.X - mouse.X; //X += Delta X
+                position.Y += lastMouse.Y - mouse.Y; // Y += Delta Y
+            }
+        }
+
+        //Kollar ifall användaren klickar på någon utav objekten
+        private static void CheckForSelection()
+        {
+            //Går igenom alla movingobjects 
+            foreach (MovingObjects movingObject in movingObjects.ToArray())
+            {
+                if (movingObject.Hitbox.Intersects(AbsoluteMouseHitbox))
+                {
+                    MovingObjectSelected(movingObject);
+                }
+            }
+            //Går igenom alla blocks
+            foreach (Block block in blocks.ToArray())
+            {
+                if (block.Hitbox.Intersects(AbsoluteMouseHitbox))
+                {
+                    BlockSelected(block);
+                }
+            }
+            //Går igenom alla effekter 
+            foreach (Point effect in effects.ToArray())
+            {
+                if (effect.Hitbox.Intersects(AbsoluteMouseHitbox))
+                {
+                    EffectSelected(effect);
+                }
+            }
         }
 
         static public void Draw(GraphicsDevice graphicsDevice)
@@ -153,63 +172,57 @@ namespace te16mono.LevelBuilder
             //Allting som är del utav banan
             if (state == LevelBuilderState.Main)
             {
-                
-                spriteBatch.Begin(SpriteSortMode.BackToFront, null, null, null, null, null, Camera.LevelBuilderPosition(position, zoom, graphicsDevice.DisplayMode.Width, graphicsDevice.DisplayMode.Height));
-                foreach (MovingObjects movingObject in movingObjects)
-                {
-                    movingObject.Draw(spriteBatch);
-                }
-                foreach (Point effect in effects)
-                {
-                    effect.Draw(spriteBatch);
-                }
-                foreach (Block block in blocks)
-                {
-                    block.Draw(spriteBatch);
-                }
-                player.Draw(spriteBatch);
-
-                if (showError && placementAllowed)
-                    spriteBatch.DrawString(spriteFont, "X", MousePosition, Color.Red);
-
-                selectedBlock.Draw(spriteBatch);
-                selectedEffect.Draw(spriteBatch);
-                selectedMovingObject.Draw(spriteBatch);
-
-                spriteBatch.End();
-                //Allting som är en del utav UI
-                spriteBatch.Begin();
-                Menu.Draw(spriteBatch);
-                spriteBatch.DrawString(spriteFont, Convert.ToString(testScroll), new Vector2(0), Color.Black);
-
-                spriteBatch.End();
+                MainDraw(graphicsDevice);
             }
+            //Allting som är del utav saving
             else if (state == LevelBuilderState.Saving)
             {
-                spriteBatch.Begin();
-                saving.Draw(spriteBatch);
-                spriteBatch.End();
+                SavingDraw();
             }
-            
+
         }
-
-
-        public static Rectangle MouseHitbox
+        //Ska målas om State == Saving
+        private static void SavingDraw()
         {
-            get
-            {
-                return new Rectangle(mouse.X, mouse.Y + 10, 1, 1);
-            }
+            spriteBatch.Begin();
+            saving.Draw(spriteBatch);
+            spriteBatch.End();
         }
 
-        public static Rectangle AbsoluteMouseHitbox
+        //Ska målas om State == Main
+        private static void MainDraw(GraphicsDevice graphicsDevice)
         {
-            get
+            //Allting som blir ska flyttas med kameran
+            spriteBatch.Begin(SpriteSortMode.BackToFront, null, null, null, null, null, Camera.LevelBuilderPosition(position, graphicsDevice.DisplayMode.Width, graphicsDevice.DisplayMode.Height));
+            foreach (MovingObjects movingObject in movingObjects)
             {
-                return new Rectangle(Convert.ToInt32( zoom * (mouse.X - 960 + position.X)), Convert.ToInt32(zoom * (mouse.Y - 540 + position.Y)), 1, 1);
+                movingObject.Draw(spriteBatch);
             }
-        }
+            foreach (Point effect in effects)
+            {
+                effect.Draw(spriteBatch);
+            }
+            foreach (Block block in blocks)
+            {
+                block.Draw(spriteBatch);
+            }
+            player.Draw(spriteBatch);
 
+            if (showError && placementAllowed)
+                spriteBatch.DrawString(spriteFont, "X", MousePosition, Color.Red);
+
+            selectedBlock.Draw(spriteBatch);
+            selectedEffect.Draw(spriteBatch);
+            selectedMovingObject.Draw(spriteBatch);
+
+            spriteBatch.End();
+            //Allting som är en del utav UI och ska ha samma position
+            spriteBatch.Begin();
+            Menu.Draw(spriteBatch);
+
+            spriteBatch.End();
+        }
+        //Laddar in alla textures som kommer behövas 
         static void LoadAllTextures()
         {
             cat = Content.Load<Texture2D>("katt");
@@ -219,8 +232,118 @@ namespace te16mono.LevelBuilder
             square = Content.Load<Texture2D>("square");
             finishFlag = Content.Load<Texture2D>("finishFlag");
             frog = Content.Load<Texture2D>("frog");
+            shield = Content.Load<Texture2D>("sheild");
+            weight = Content.Load<Texture2D>("weight");
+            iceblock = Content.Load<Texture2D>("iceblock");
+            goldBag = Content.Load<Texture2D>("goldbag");
         }
 
+        
+        // Om man har tryck på ett moving object
+        static void MovingObjectSelected(MovingObjects input)
+        {
+            //Sparar det gamla valda värdet ifall det finns ett och byter sedan till det valda movingObject
+            if (Menu.menu != MenuType.ValueChanging)
+            {
+                selectedMovingObject = input;
+                movingObjects.Remove(input);
+                Menu.ChangeMovingObject(selectedMovingObject);
+                placementAllowed = false;
+            }
+            else
+            {
+                SaveValue();
+                selectedMovingObject = input;
+                movingObjects.Remove(input);
+                Menu.ChangeMovingObject(selectedMovingObject);
+                placementAllowed = false;
+            }
+        }
+        //Om man har tryck på ett block
+        static void BlockSelected(Block input)
+        {
+            //Sparar det gamla valda värdet ifall det finns ett och byter sedan till det valda blocket
+            if (Menu.menu != MenuType.ValueChanging)
+            {
+                selectedBlock = input;
+                blocks.Remove(input);
+                Menu.ChangeBlock(selectedBlock);
+                placementAllowed = false;
+            }
+            else
+            {
+                SaveValue();
+                selectedBlock = input;
+                blocks.Remove(input);
+                Menu.ChangeBlock(selectedBlock);
+                placementAllowed = false;
+            }
+
+        }
+
+        //Om man har tryck på en effekt
+        static void EffectSelected(Point input)
+        {
+            //Sparar det gamla valda värdet ifall det finns ett och byter sedan till den valda effekten
+            if (Menu.menu != MenuType.ValueChanging)
+            {
+                selectedEffect = input;
+                effects.Remove(input);
+                Menu.ChangeEffect(selectedEffect);
+                placementAllowed = false;
+            }
+            else
+            {
+                SaveValue();
+                selectedEffect = input;
+                effects.Remove(input);
+                Menu.ChangeEffect(selectedEffect);
+                placementAllowed = false;
+            }
+
+        }
+
+        //Kollar ifall det finns några objekt som behöver flyttas till sin rätta lista
+        static void SaveValue()
+        {
+            //Sparas endast ifall det inte är dummy värde
+            if (selectedBlock != LevelBuilderDummy.DummyBlock)
+            {
+                blocks.Add(selectedBlock);
+                selectedBlock = LevelBuilderDummy.DummyBlock;
+            }
+            //Sparas endast ifall det inte är dummy värde
+            else if (selectedEffect != LevelBuilderDummy.DummyEffect)
+            {
+                effects.Add(selectedEffect);
+                selectedEffect = LevelBuilderDummy.DummyEffect;
+            }
+            //Sparas endast ifall det inte är dummy värde
+            else if (selectedMovingObject != LevelBuilderDummy.DummyMovingObject)
+            {
+                movingObjects.Add(selectedMovingObject);
+                selectedMovingObject = LevelBuilderDummy.DummyMovingObject;
+            }
+        }
+        //Återställer så att det blir en tom bana
+        public static void Reset()
+        {
+            movingObjects = new List<MovingObjects>();
+            effects = new List<Point>();
+            blocks = new List<Block>();
+            LevelBuilderDummy.DummyValues();
+            position = new Vector2(0);
+        }
+        //Retunerar true ifall man trycker ner vänstermusknapp. Ifall man håller ner den retuneras false
+        public static bool LeftClick()
+        {
+            if (mouse.LeftButton == ButtonState.Pressed && lastMouse.LeftButton == ButtonState.Released)
+                return true;
+            else
+                return false;
+        }
+
+        //Musens position justerat efter kameran
         public static Vector2 MousePosition
         {
             get
@@ -229,93 +352,21 @@ namespace te16mono.LevelBuilder
             }
         }
 
-        static void MovingObjectSelected(MovingObjects input)
+        //Alla rektanglar som används i klassen
+        public static Rectangle MouseHitbox
         {
-            if (Menu.menu != MenuType.ValueChanging)
+            get
             {
-                selectedMovingObject = input;
-                movingObjects.Remove(input);
-                Menu.ChangeMovingObject(selectedMovingObject);
-                placementAllowed = false;
-            }
-            else
-            {
-                SaveValue();
-                selectedMovingObject = input;
-                movingObjects.Remove(input);
-                Menu.ChangeMovingObject(selectedMovingObject);
-                placementAllowed = false;
+                return new Rectangle(mouse.X, mouse.Y + 5, 1, 1);
             }
         }
 
-        static void BlockSelected(Block input)
+        public static Rectangle AbsoluteMouseHitbox
         {
-            if (Menu.menu != MenuType.ValueChanging)
+            get
             {
-                selectedBlock = input;
-                blocks.Remove(input);
-                Menu.ChangeBlock(selectedBlock);
-                placementAllowed = false;
-            }
-            else
-            {
-                SaveValue();
-                selectedBlock = input;
-                blocks.Remove(input);
-                Menu.ChangeBlock(selectedBlock);
-                placementAllowed = false;
-            }
-            
-        }
-
-        static void EffectSelected(Point input)
-        {
-            if (Menu.menu != MenuType.ValueChanging)
-            {
-                selectedEffect = input;
-                effects.Remove(input);
-                Menu.ChangeEffect(selectedEffect);
-                placementAllowed = false;
-            }
-            else
-            {
-                SaveValue();
-                selectedEffect = input;
-                effects.Remove(input);
-                Menu.ChangeEffect(selectedEffect);
-                placementAllowed = false;
-            }
-            
-        }
-
-        static void SaveValue()
-        {
-            if (selectedBlock != LevelBuilderDummy.DummyBlock)
-            {
-                blocks.Add(selectedBlock);
-                selectedBlock = LevelBuilderDummy.DummyBlock;
-            }
-            else if (selectedEffect != LevelBuilderDummy.DummyEffect)
-            {
-                effects.Add(selectedEffect);
-                selectedEffect = LevelBuilderDummy.DummyEffect;
-            }
-            else if (selectedMovingObject != LevelBuilderDummy.DummyMovingObject)
-            {
-                movingObjects.Add(selectedMovingObject);
-                selectedMovingObject = LevelBuilderDummy.DummyMovingObject;
+                return new Rectangle(Convert.ToInt32(mouse.X - 960 + position.X), Convert.ToInt32(mouse.Y - 540 + position.Y), 1, 1);
             }
         }
-
-        public static void Reset()
-        {
-            movingObjects = new List<MovingObjects>();
-            effects = new List<Point>();
-            blocks = new List<Block>();
-            LevelBuilderDummy.DummyValues();
-            position = new Vector2(0);
-            zoom = 1;
-        }
-        
     }
 }

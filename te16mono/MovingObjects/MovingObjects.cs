@@ -39,6 +39,30 @@ namespace te16mono
         
 
         //<Summary> Hitboxen</summary>
+
+        protected virtual void Move()
+        {
+            if (acceleration < maxSpeed && acceleration > -maxSpeed)
+            {
+                //Om den ska gå åt vänster
+                if (!walkLeft)
+                {
+                    acceleration += (float)0.01;
+                }
+                //Om den ska åka höger
+                else
+                {
+                    acceleration -= (float)0.01;
+                }
+
+                velocity.X += acceleration;
+            }
+            velocity.Y += Program.Gravity;
+
+            position.Y += velocity.Y;
+            position.X += velocity.X;
+        }
+
         public virtual Rectangle Hitbox
         {
             get
@@ -127,7 +151,7 @@ namespace te16mono
         }
         public abstract void Update(GameTime gameTime);
 
-
+       
         //Tar reda på vilken sida utav objektet som hitboxen befinner sig
         //Fungerar hyfsat bra men kollisionen underifrån kan göras bättre
         protected Oriantation CheckCollision(Rectangle collided)

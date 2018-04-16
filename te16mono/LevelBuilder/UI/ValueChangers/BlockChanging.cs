@@ -6,12 +6,14 @@ using Microsoft.Xna.Framework;
 
 namespace te16mono.LevelBuilder.UI
 {
+    //Anton
     class BlockChanging : ValueChanging
     {
         string currentX, currentY, currentWidth, currentHeight, currentVelocityY, currentVelocityX;
 
         public BlockChanging(Block input)
         {
+            //Alla de olika alternativen som finns
             options = new List<string>();
             options.Add("X");
             options.Add("Y");
@@ -27,11 +29,12 @@ namespace te16mono.LevelBuilder.UI
             currentX = Convert.ToString(input.position.X);
             currentY = Convert.ToString(input.position.Y);
         }
-
+        //Målar ut alla de olika värdena
         protected override void DrawValues(SpriteBatch spriteBatch)
         {
+            //Sätter positionen
             position = new Vector2(1500, 140);
-
+            //Om man redigerar textboxen så byts färg och "|" är tilllagt i slutet
             if (editing != Editing.X)
             {
                 spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.White);
@@ -107,21 +110,22 @@ namespace te16mono.LevelBuilder.UI
                 position.Y += 80;
             }
         }
-
+        //Kollar ifall exitknappen trycks ner
         protected override void CheckForExit()
         {
-            if (MainLevelBuilder.mouse.LeftButton == ButtonState.Pressed && MainLevelBuilder.MouseHitbox.Intersects(ExitRectangle))
+            if (MainLevelBuilder.LeftClick() && MainLevelBuilder.MouseHitbox.Intersects(ExitRectangle))
                 Menu.DoneWithBlock();
         }
-
+        //Kollar ifall användaren klickar på någon utav hitboxarna och byter värde på editString.
         protected override bool CheckHitbox()
         {
             MouseState mouse = MainLevelBuilder.mouse;
-
-            if (mouse.LeftButton == ButtonState.Pressed)
+            //Körs endast om man trycker ner vänstermusknapp
+            if (MainLevelBuilder.LeftClick())
             {
+                //Sätter rätt position
                 position = new Vector2(1500, 100);
-
+                //Returnerar true ifall och byter state ifall användaren trycker på någon utav rektanglarna
                 if (BigSelectionRectangle.Intersects(MainLevelBuilder.MouseHitbox))
                 {
                     editing = Editing.X;
@@ -164,9 +168,53 @@ namespace te16mono.LevelBuilder.UI
                     return true;
                 }
             }
+            //Retunerar false ifall inget blev tryckt
             return false;
         }
-
+        //Kollar ifall användaren klickar på någon utav hitboxarna.
+        protected override bool CheckForChange()
+        {
+            MouseState mouse = MainLevelBuilder.mouse;
+            //Körs endast om man trycker ner vänstermusknapp
+            if (MainLevelBuilder.LeftClick())
+            {
+                //Sätter rätt position
+                position = new Vector2(1500, 100);
+                //Returnerar true ifall och byter state ifall användaren trycker på någon utav rektanglarna
+                if (BigSelectionRectangle.Intersects(MainLevelBuilder.MouseHitbox))
+                {
+                    return true;
+                }
+                position.Y += 80;
+                if (BigSelectionRectangle.Intersects(MainLevelBuilder.MouseHitbox))
+                {
+                    return true;
+                }
+                position.Y += 80;
+                if (BigSelectionRectangle.Intersects(MainLevelBuilder.MouseHitbox))
+                {
+                    return true;
+                }
+                position.Y += 80;
+                if (BigSelectionRectangle.Intersects(MainLevelBuilder.MouseHitbox))
+                {
+                    return true;
+                }
+                position.Y += 80;
+                if (BigSelectionRectangle.Intersects(MainLevelBuilder.MouseHitbox))
+                {
+                    return true;
+                }
+                position.Y += 80;
+                if (BigSelectionRectangle.Intersects(MainLevelBuilder.MouseHitbox))
+                {
+                    return true;
+                }
+            }
+            //Retunerar false ifall inget blev tryckt
+            return false;
+        }
+        //Ändrar värdet på den sak som editas
         protected override void SetEdit()
         {
             if (editing == Editing.Width)
@@ -182,15 +230,16 @@ namespace te16mono.LevelBuilder.UI
             else if (editing == Editing.Y)
                 currentY = editString;
         }
-
+        //Sparar värdena
         protected override void SetValues()
         {
+            //Gör ett temp movingobject för att ändra värdena på
             Block block = MainLevelBuilder.selectedBlock;
-
             block.velocity.X = (float)Convert.ToDouble(currentVelocityX);
             block.velocity.Y = (float)Convert.ToDouble(currentVelocityY);
             block.position.X = (float)Convert.ToDouble(currentX);
             block.position.Y = (float)Convert.ToDouble(currentY);
+            //Kollar så att längden och bredden båda är heltal
             try
             {
                 block.width = Convert.ToInt32(currentWidth);
