@@ -26,7 +26,7 @@ namespace te16mono
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         public static GameSection gameSection;
-
+        KeyboardState keyboard, lastKeyboard;
 
 
         public Game1()
@@ -49,7 +49,8 @@ namespace te16mono
             Main.Initialize(Content);
             MainLevelBuilder.Initialize(Content, GraphicsDevice);
             gameSection = GameSection.CoreGame;
-
+            keyboard = new KeyboardState();
+            lastKeyboard = new KeyboardState();
             IsMouseVisible = true;
 
             base.Initialize();
@@ -83,7 +84,7 @@ namespace te16mono
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-
+            Main.keyboard = Keyboard.GetState();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Main.currentState = Main.State.Pause;
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Q))
@@ -111,12 +112,13 @@ namespace te16mono
                     case Main.State.Quit:
                         this.Exit();
                         break;
-                       
-                        
-                
 
-                case Main.State.Pause:Main.PauseUpdate();
-                    break;
+
+
+
+                    case Main.State.Pause:
+                        Main.currentState = Main.PauseUpdate(gameTime);
+                        break;
 
                     case Main.State.Finish:
                         Main.FinishUpdate();
@@ -147,6 +149,7 @@ namespace te16mono
                 if (gameSection == GameSection.CoreGame)
                     MainLevelBuilder.Reset();
                 }
+            Main.lastKeyboard = keyboard;
             base.Update(gameTime);
         }
   

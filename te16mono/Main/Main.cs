@@ -32,12 +32,12 @@ namespace te16mono
         public static List<Point> effects;
         //TestKatten
         public static List<MovingObjects> testObjects;
-
+        public static KeyboardState keyboard, lastKeyboard;
 
 
 
         static Menyer meny;
-
+        static PauseMeny pauseMeny;
 
 
         static public void Initialize(ContentManager content)
@@ -65,7 +65,15 @@ namespace te16mono
             meny = new Menyer((int)State.Meny);
             meny.AddItem(Content.Load<Texture2D>("Start"),(int)State.Run);
             meny.AddItem(Content.Load<Texture2D>("Quit"),(int)State.Quit );
-            
+
+            pauseMeny = new PauseMeny((int)State.Pause);
+            pauseMeny.AddItem(Content.Load<Texture2D>("Meny"),(int)State.);
+            pauseMeny.AddItem(Content.Load<Texture2D>("Quit"), (int)State.Quit);
+
+
+            keyboard = new KeyboardState();
+            lastKeyboard = new KeyboardState();
+
 
             //Hugo F
             font = Content.Load<SpriteFont>("Font");
@@ -237,27 +245,19 @@ namespace te16mono
             spriteBatch.End();
         }
 
-        public static State PauseUpdate()
+        public static State PauseUpdate(GameTime gameTime)
         {
-            KeyboardState keyboard = Keyboard.GetState();
 
-            if (keyboard.IsKeyDown(Keys.S)) // Resume på pause meny fixar detta sen 
-                currentState = State.Run;
+            return (State)pauseMeny.Update(gameTime);
 
-            if (keyboard.IsKeyDown(Keys.Q))
-                currentState = State.Quit;
-
-            return State.Pause;
         }
 
         public static void PauseDraw()
         {
 
-            spriteBatch.Begin();
+            pauseMeny.Draw(spriteBatch);
+
             
-            spriteBatch.End();
-
-
         }
 
 

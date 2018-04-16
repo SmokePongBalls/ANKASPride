@@ -116,7 +116,7 @@ namespace te16mono
                
 
             }
-            if (keyboardState.IsKeyDown(Keys.Enter))
+            if (keyboardState.IsKeyDown(Keys.Enter) && Main.lastKeyboard.IsKeyUp(Keys.Enter))
 
                 return meny[selected].State;
             else
@@ -144,10 +144,35 @@ namespace te16mono
             spritebatch.End();
         }
 
+     
 
 
 
      }
+
+    class PauseMenyItem : MenyItem
+    {
+        public PauseMenyItem(Texture2D texture, Vector2 position, int currentState) : base(texture, position, currentState)
+        {
+
+            
+
+
+
+
+        }
+
+
+    }
+
+
+    class PauseMeny : Menyer
+    {
+        public PauseMeny(int defaultMenystate) : base(defaultMenystate)
+        {
+        }
+    }
+
 
 
 
