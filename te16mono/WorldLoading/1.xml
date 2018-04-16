@@ -92,6 +92,11 @@
       <Y>500</Y>
       <Worth>1</Worth>
     </Whammy>
+    <HighGravity>
+      <Texture>weight</Texture>
+      <X>850</X>
+      <Y>500</Y>
+    </HighGravity>
     <Finish>
       <Texture>finishFlag</Texture>
       <X>3750</X>

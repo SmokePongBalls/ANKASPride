@@ -104,8 +104,10 @@ namespace te16mono
 
         public static State RunUpdate(GameTime gameTime)
         {
-            //Testkatten
 
+            player.Update(gameTime);
+
+            //Testkatten
             foreach (Block testBlock in testBlocks.ToArray())
             {
                 if (player.Hitbox.Intersects(testBlock.Hitbox))
@@ -199,7 +201,7 @@ namespace te16mono
             }
 
             countdown -= gameTime.ElapsedGameTime.TotalMilliseconds;
-            player.Update(gameTime);
+            
 
 
             if (player.health <= 0)
