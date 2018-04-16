@@ -37,14 +37,7 @@ namespace te16mono
 
         protected override void Initialize()
         {
-            //Fullscreen Hugo F --
-            //Gör så att spelet fyller hela skärmen.
-            graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
-            graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
-            //Är false för att spelet buggar lite om man tabbar ur det när det är fullscreen. måste fixas. (kanske om man gör en "if-sats" som kollar om "alt" och "tab" trycks samtidigt. Då så går det ur fullscreen?) Hugo F
-            graphics.IsFullScreen = false;
-            graphics.ApplyChanges();
-            //--
+            Fullscreen();
             Main.currentState = Main.State.Meny;
             Main.Initialize(Content);
             MainLevelBuilder.Initialize(Content, GraphicsDevice);
@@ -53,6 +46,18 @@ namespace te16mono
             IsMouseVisible = true;
 
             base.Initialize();
+        }
+
+        private void Fullscreen()
+        {
+            //Fullscreen Hugo F --
+            //Gör så att spelet fyller hela skärmen.
+            graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
+            graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
+            //Är false för att spelet buggar lite om man tabbar ur det när det är fullscreen. måste fixas. (kanske om man gör en "if-sats" som kollar om "alt" och "tab" trycks samtidigt. Då så går det ur fullscreen?) Hugo F
+            graphics.IsFullScreen = false;
+            graphics.ApplyChanges();
+            //--
         }
 
         /// <summary>
