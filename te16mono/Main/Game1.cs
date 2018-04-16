@@ -110,7 +110,7 @@ namespace te16mono
 
 
                     case Main.State.Quit:
-                        this.Exit();
+                        Exit();
                         break;
 
 
