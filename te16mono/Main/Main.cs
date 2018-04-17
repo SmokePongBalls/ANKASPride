@@ -37,7 +37,7 @@ namespace te16mono
 
 
         static Menyer meny;
-
+        static PauseMeny pauseMeny;
 
 
         static public void Initialize(ContentManager content)
@@ -63,9 +63,12 @@ namespace te16mono
             spriteBatch = new SpriteBatch(graphicsDevice);
 
             meny = new Menyer((int)State.Meny);
-            meny.AddItem(Content.Load<Texture2D>("Start"),(int)State.Run);
-            meny.AddItem(Content.Load<Texture2D>("Quit"),(int)State.Quit );
-            
+            meny.AddItem((int)State.Run, Content.Load<Texture2D>("Start"));
+            meny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));
+
+            pauseMeny = new PauseMeny((int)State.Pause);
+            pauseMeny.AddItem((int)State.Meny,Content)
+
 
             //Hugo F
             font = Content.Load<SpriteFont>("Font");

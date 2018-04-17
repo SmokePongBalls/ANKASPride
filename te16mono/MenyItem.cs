@@ -59,7 +59,7 @@ namespace te16mono
 
         }
 
-        public void AddItem(Texture2D itemTexture, int State) // lägger till meny valen i listan 
+        public void AddItem(int State, Texture2D itemTexture) // lägger till meny valen i listan 
         {
 
             // sätter höjden på föremplerna (item)
@@ -147,6 +147,32 @@ namespace te16mono
 
 
      }
+
+
+    class PauseMenyItem : MenyItem
+    {
+        public PauseMenyItem(Texture2D texture, Vector2 position, int currentState) : base(texture, position, currentState)
+        {
+
+
+
+
+
+        }
+
+    }
+
+    class PauseMeny : Menyer
+    {
+        public PauseMeny(int defaultMenystate) : base(defaultMenystate)
+        {
+
+             
+
+
+        }
+    }
+
 
 
 
