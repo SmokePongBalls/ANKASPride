@@ -67,7 +67,7 @@ namespace te16mono
             meny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));
 
             pauseMeny = new PauseMeny((int)State.Pause);
-            pauseMeny.AddItem((int)State.Meny,Content)
+            //pauseMeny.AddItem((int)State.Meny, );
 
 
             //Hugo F

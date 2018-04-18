@@ -18,7 +18,7 @@ namespace te16mono
             document = SaveEffect(document);
 
             //Sparar filen i mappen programmet körs ifrån med namnet [name].xml
-            File.WriteAllText(name + ".xml", document);
+            File.WriteAllText("WorldLoading/" + name + ".xml", document);
         }
         //Lägger till alla efffects i dokument
         private static string SaveEffect(string document)
