@@ -69,8 +69,10 @@ namespace te16mono
             //kollar om player är under någon effect. Det är vad boolen är till för Hugo F
             if (underEffect == true)
             {
-                Effects(gameTime);
-
+                if (effects.Count > 1)               
+                    effects.RemoveAt(0);
+                
+                Effects(gameTime);              
             }
 
         }
@@ -174,7 +176,7 @@ namespace te16mono
         private void Effects(GameTime gameTime)
         {
             //kollar om player är under specifikt "Immortality" effekten
-            if (effect == "Immortality")
+            if (effects[0] == "immortality")
             {
                 //player kan inte bli skadade om detta är false
                 canBeDamaged = false;
@@ -191,7 +193,7 @@ namespace te16mono
 
             }
 
-            if (effect == "Whammy")
+            if (effects[0] == "Whammy")
             {
                 if (whammy <= 0)
                 {
@@ -204,7 +206,7 @@ namespace te16mono
 
             }
 
-            if (effect == "HighGravity")
+            if (effects[0] == "HighGravity")
             {
                 //höjer gravity så att player inte kan hoppa lika högt och åker ner snabbare
                 gravity = 1;
