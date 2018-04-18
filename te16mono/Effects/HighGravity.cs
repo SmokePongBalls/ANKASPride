@@ -18,7 +18,7 @@ namespace te16mono
             //ser till så att programmet vet att player är under en effekt
             player.underEffect = true;
             //ser till så att programmet vet vilken sorts effect det är
-            player.effect = "HighGravity";
+            player.effects.Add("HighGravity");
             //ser till så att players "underEffect" och "effect" blir faktist ändrad och kan då användas. Den skickar tillbaka player och dess värden som är ändrade
             return player;
         }

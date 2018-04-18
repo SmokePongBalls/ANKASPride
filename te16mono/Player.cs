@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 
 namespace te16mono
 {
@@ -21,7 +22,7 @@ namespace te16mono
         public bool underEffect;
         public bool canBeDamaged = true;
         public bool isWhammy = false;
-       
+        public List<string> effects = new List<string>();
         public string effect;
         
         //kontroller

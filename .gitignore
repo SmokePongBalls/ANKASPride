@@ -260,3 +260,4 @@ paket-files/
 __pycache__/
 *.pyc
 te16mono/Content/Content.mgcb
+te16mono/Main/Main.cs
