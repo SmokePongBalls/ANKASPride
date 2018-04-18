@@ -3,7 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace te16mono
 {
-    class FinishLine : Point
+    //ändrade så att alla effekter ärver av Effekt nu istället. Hugo F
+    class FinishLine : Effect
     {
 
         public FinishLine(Vector2 position, Texture2D texture, int worth) : base(position, texture, worth)

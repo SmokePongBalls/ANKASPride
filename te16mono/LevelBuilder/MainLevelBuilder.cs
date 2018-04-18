@@ -32,14 +32,14 @@ namespace te16mono.LevelBuilder
         //Ett objekt flyttas till en av de här när det ska redigeras
         public static MovingObjects selectedMovingObject;
         public static Block selectedBlock;
-        public static Point selectedEffect;
+        public static Effect selectedEffect;
 
         public static Player player; //Används så att användaren ska se vart spelaren börjar
 
         //Listorna med saker man har placerat ut 
         public static List<Block> blocks;
         public static List<MovingObjects> movingObjects;
-        public static List<Point> effects;
+        public static List<Effect> effects;
         //Alla textures som används
         public static Texture2D
             cat,
@@ -60,7 +60,7 @@ namespace te16mono.LevelBuilder
             player = new Player(1, Content.Load<Texture2D>("square"));
             spriteBatch = new SpriteBatch(graphicsDevice);
             movingObjects = new List<MovingObjects>();
-            effects = new List<Point>();
+            effects = new List<Effect>();
             blocks = new List<Block>();
             Vector2 position = new Vector2(0);
             mouse = new MouseState();
@@ -158,7 +158,7 @@ namespace te16mono.LevelBuilder
                 }
             }
             //Går igenom alla effekter 
-            foreach (Point effect in effects.ToArray())
+            foreach (Effect effect in effects.ToArray())
             {
                 if (effect.Hitbox.Intersects(AbsoluteMouseHitbox))
                 {
@@ -198,7 +198,7 @@ namespace te16mono.LevelBuilder
             {
                 movingObject.Draw(spriteBatch);
             }
-            foreach (Point effect in effects)
+            foreach (Effect effect in effects)
             {
                 effect.Draw(spriteBatch);
             }
@@ -282,7 +282,7 @@ namespace te16mono.LevelBuilder
         }
 
         //Om man har tryck på en effekt
-        static void EffectSelected(Point input)
+        static void EffectSelected(Effect input)
         {
             //Sparar det gamla valda värdet ifall det finns ett och byter sedan till den valda effekten
             if (Menu.menu != MenuType.ValueChanging)
@@ -329,7 +329,7 @@ namespace te16mono.LevelBuilder
         public static void Reset()
         {
             movingObjects = new List<MovingObjects>();
-            effects = new List<Point>();
+            effects = new List<Effect>();
             blocks = new List<Block>();
             LevelBuilderDummy.DummyValues();
             position = new Vector2(0);

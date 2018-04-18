@@ -10,7 +10,7 @@ namespace te16mono.LevelBuilder.UI
     class EffectChanging : ValueChanging
     {
         string currentWorth, currentX, currentY;
-        public EffectChanging(Point input)
+        public EffectChanging(Effect input)
         {
             //De olika sakerna som kan ändras
             options = new List<string>();
@@ -149,7 +149,7 @@ namespace te16mono.LevelBuilder.UI
         protected override void SetValues()
         {
             //Gör ett temp movingobject för att ändra värdena på
-            Point effect = MainLevelBuilder.selectedEffect;
+            Effect effect = MainLevelBuilder.selectedEffect;
             effect.worth = Convert.ToInt32(currentWorth);
             effect.position.X = (float)Convert.ToDouble(currentX);
             effect.position.Y = (float)Convert.ToDouble(currentY);

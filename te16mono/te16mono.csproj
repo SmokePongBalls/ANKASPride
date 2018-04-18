@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="Blocks\BlockDummy.cs" />
     <Compile Include="Effects\EffectDummy.cs" />
+    <Compile Include="Effects\Effects.cs" />
     <Compile Include="Effects\FinishLine.cs" />
     <Compile Include="Effects\HighGravity.cs" />
     <Compile Include="Effects\Immortality.cs" />

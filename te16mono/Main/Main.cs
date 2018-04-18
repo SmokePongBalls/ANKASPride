@@ -29,7 +29,7 @@ namespace te16mono
 
         public static List<Block> testBlocks;
         public static List<Projectiles> projectiles;
-        public static List<Point> effects;
+        public static List<Effect> effects;
         //TestKatten
         public static List<MovingObjects> testObjects;
 
@@ -47,7 +47,7 @@ namespace te16mono
             testBlocks = new List<Block>();
             testObjects = new List<MovingObjects>();
             projectiles = new List<Projectiles>();
-            effects = new List<Point>();
+            effects = new List<Effect>();
             // TODO: Add your initialization logic here
             player = new Player(1, Content.Load<Texture2D>("square"));
             player.up = Keys.W;
@@ -67,7 +67,7 @@ namespace te16mono
             meny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));
 
             pauseMeny = new PauseMeny((int)State.Pause);
-            pauseMeny.AddItem((int)State.Meny,Content)
+            //pauseMeny.AddItem((int)State.Meny, Content);
 
 
             //Hugo F
@@ -193,7 +193,7 @@ namespace te16mono
                     projectiles.Remove(projectile);
             }
 
-            foreach (Point effect in effects.ToArray())
+            foreach (Effect effect in effects.ToArray())
             {
                 if (effect.Hitbox.Intersects(player.Hitbox))
                 {
@@ -282,7 +282,7 @@ namespace te16mono
             foreach (Projectiles projectile in projectiles)
                 projectile.Draw(spriteBatch);
 
-            foreach (Point point in effects)
+            foreach (Effect point in effects)
                 point.Draw(spriteBatch);
 
             player.Draw(spriteBatch);
@@ -316,7 +316,7 @@ namespace te16mono
             player.health = 10;
             testObjects = new List<MovingObjects>();
             testBlocks = new List<Block>();
-            effects = new List<Point>();
+            effects = new List<Effect>();
 
 
             try

@@ -83,7 +83,7 @@ namespace te16mono.LevelBuilder.UI
             LevelBuilderDummy.DummyValues();
         }
         //Initiera och byter meny till EffectChanging
-        public static void ChangeEffect(Point input)
+        public static void ChangeEffect(Effect input)
         {
             valueChanging = new EffectChanging(input);
             menu = MenuType.ValueChanging;

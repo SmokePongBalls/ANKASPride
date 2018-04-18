@@ -4,7 +4,8 @@ using Microsoft.Xna.Framework.Graphics;
 namespace te16mono
 {
     //Hugo F
-    class Whammy : Point
+    //ändrade så att alla effekter ärver av Effekt nu istället. Hugo F
+    class Whammy : Effect
     {
         public Whammy(Vector2 position, Texture2D texture, int worth) : base(position, texture, worth)
         {

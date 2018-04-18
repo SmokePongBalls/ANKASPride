@@ -3,36 +3,16 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace te16mono
 {
-    public class Point
+    //ändrade så att alla effekter ärver av Effekt nu istället. Hugo F
+    public class Point : Effect
     {
-        public string name;
-        public Vector2 position;
-        protected Texture2D texture;
-        public int worth;
-
-        public Point(Vector2 position, Texture2D texture, int worth)
+        public Point(Vector2 position, Texture2D texture, int worth) : base(position, texture, worth)
         {
             name = "Point";
-            this.position = position;
-            this.texture = texture;
-            this.worth = worth;
         }
 
-        public virtual Rectangle Hitbox
-        {
-            get
-            {
-                Rectangle hitbox = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
-                return hitbox;
-            }
-        }
-
-        public virtual void Draw(SpriteBatch spriteBatch)
-        {
-
-            spriteBatch.Draw(texture, Hitbox, Color.White);
-        }
-        public virtual Player Intersect(GameTime gameTime, Player player)
+             
+        public override Player Intersect(GameTime gameTime, Player player)
         {
 
             player.points += worth;

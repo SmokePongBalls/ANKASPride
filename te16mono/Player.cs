@@ -382,6 +382,20 @@ namespace te16mono
                 health -= damage;
             }
         }
+        /*
+        Rectangle effect
+        {
+            get
+            {
+
+                return new Rectangle(position.X -)
+
+            }
+
+            set
+            { }
+        }
+        */
     }
     
 

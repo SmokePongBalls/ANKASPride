@@ -12,7 +12,7 @@ namespace te16mono.LevelBuilder
     {
         static MovingObjects dummyMovingObjects;
         static Block dummyBlock;
-        static Point dummyEffect;
+        static Effect dummyEffect;
         //Standard dummyvärdena
         public static void SetDummyValues()
         {
@@ -42,7 +42,7 @@ namespace te16mono.LevelBuilder
                 return dummyBlock;
             }
         }
-        public static Point DummyEffect
+        public static Effect DummyEffect
         {
             get
             {

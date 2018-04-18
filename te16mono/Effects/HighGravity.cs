@@ -3,7 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace te16mono
 {
-    class HighGravity : Point
+    //Hugo F
+    //ändrade så att alla effekter ärver av Effekt nu istället. Hugo F
+    class HighGravity : Effect
     {
         public HighGravity(Vector2 position, Texture2D texture, int worth) : base(position, texture, worth)
         {
