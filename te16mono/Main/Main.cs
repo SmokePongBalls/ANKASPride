@@ -26,13 +26,13 @@ namespace te16mono
         static Song music;
         static double countdown = 0;
         static ContentManager Content;
-
+        
         public static List<Block> testBlocks;
         public static List<Projectiles> projectiles;
         public static List<Effect> effects;
         //TestKatten
         public static List<MovingObjects> testObjects;
-
+        static new Vector2 heartposition = new Vector2((float)20, (float)10);
 
 
 
@@ -292,8 +292,16 @@ namespace te16mono
             //Här ska alla saker som stannar i skärmen vara
             // (UI)
             //Hugo F
+           
+            
             spriteBatch.Begin();
-            spriteBatch.DrawString(font, "Health: " + player.health + " Time: " + gameTime.TotalGameTime.Minutes + ":" +  gameTime.TotalGameTime.Seconds + ":" + gameTime.TotalGameTime.Milliseconds, Vector2.Zero, Color.White);
+            for (int i = 0; i < player.health; i++)
+            {
+                spriteBatch.Draw(Content.Load<Texture2D>("heart"), heartposition, Color.White);
+                heartposition.X += 60;
+            }
+            heartposition.X = 20;
+            //spriteBatch.DrawString(font, "Health: " + player.health + " Time: " + gameTime.TotalGameTime.Minutes + ":" +  gameTime.TotalGameTime.Seconds + ":" + gameTime.TotalGameTime.Milliseconds, Vector2.Zero, Color.White);
             spriteBatch.End();
 
             // TODO: Add your drawing code here

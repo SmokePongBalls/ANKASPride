@@ -69,6 +69,8 @@ namespace te16mono
             //kollar om player är under någon effect. Det är vad boolen är till för Hugo F
             if (underEffect == true)
             {
+                //Ser till så att om player tar upp yttligare en effekt så tas den som player redan har bort. Hugo F
+                //Gjorde detta eftersom effekterna över tid störde lite på whammy effekten så att den aldrig försvann. Hugo F
                 if (effects.Count > 1)               
                     effects.RemoveAt(0);
                 
@@ -89,7 +91,6 @@ namespace te16mono
                 velocity.X += acceleration;
 
             //Om man har fått whammy efekten på sig så blir canJump false och då går det icke att hoppa. Hugo F = just den if-satsen 
-
             if (Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Space))
             {
 
@@ -205,6 +206,8 @@ namespace te16mono
                     isWhammy = true;
 
             }
+            else
+                isWhammy = false;
 
             if (effects[0] == "HighGravity")
             {
