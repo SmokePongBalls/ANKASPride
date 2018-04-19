@@ -32,7 +32,7 @@ namespace te16mono
         public static List<Effect> effects;
         //TestKatten
         public static List<MovingObjects> testObjects;
-        static new Vector2 heartposition = new Vector2((float)20, (float)10);
+        static new Vector2 heartposition;
 
 
 
@@ -44,6 +44,7 @@ namespace te16mono
         {
 
             Content = content;
+            heartposition = new Vector2((float)20, (float)10);
             testBlocks = new List<Block>();
             testObjects = new List<MovingObjects>();
             projectiles = new List<Projectiles>();
