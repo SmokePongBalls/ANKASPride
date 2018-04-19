@@ -16,7 +16,7 @@ namespace te16mono.LevelBuilder
         {
             toSave = "";
             editPosition = 0;
-        }
+        }   
         public void Update(KeyboardState keyboardState, KeyboardState lastKeyboardState)
         {
             //Om man trycker på knappen för att spara eller enter
@@ -55,11 +55,11 @@ namespace te16mono.LevelBuilder
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(MainLevelBuilder.square, BackgroundRectangle, Color.Black);
+            spriteBatch.Draw(MainLevelBuilder.square, Save, Color.White);
             spriteBatch.Draw(MainLevelBuilder.square, ExitRectangle, Color.White);
             spriteBatch.DrawString(MainLevelBuilder.spriteFont, TextInput.DrawWithMarker(editPosition, toSave), new Vector2(810, 300), Color.Black);
-            spriteBatch.Draw(MainLevelBuilder.square, Back, Color.White);
-            spriteBatch.Draw(MainLevelBuilder.square, Save, Color.White);
             spriteBatch.DrawString(MainLevelBuilder.spriteFont, "Back", new Vector2(810, 350), Color.Black);
+            spriteBatch.Draw(MainLevelBuilder.square, Back, Color.White);
             spriteBatch.DrawString(MainLevelBuilder.spriteFont, "Save", new Vector2(1010, 350), Color.Black);
         }
 

@@ -8,12 +8,14 @@ using te16mono.LevelBuilder;
 
 namespace te16mono.Input
 {
-    //Anton
+    //Anton har gjort allt i den här klassen
     static class TextInput
     {
+        //Metoden som ska kallas ifall man vill kolla efter A-Z, 0-9 "-" och "."
         public static string CheckForInput(KeyboardState keyboard, KeyboardState lastKeyboard, string input, int position)
         {
             string toAdd = "";
+            //Kollar ifall det ska vara stora bokstäver
             if (keyboard.IsKeyDown(Keys.LeftShift) || keyboard.IsKeyDown(Keys.RightShift))
             {
                 toAdd += CheckLetters(keyboard, lastKeyboard);
@@ -25,19 +27,22 @@ namespace te16mono.Input
             }
             toAdd += CheckNumbers(keyboard, lastKeyboard);
 
+            //Lägger till " " ifall man trycker på space
             if (keyboard.IsKeyDown(Keys.Space) && lastKeyboard.IsKeyUp(Keys.Space))
             {
                 toAdd += " ";
             }
-            
+            //Retunerar input stringen med de symbolerna som ska läggas till
             return input = input.Insert(position, toAdd);
         }
+        //Metoden som kallas ifall man vill kolla efter 0-9 "-" och "."
         public static string CheckForNumberInput(KeyboardState keyboard, KeyboardState lastKeyboard, string input, int position)
         {
             string toAdd = "";
             toAdd += CheckNumbers(keyboard, lastKeyboard);
             return input = input.Insert(position, toAdd);
         }
+        //Kollar ifall A-Z har blivit nertryckt och retunerar rätt char
         static string CheckLetters(KeyboardState keyboard, KeyboardState lastKeyboard)
         {
             if (keyboard.IsKeyDown(Keys.A) && lastKeyboard.IsKeyUp(Keys.A))
@@ -147,7 +152,7 @@ namespace te16mono.Input
 
             return "";
         }
-
+        //Kollar ifall 0-9 "." och "-" har blivit nertryckt retunerar rätt char
         public static string CheckNumbers(KeyboardState keyboardState, KeyboardState lastKeyboardState)
         {
             if (keyboardState.IsKeyDown(Keys.NumPad0) && lastKeyboardState.IsKeyDown(Keys.NumPad0) == false || keyboardState.IsKeyDown(Keys.D0) && lastKeyboardState.IsKeyDown(Keys.D0) == false)
@@ -200,7 +205,7 @@ namespace te16mono.Input
             }
             return "";
         }
-
+        //Ifall backknappen är tryckt så tas en utav karaktärerna bort. backknappen + control tar bort alla char ifrån input[0] till position
         public static string CheckForBackSpace(KeyboardState keyboardState, KeyboardState lastKeyboardState, string input, int position)
         {
             if (input.Length > 0 && keyboardState.IsKeyDown(Keys.Back) && lastKeyboardState.IsKeyDown(Keys.Back) == false && position > 0)
@@ -216,6 +221,7 @@ namespace te16mono.Input
             }
             return input;
         }
+        //Returnerar delta string
         public static int AdjustPosition(string newString, string oldString)
         {
             if (newString != oldString)
@@ -230,6 +236,7 @@ namespace te16mono.Input
             else
                 return 0;
         }
+        //Ändrar position ifall användaren trycker på vänster eller högermusknapp
         public static int CheckEditPosition(int position, int stringLenght)
         {
             if (MainLevelBuilder.keyboardState.IsKeyDown(Keys.Left) && MainLevelBuilder.lastKeyboardState.IsKeyUp(Keys.Left) && position > 0)
@@ -242,22 +249,13 @@ namespace te16mono.Input
             }
             return position;
         }
+        //Retunerar input med ett "|" på input[position] ifall position är out of range så läggs den till i slutet
         public static string DrawWithMarker(int position, string input)
         {
-            string toReturn = "";
             if (position != input.Length)
-                for (int i = 0; i < input.Length; i++)
-                {
-                    if (i == position)
-                    {
-                        toReturn += "|";
-                    }
-                    toReturn += input[i];
-                }
+                return input.Insert(position, "|");
             else
-                toReturn = input + "|";
-
-            return toReturn;
+                return input + "|";
         }
     }
 

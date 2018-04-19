@@ -6,6 +6,7 @@ using static te16mono.Meny;
 
 namespace te16mono
 {
+    //Anton 
     static class Finish
     {
         public static void Update()

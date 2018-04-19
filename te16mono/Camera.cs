@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 namespace te16mono
 {
-    //Anton
+    //Anton har gjort allt i den här klassen
     static class Camera
     {
 

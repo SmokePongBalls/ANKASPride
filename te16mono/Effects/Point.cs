@@ -11,7 +11,7 @@ namespace te16mono
             name = "Point";
         }
 
-             
+        //Körs ifall den krockar med  player Anton
         public override Player Intersect(GameTime gameTime, Player player)
         {
 

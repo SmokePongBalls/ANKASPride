@@ -1,15 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static te16mono.Main;
+
 
 namespace te16mono
 {
+    //Anton
     public static class GameOver
     {
         public static void Update()
@@ -19,15 +15,15 @@ namespace te16mono
             //Retry
             if (keyboardState.IsKeyDown(Keys.M))
             {
-                Main.currentState = State.Meny;
-                map = 1;
+                Main.currentState = Main.State.Meny;
+                Main.map = 1;
             }
             if (keyboardState.IsKeyDown(Keys.R))
-                Main.currentState = State.Run;
+                Main.currentState = Main.State.Run;
 
             //Lämna spelet
             if (keyboardState.IsKeyDown(Keys.Q))  //
-                Main.currentState = State.Quit;
+                Main.currentState = Main.State.Quit;
 
         }
         public static Rectangle Rectangle(GraphicsDevice graphicsDevice)

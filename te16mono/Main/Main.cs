@@ -222,10 +222,8 @@ namespace te16mono
         public static void FinishUpdate()
         {
             Finish.Update();
-
-
         }
-
+        //Målas när state är finish Anton
         public static void FinishDraw(GraphicsDevice graphicsDevice)
         {
             spriteBatch.Begin();
@@ -293,13 +291,13 @@ namespace te16mono
 
             
         }
-
+        //Gör en ny projectile och lägger till den i projectiles Anton
         public static void Shoot(string type, Vector2 position, Vector2 velocity, int damage, int health)
         {
             if (type == "regular")
                 projectiles.Add(new RegularProjectile(health, damage, position, velocity, Content.Load<Texture2D>("RegularProjectile")));
         }
-
+        //Laddar in en bana. Anton
         public static void LoadMap()
         {
 

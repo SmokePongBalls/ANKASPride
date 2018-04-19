@@ -32,7 +32,7 @@ namespace te16mono
                 }
             }
         }
-        //Går igenom hela movingobject elementet
+        //Går igenom hela movingobject elementet Anton
         static void LoadMovingObjects(ContentManager Content, XmlNode node)
         {
             foreach (XmlNode child in node.ChildNodes)
@@ -59,7 +59,7 @@ namespace te16mono
                 }
             }
         }
-        //Går igenom hela blocks elementet
+        //Går igenom hela blocks elementet Anton
         static void LoadBlocks(ContentManager Content, XmlNode node)
         {
             foreach (XmlNode child in node.ChildNodes)
@@ -70,7 +70,7 @@ namespace te16mono
                 }
             }
         }
-        //Går igenom hela point elementet
+        //Går igenom hela point elementet Anton
         static void LoadPoints(ContentManager Content, XmlNode node)
         {
             foreach (XmlNode child in node.ChildNodes)
@@ -108,7 +108,7 @@ namespace te16mono
             }
         }
 
-        //Om det är en finishflagga som ska läggas till
+        //Om det är en finishflagga som ska läggas till Anton
         static void AddFinish(ContentManager Content, XmlNode child)
         {
             //Standardvärden ifall något går fel
@@ -130,7 +130,7 @@ namespace te16mono
             //Lägger till objektet i listan
             Main.effects.Add(new FinishLine(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
         }
-        //Om det är ett poäng som ska läggas till
+        //Om det är ett poäng som ska läggas till Anton
         static void AddPoint(ContentManager Content, XmlNode child)
         {
             int worth = 100;
@@ -151,7 +151,7 @@ namespace te16mono
             //Lägger till objektet i listan
             Main.effects.Add(new Point(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
         }
-        //Om det är HighGravity som ska läggas till
+        //Om det är HighGravity som ska läggas till Hugo F
         static void AddHighGravity(ContentManager Content, XmlNode child)
         {
             //Standard värden ifall något går fel
@@ -173,7 +173,7 @@ namespace te16mono
             //Lägger till objektet i listan
             Main.effects.Add(new HighGravity(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
         }
-        //Om det är whammy som ska läggas till
+        //Om det är whammy som ska läggas till Hugo F
         static void AddWhammy(ContentManager Content, XmlNode child)
         {
             //Standardvärden ifall att något går fel
@@ -195,7 +195,7 @@ namespace te16mono
             //Lägger till objektet i listan
             Main.effects.Add(new Whammy(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
         }
-        //Om det är immortality som ska läggas till
+        //Om det är immortality som ska läggas till Hugo F
         static void AddImmortality(ContentManager Content, XmlNode child)
         {
             //Standardvärden ifall något går fel
@@ -217,7 +217,7 @@ namespace te16mono
             //Lägger till objektet i listan
             Main.effects.Add(new Immortality(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
         }
-        //Om det är health som ska läggas till
+        //Om det är health som ska läggas till Hugo F
         static void AddHealth(ContentManager Content, XmlNode child)
         {
             //Standard värden ifall något går fel
@@ -239,7 +239,7 @@ namespace te16mono
             //Lägger till objektet i listan
             Main.effects.Add(new Health(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
         }
-        //Om det är ett block som ska läggas till
+        //Om det är ett block som ska läggas till Hugo F
         static void AddBlock(ContentManager Content, XmlNode child)
         {
             //Om det är ett vanligt block
@@ -272,7 +272,7 @@ namespace te16mono
                 Main.testBlocks.Add(new Block(new Vector2(X, Y), width, height, new Vector2(velocityX, velocityY), Content.Load<Texture2D>(texture)));
             }
         }
-        //Om det är en katt som ska läggas till
+        //Om det är en katt som ska läggas till Anton
         static void AddKatt(ContentManager Content, XmlNode child)
         {
             //Standardvärden ifall något går fel
@@ -300,7 +300,7 @@ namespace te16mono
             //Lägger till objektet i listan
             Main.testObjects.Add(new Katt(Content.Load<Texture2D>(texture), new Vector2(X, Y), walkLeft, maxSpeed, maxX, minX));
         }
-        //Om det är en groda som ska läggas till
+        //Om det är en groda som ska läggas till Anton
         static void AddFrog(ContentManager Content, XmlNode child)
         {
             //Standardvärden ifall något går fel
@@ -328,7 +328,7 @@ namespace te16mono
             //Lägger till objektet i listan
             Main.testObjects.Add(new Frog(Content.Load<Texture2D>(texture), new Vector2(X, Y), walkLeft, maxSpeed, maxX, minX));
         }
-        //Om det är en fågel som ska läggas till
+        //Om det är en fågel som ska läggas till Anton
         static void AddBird(ContentManager Content, XmlNode child)
         {
             //Standardvärden ifall något går fel
@@ -356,7 +356,7 @@ namespace te16mono
             //Lägger till objektet i listan
             Main.testObjects.Add(new Bird(Content.Load<Texture2D>(texture), new Vector2(X, Y), walkLeft, maxSpeed, maxX, minX));
         }
-        //Om det är en igelkott som ska läggas till
+        //Om det är en igelkott som ska läggas till Anton
         static void AddHedgehog(ContentManager Content, XmlNode child)
         {
             //Standardvärden ifall något går fel

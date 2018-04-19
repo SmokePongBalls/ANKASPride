@@ -23,10 +23,10 @@ namespace te16mono
             //Bestämmer hur långt den får gå
             this.maxX = maxX;
             this.minX = minX;
-            timeToShoot = 4000;
+            timeToShoot = 4000; //Tiden innan första skottet skjuts (milisekunder)
             health = 5;
         }
-
+        //Anton
         public override void Update(GameTime gameTime)
         {
 
@@ -53,7 +53,7 @@ namespace te16mono
                 acceleration = 0;
                 velocity.X = acceleration;
             }
-
+            //När timeToShoot är 0 eller mindre ska den skjuta ett skott neråt
             timeToShoot -= gameTime.ElapsedGameTime.Milliseconds;
             if (timeToShoot <= 0)
             {
@@ -62,7 +62,7 @@ namespace te16mono
             }
             velocity.Y = 0;
         }
-
+        //Metoden som ser till att objektet rör på sig Anton
         protected override void Move()
         {
             // Om den inte har uppnåt maxfart
@@ -84,7 +84,7 @@ namespace te16mono
             position.X += velocity.X;
         }
 
-        //Om den krockar med ett objekt (OBS INTE PROJECTILES)
+        //Om den krockar med ett objekt (OBS INTE PROJECTILES) Anton
         public override void Intersect(Rectangle collided, Vector2 collidedVelocity, int damage, bool collidedCanStandOn)
         {
             //Ser till så att den inte krockat med sig själv
@@ -96,13 +96,8 @@ namespace te16mono
                 if (oriantation == Oriantation.Right)
                 {
                     //Ser till så att objekten inte längre är innuti varandra
-
                     position.X -= velocity.X;
-
-                    //position.X = collided.X + collided.Width - velocity.X;
-
-
-                    //Säger ut fienden att gå åt andra hållet
+                    //Säger ut objektet att inte längre åka åt vänster
                     walkLeft = false;
                     //Återställer acceleration och velocity så den inte fortsätter in i objektet
                     acceleration = 0;
@@ -112,10 +107,7 @@ namespace te16mono
                 {
                     //Ser till så att objekten inte längre är innuti varandra
                     position.X -= velocity.X;
-
-                    //position.X = collided.X + collided.Width - velocity.X;
-
-                    //Säger ut fienden att gå åt andra hållet
+                    //Säger ut objektet att inte längre åka åt höger
                     walkLeft = true;
                     //Återställer acceleration och velocity så den inte fortsätter in i objektet
                     acceleration = 0;
@@ -123,7 +115,7 @@ namespace te16mono
                 }
             }
         }
-        //Om objektet blir träffad av en projektil
+        //Om objektet blir träffad av en projektil Anton
         public override void ProjectileIntersect(Rectangle collided, int damage)
         {
             health -= damage;

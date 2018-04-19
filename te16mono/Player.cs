@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace te16mono
 {
     //Anton, Hugo F
-
+    //Hela effekt delen är gjord enbart 
     public class Player : MovingObjects
     {
         
@@ -246,13 +246,14 @@ namespace te16mono
                 health -= damage;
             }
         }
-
+        //Main delen för intersect Anton
         public override void Intersect(Rectangle collided,  Vector2 collidedVelocity, int damage, bool collidedCanStandOn)
         {
             //Ser till så att den inte krockat med sig själv
             //Är mest ett failsafe ifall alla movingObjects ligger i samma lista
             if (Hitbox != collided)
             {
+                //Får reda på vilken sida objektet krockade ifrån (Upp ner höger vänster)
                 Oriantation oriantation = CheckCollision(collided);
 
                 //Om objektet har en damage
@@ -266,12 +267,9 @@ namespace te16mono
                 {
                     NoDamageFunction(collided, collidedVelocity, oriantation);
                 }
-
-
-
             }
         }
-
+        //Ifall objektet har krockat med något men inte tar skada på player körs dem här Anton
         private void NoDamageFunction(Rectangle collided, Vector2 collidedVelocity, Oriantation oriantation)
         {
             if (oriantation == Oriantation.Up)
@@ -327,7 +325,7 @@ namespace te16mono
                 lastTouchedSurface = Oriantation.Left;
             }
         }
-
+        //Ifall objektet har krockat med något och tar skada på player körs den här. Den körs också ifall objektet som krockats med tar skada men kan stås på Anton
         private void DamageFunction(Rectangle collided, Vector2 collidedVelocity, int damage, bool collidedCanStandOn, Oriantation oriantation)
         {
             if (oriantation == Oriantation.Up && collidedCanStandOn)
@@ -388,21 +386,5 @@ namespace te16mono
                 health -= damage;
             }
         }
-        /*
-        Rectangle effect
-        {
-            get
-            {
-
-                return new Rectangle(position.X -)
-
-            }
-
-            set
-            { }
-        }
-        */
     }
-    
-
 }

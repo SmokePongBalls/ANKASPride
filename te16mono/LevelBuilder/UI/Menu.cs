@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace te16mono.LevelBuilder.UI
 {
-    //Anton
+    //Anton har gjort allt i den här klassen
     public static class Menu
     {
         public static MenuType menu = MenuType.Selection;

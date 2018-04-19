@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace te16mono.LevelBuilder.UI
 {
-    //Anton
+    //Anton har gjort allt i den här klassen
     static class Options
     {
         static List<string> options = new List<string>();

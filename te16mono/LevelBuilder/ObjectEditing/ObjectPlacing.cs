@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace te16mono.LevelBuilder.ObjectEditing
 {
-    //Anton
+    //Anton har gjort allt i den här klassen
     static class ObjectPlacing
     {
         //Gör ett nytt objekt

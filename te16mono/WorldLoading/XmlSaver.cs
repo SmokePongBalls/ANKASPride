@@ -5,7 +5,7 @@ namespace te16mono
 {
     static class XmlSaver
     {
-        //Anton
+        //Anton har gjort hela klassen
 
         public static void Save(string name)
         {

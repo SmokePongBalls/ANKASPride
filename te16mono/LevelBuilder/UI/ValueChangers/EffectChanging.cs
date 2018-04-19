@@ -7,7 +7,7 @@ using te16mono.Input;
 
 namespace te16mono.LevelBuilder.UI
 {
-    //Anton
+    //Anton har gjort allt i den här klassen
     class EffectChanging : ValueChanging
     {
         string currentWorth, currentX, currentY;
@@ -106,7 +106,7 @@ namespace te16mono.LevelBuilder.UI
             else
             {
                 spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.AntiqueWhite);
-                spriteBatch.DrawString(MainLevelBuilder.spriteFont, TextInput.DrawWithMarker(editPosition, editString), Color.Black);
+                spriteBatch.DrawString(MainLevelBuilder.spriteFont, TextInput.DrawWithMarker(editPosition, editString), position, Color.Black);
                 position.Y += 80;
             }
             if (editing != Editing.Y)

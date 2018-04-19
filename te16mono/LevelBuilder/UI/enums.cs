@@ -2,7 +2,7 @@
 
 namespace te16mono.LevelBuilder.UI
 {
-    //Anton
+    //Anton har gjort allt enumerna
     public enum SelectedObject
     {
         Null,

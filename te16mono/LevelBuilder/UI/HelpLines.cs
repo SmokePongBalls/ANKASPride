@@ -5,7 +5,7 @@ using System;
 
 namespace te16mono.LevelBuilder.UI
 {
-    //Anton
+    //Anton har gjort allt i den här klassen
     static class HelpLines
     {
         public static void Draw(Vector2 position, SpriteBatch spriteBatch)

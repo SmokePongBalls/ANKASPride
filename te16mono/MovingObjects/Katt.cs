@@ -30,12 +30,11 @@ namespace te16mono
         public override void Update(GameTime gameTime)
         {
 
-            // Om den inte har uppnåt maxfart
+            
             Move();
 
 
             //Om den har nått sin maxposition på X
-
             if (position.X + texture.Width >= maxX && walkLeft == false)
             {
                 position.X = maxX - texture.Width;
@@ -53,23 +52,7 @@ namespace te16mono
                 acceleration = 0;
                 velocity.X = acceleration;
             }
-
-            /*
-             * PLATTFORMAR FUNGERAR NU GGWP
-             * 
-            //Längst ner på skärmen
-            //DETTA MÅSTE BORT NÄR VI HAR FUNGERADE PLATTFORMAR
-            if (position.Y + texture.Height > 1080)
-            {
-                position.Y = 1080 - texture.Height;
-                velocity.Y = -velocity.Y * (float)0.5 ;
-            }
-            */
         }
-
-        
-            
-
     }
 }
 

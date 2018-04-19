@@ -35,13 +35,10 @@ namespace te16mono
 
             spriteBatch.Draw(texture, position, Color.White);
         }
-
-        
-
-        //<Summary> Hitboxen</summary>
-
+        //Metoden som ser till så att objektet byter position Anton
         protected virtual void Move()
         {
+            // Om den inte har uppnåt maxfart
             if (acceleration < maxSpeed && acceleration > -maxSpeed)
             {
                 //Om den ska gå åt vänster
@@ -62,7 +59,7 @@ namespace te16mono
             position.Y += velocity.Y;
             position.X += velocity.X;
         }
-
+        //Objektets hitbox Anton
         public virtual Rectangle Hitbox
         {
             get
@@ -71,7 +68,7 @@ namespace te16mono
                 return hitbox;
             }
         }
-
+        //Ifall objektet krockar med en projektil Anton
         public virtual void ProjectileIntersect(Rectangle collided, int damage)
         {
 
@@ -91,13 +88,14 @@ namespace te16mono
 
         }
 
-
+        //Ifall objektet krockar med ett annat objekt (som inte är en projektil)
         public virtual void Intersect(Rectangle collided, Vector2 collidedVelocity, int damage, bool collidedCanStandOn)
         {
             //Ser till så att den inte krockat med sig själv
             //Är mest ett failsafe ifall alla movingObjects ligger i samma lista
             if (Hitbox != collided)
             {
+                //Får reda på vilken sida objektet krockade ifrån (Upp ner höger vänster)
                 Oriantation oriantation = CheckCollision(collided);
 
                 if (oriantation == Oriantation.Up)
@@ -122,12 +120,7 @@ namespace te16mono
                 else if (oriantation == Oriantation.Right)
                 {
                     //Ser till så att objekten inte längre är innuti varandra
-
                     position.X -= velocity.X;
-
-                    //position.X = collided.X + collided.Width - velocity.X;
-
-
                     //Säger ut fienden att gå åt andra hållet
                     walkLeft = false;
                     //Återställer acceleration och velocity så den inte fortsätter in i objektet
@@ -149,11 +142,13 @@ namespace te16mono
                 }
             }
         }
+        //All de olika update är så olika varande att de alla måste skriva över
         public abstract void Update(GameTime gameTime);
 
        
         //Tar reda på vilken sida utav objektet som hitboxen befinner sig
         //Fungerar hyfsat bra men kollisionen underifrån kan göras bättre
+        //Anton
         protected Oriantation CheckCollision(Rectangle collided)
         {
             //Om den är till vänster

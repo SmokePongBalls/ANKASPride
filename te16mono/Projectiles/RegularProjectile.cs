@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace te16mono
 {
-    //Anton
+    //Anton har gjort allt i den här klassen
 
     class RegularProjectile : Projectiles
     {

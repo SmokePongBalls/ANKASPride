@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
+using te16mono.Input;
 
 namespace te16mono.LevelBuilder.UI
 {
-    //Anton
+    //Anton har gjort allt i den här klassen
     class BlockChanging : ValueChanging
     {
         string currentX, currentY, currentWidth, currentHeight, currentVelocityY, currentVelocityX;

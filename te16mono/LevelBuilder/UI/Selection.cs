@@ -6,7 +6,7 @@ using System;
 
 namespace te16mono.LevelBuilder.UI
 {
-    //Anton
+    //Anton har gjort allt i den här klassen
     class Selection
     {
         

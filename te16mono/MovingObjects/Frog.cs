@@ -18,7 +18,7 @@ namespace te16mono
             velocity = new Vector2(0);
             acceleration = 0;
             damage = 1;
-            canStandOn = true;
+            canStandOn = true; //Om denna är true kan man stå på objektet utan att ta skada
             //Bestämmer hur långt den får gå
             this.maxX = maxX;
             this.minX = minX;
@@ -29,7 +29,7 @@ namespace te16mono
         {
 
             TryJump();
-            // Om den inte har uppnåt maxfart
+            
             Move();
 
 
@@ -62,54 +62,6 @@ namespace te16mono
                 canJump = false;
             }
         }
-        //Gammal intersect
-        /*
-        public override void Intersect(Rectangle collided, Vector2 collidedVelocity, int damage, bool collidedCanStandOn)
-        {
-            //Ser till så att den inte krockat med sig själv
-            //Är mest ett failsafe ifall alla movingObjects ligger i samma lista
-            if (Hitbox != collided)
-            {
-                Oriantation oriantation = CheckCollision(collided);
-
-
-                if (oriantation == Oriantation.Up)
-                {
-                    //Får samma y velocity som objektet det krockar med
-                    //Vi kanske kan göra fungerande hissar med det här
-                    velocity.Y = collidedVelocity.Y;
-                    //Ser till så att objekten inte längre är innuti varandra
-                    position.Y = collided.Y - Hitbox.Height;
-                    //Står på solid mark så man får hoppa igen
-                    canJump = true;
-                }
-                else if (oriantation == Oriantation.Down)
-                {
-                    //Får samma y velocity som objektet det krockar med
-                    //Vi kanske kan göra fungerande hissar med det här
-                    velocity.Y = collidedVelocity.Y;
-                    //Ser till så att objekten inte längre är innuti varandra
-                    position.Y = collided.Y + collided.Height;
-                }
-                else if (oriantation == Oriantation.Right)
-                {
-                    //Ser till så att objekten inte längre är innuti varandra
-                    position.X = collided.X + collided.Width - velocity.X;
-                    //Återställer velocity så den inte fortsätter in i objektet
-                    velocity.X = 0;
-                    acceleration = 0;
-                }
-                else if (oriantation == Oriantation.Left)
-                {
-                    //Ser till så att objekten inte längre är innuti varandra
-                    position.X = collided.X - velocity.X - texture.Width;
-                    //Återställer velocity så den inte fortsätter in i objektet
-                    velocity.X = 0;
-                    acceleration = 0;
-                }
-            }
-        }
-        */
     }
 
 }

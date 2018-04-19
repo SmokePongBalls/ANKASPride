@@ -10,7 +10,7 @@ using te16mono.Input;
 
 namespace te16mono.LevelBuilder
 {
-    //Anton
+    //Anton har gjort allt i den här klassen
 
     public enum LevelBuilderState { Main, Saving }
     static class MainLevelBuilder

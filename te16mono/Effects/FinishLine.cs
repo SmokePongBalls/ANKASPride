@@ -11,6 +11,7 @@ namespace te16mono
         {
             name = "Finish";
         }
+        //Körs ifall den krockar med player Anton
         public override Player Intersect(GameTime gameTime, Player player)
         {
             Main.currentState = Main.State.Finish;
