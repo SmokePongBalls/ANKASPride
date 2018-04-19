@@ -44,7 +44,7 @@ namespace te16mono.LevelBuilder.UI
             else
             {
                 spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.AntiqueWhite);
-                spriteBatch.DrawString(MainLevelBuilder.spriteFont, currentX + "|", position, Color.Black);
+                spriteBatch.DrawString(MainLevelBuilder.spriteFont, TextInput.DrawWithMarker(editPosition, editString), position, Color.Black);
                 position.Y += 80;
             }
             if (editing != Editing.Y)
@@ -56,7 +56,7 @@ namespace te16mono.LevelBuilder.UI
             else
             {
                 spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.AntiqueWhite);
-                spriteBatch.DrawString(MainLevelBuilder.spriteFont, currentY + "|", position, Color.Black);
+                spriteBatch.DrawString(MainLevelBuilder.spriteFont, TextInput.DrawWithMarker(editPosition, editString), position, Color.Black);
                 position.Y += 80;
             }
             //Done
@@ -70,7 +70,7 @@ namespace te16mono.LevelBuilder.UI
             else
             {
                 spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.AntiqueWhite);
-                spriteBatch.DrawString(MainLevelBuilder.spriteFont, currentWidth + "|", position, Color.Black);
+                spriteBatch.DrawString(MainLevelBuilder.spriteFont, TextInput.DrawWithMarker(editPosition, editString), position, Color.Black);
                 position.Y += 80;
             }
             if (editing != Editing.Height)
@@ -82,7 +82,7 @@ namespace te16mono.LevelBuilder.UI
             else
             {
                 spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.AntiqueWhite);
-                spriteBatch.DrawString(MainLevelBuilder.spriteFont, currentHeight + "|", position, Color.Black);
+                spriteBatch.DrawString(MainLevelBuilder.spriteFont, TextInput.DrawWithMarker(editPosition, editString), position, Color.Black);
                 position.Y += 80;
             }
             if (editing != Editing.VelocityY)

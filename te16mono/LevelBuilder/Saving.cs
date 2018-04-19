@@ -56,7 +56,7 @@ namespace te16mono.LevelBuilder
         {
             spriteBatch.Draw(MainLevelBuilder.square, BackgroundRectangle, Color.Black);
             spriteBatch.Draw(MainLevelBuilder.square, ExitRectangle, Color.White);
-            spriteBatch.DrawString(MainLevelBuilder.spriteFont, toSave + "|", new Vector2(810, 300), Color.Black);
+            spriteBatch.DrawString(MainLevelBuilder.spriteFont, TextInput.DrawWithMarker(editPosition, toSave), new Vector2(810, 300), Color.Black);
             spriteBatch.Draw(MainLevelBuilder.square, Back, Color.White);
             spriteBatch.Draw(MainLevelBuilder.square, Save, Color.White);
             spriteBatch.DrawString(MainLevelBuilder.spriteFont, "Back", new Vector2(810, 350), Color.Black);
@@ -92,12 +92,6 @@ namespace te16mono.LevelBuilder
             {
                 return new Rectangle(790, 285, 340, 110);
             }
-        }
-
-        //Fixar ett logiskt fel jag inte hittar anledningen till
-        void SpaghettiFix()
-        {
-            editPosition = toSave.Length - 1;
         }
     }
 }

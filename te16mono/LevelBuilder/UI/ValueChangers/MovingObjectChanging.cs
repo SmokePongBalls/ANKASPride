@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using te16mono.Input;
 
 namespace te16mono.LevelBuilder.UI
 {
@@ -42,7 +43,7 @@ namespace te16mono.LevelBuilder.UI
             else
             {
                 spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.AntiqueWhite);
-                spriteBatch.DrawString(MainLevelBuilder.spriteFont, currentX + "|", position, Color.Black);
+                spriteBatch.DrawString(MainLevelBuilder.spriteFont, TextInput.DrawWithMarker(editPosition, editString), position, Color.Black);
                 position.Y += 80;
             }
             if (editing != Editing.Y)
@@ -54,7 +55,7 @@ namespace te16mono.LevelBuilder.UI
             else
             {
                 spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.AntiqueWhite);
-                spriteBatch.DrawString(MainLevelBuilder.spriteFont, currentY + "|", position, Color.Black);
+                spriteBatch.DrawString(MainLevelBuilder.spriteFont, TextInput.DrawWithMarker(editPosition, editString), position, Color.Black);
                 position.Y += 80;
             }
             if (editing != Editing.MinX)
@@ -66,7 +67,7 @@ namespace te16mono.LevelBuilder.UI
             else
             {
                 spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.AntiqueWhite);
-                spriteBatch.DrawString(MainLevelBuilder.spriteFont, currentMinX + "|", position, Color.Black);
+                spriteBatch.DrawString(MainLevelBuilder.spriteFont, TextInput.DrawWithMarker(editPosition, editString), position, Color.Black);
                 position.Y += 80;
             }
             if (editing != Editing.MaxX)
@@ -78,7 +79,7 @@ namespace te16mono.LevelBuilder.UI
             else
             {
                 spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.AntiqueWhite);
-                spriteBatch.DrawString(MainLevelBuilder.spriteFont, currentMaxX + "|", position, Color.Black);
+                spriteBatch.DrawString(MainLevelBuilder.spriteFont, TextInput.DrawWithMarker(editPosition, editString), position, Color.Black);
                 position.Y += 80;
             }
             if (editing != Editing.MaxSpeed)
@@ -90,7 +91,7 @@ namespace te16mono.LevelBuilder.UI
             else
             {
                 spriteBatch.Draw(Menu.Square, SelectionRectangle, Color.AntiqueWhite);
-                spriteBatch.DrawString(MainLevelBuilder.spriteFont, currentMaxSpeed + "|", position, Color.Black);
+                spriteBatch.DrawString(MainLevelBuilder.spriteFont, TextInput.DrawWithMarker(editPosition, editString), position, Color.Black);
                 position.Y += 80;
             }
 

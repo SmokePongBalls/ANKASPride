@@ -242,6 +242,23 @@ namespace te16mono.Input
             }
             return position;
         }
+        public static string DrawWithMarker(int position, string input)
+        {
+            string toReturn = "";
+            if (position != input.Length)
+                for (int i = 0; i < input.Length; i++)
+                {
+                    if (i == position)
+                    {
+                        toReturn += "|";
+                    }
+                    toReturn += input[i];
+                }
+            else
+                toReturn = input + "|";
+
+            return toReturn;
+        }
     }
 
     
