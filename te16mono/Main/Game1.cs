@@ -41,7 +41,7 @@ namespace te16mono
             Main.currentState = Main.State.Meny;
             Main.Initialize(Content);
             MainLevelBuilder.Initialize(Content, GraphicsDevice);
-            gameSection = GameSection.LevelBuilding;
+            gameSection = GameSection.CoreGame;
 
             IsMouseVisible = true;
 
@@ -129,7 +129,8 @@ namespace te16mono
                     break;
 
                 case Main.State.Pause:
-                    Main.PauseUpdate();
+                    Main.currentState = Main.PauseUpdate(gameTime);
+
                     break;
 
                 case Main.State.Finish:

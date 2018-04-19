@@ -65,9 +65,12 @@ namespace te16mono
             meny = new Menyer((int)State.Meny);
             meny.AddItem((int)State.Run, Content.Load<Texture2D>("Start"));
             meny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));
+            meny.AddItem((int)GameSection.LevelBuilding, Content.Load<Texture2D>("Level"));
+
 
             pauseMeny = new PauseMeny((int)State.Pause);
-            //pauseMeny.AddItem((int)State.Meny, Content);
+            pauseMeny.AddItem((int)GameSection.CoreGame, Content.Load<Texture2D>("Meny"));
+            pauseMeny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));
 
 
             //Hugo F
@@ -242,23 +245,16 @@ namespace te16mono
             spriteBatch.End();
         }
 
-        public static void PauseUpdate()
+        public static State PauseUpdate(GameTime gameTime)
         {
-            KeyboardState keyboard = Keyboard.GetState();
+           return (State)pauseMeny.Update(gameTime);
 
-            if (keyboard.IsKeyDown(Keys.S)) // Resume på pause meny fixar detta sen 
-                currentState = State.Run;
-
-            if (keyboard.IsKeyDown(Keys.Q))
-                currentState = State.Quit;
         }
 
         public static void PauseDraw()
         {
 
-            spriteBatch.Begin();
-            
-            spriteBatch.End();
+            pauseMeny.Draw(spriteBatch);
 
 
         }
