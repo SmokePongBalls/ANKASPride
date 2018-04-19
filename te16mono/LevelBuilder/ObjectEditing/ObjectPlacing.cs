@@ -24,7 +24,7 @@ namespace te16mono.LevelBuilder.ObjectEditing
                 if (movingObject.Hitbox.Intersects(checkRectangle))
                     return true;
             }
-            foreach (Point effect in MainLevelBuilder.effects)
+            foreach (Effect effect in MainLevelBuilder.effects)
             {
                 if (effect.Hitbox.Intersects(checkRectangle))
                     return true;

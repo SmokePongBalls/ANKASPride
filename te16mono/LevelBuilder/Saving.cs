@@ -10,10 +10,12 @@ namespace te16mono.LevelBuilder
     class Saving
     {
         string toSave; //Stringen som bestämmer vilket namn filen kommer ha
+        int editPosition;
 
         public Saving()
         {
             toSave = "";
+            editPosition = 0;
         }
         public void Update(KeyboardState keyboardState, KeyboardState lastKeyboardState)
         {
@@ -32,11 +34,23 @@ namespace te16mono.LevelBuilder
             //Annars ska det kolla ifall användaren försöker skriva något
             else
             {
-                toSave = TextInput.CheckForBackSpace(toSave, keyboardState, lastKeyboardState);
-                toSave += TextInput.CheckForInput(keyboardState, lastKeyboardState);
+                
+                editPosition = TextInput.CheckEditPosition(editPosition, toSave.Length);
+                string tempToSave = TextInput.CheckForBackSpace(keyboardState, lastKeyboardState, toSave, editPosition);
+                StringCompare(tempToSave);
+                tempToSave = TextInput.CheckForInput(keyboardState, lastKeyboardState, toSave, editPosition);
+
+                StringCompare(tempToSave);
             }
-            
+
         }
+
+        private void StringCompare(string tempToSave)
+        {
+            editPosition += TextInput.AdjustPosition(tempToSave, toSave);
+            toSave = tempToSave;
+        }
+
         //Ritar ut allt som behöver synas
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -78,6 +92,12 @@ namespace te16mono.LevelBuilder
             {
                 return new Rectangle(790, 285, 340, 110);
             }
+        }
+
+        //Fixar ett logiskt fel jag inte hittar anledningen till
+        void SpaghettiFix()
+        {
+            editPosition = toSave.Length - 1;
         }
     }
 }
