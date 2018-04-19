@@ -177,7 +177,7 @@ namespace te16mono
         private void Effects(GameTime gameTime)
         {
             //kollar om player är under specifikt "Immortality" effekten
-            if (effects[0] == "immortality")
+            if (effects[0] == "Immortality")
             {
                 //player kan inte bli skadade om detta är false
                 canBeDamaged = false;
