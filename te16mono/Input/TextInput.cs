@@ -4,34 +4,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using te16mono.LevelBuilder;
 
 namespace te16mono.Input
 {
     //Anton
     static class TextInput
     {
-        public static string CheckForInput(KeyboardState keyboard, KeyboardState lastKeyboard)
+        public static string CheckForInput(KeyboardState keyboard, KeyboardState lastKeyboard, string input, int position)
         {
-            string returnString = "";
-
+            string toAdd = "";
             if (keyboard.IsKeyDown(Keys.LeftShift) || keyboard.IsKeyDown(Keys.RightShift))
             {
-                returnString += CheckLetters(keyboard, lastKeyboard);
+                toAdd += CheckLetters(keyboard, lastKeyboard);
             }
             else
             {
-                returnString += CheckLetters(keyboard, lastKeyboard);
-                returnString = returnString.ToLower();
+                toAdd += CheckLetters(keyboard, lastKeyboard);
+                toAdd = toAdd.ToLower();
             }
-            returnString += CheckNumbers(keyboard, lastKeyboard);
+            toAdd += CheckNumbers(keyboard, lastKeyboard);
 
             if (keyboard.IsKeyDown(Keys.Space) && lastKeyboard.IsKeyUp(Keys.Space))
             {
-                returnString += " ";
+                toAdd += " ";
             }
-            return returnString;
+            
+            return input = input.Insert(position, toAdd);
         }
-
+        public static string CheckForNumberInput(KeyboardState keyboard, KeyboardState lastKeyboard, string input, int position)
+        {
+            string toAdd = "";
+            toAdd += CheckNumbers(keyboard, lastKeyboard);
+            return input = input.Insert(position, toAdd);
+        }
         static string CheckLetters(KeyboardState keyboard, KeyboardState lastKeyboard)
         {
             if (keyboard.IsKeyDown(Keys.A) && lastKeyboard.IsKeyUp(Keys.A))
@@ -138,6 +144,7 @@ namespace te16mono.Input
             {
                 return "Z";
             }
+
             return "";
         }
 
@@ -194,20 +201,48 @@ namespace te16mono.Input
             return "";
         }
 
-        public static string CheckForBackSpace(string input, KeyboardState keyboardState, KeyboardState lastKeyboardState)
+        public static string CheckForBackSpace(KeyboardState keyboardState, KeyboardState lastKeyboardState, string input, int position)
         {
-            if (input.Length > 0 && keyboardState.IsKeyDown(Keys.Back) && lastKeyboardState.IsKeyDown(Keys.Back) == false)
+            if (input.Length > 0 && keyboardState.IsKeyDown(Keys.Back) && lastKeyboardState.IsKeyDown(Keys.Back) == false && position > 0)
             {
                 if (keyboardState.IsKeyDown(Keys.LeftControl) || keyboardState.IsKeyDown(Keys.RightControl))
                 {
-                    return "";
+                    return input.Remove(0, position);
                 }
                 else
                 {
-                    return input.Remove(input.Length - 1);
+                    return input.Remove(position - 1, 1);
                 }
             }
             return input;
         }
+        public static int AdjustPosition(string newString, string oldString)
+        {
+            if (newString != oldString)
+            {
+                if (oldString == "")
+                {
+                    return newString.Length;
+                }
+                else
+                    return newString.Length - oldString.Length;
+            }
+            else
+                return 0;
+        }
+        public static int CheckEditPosition(int position, int stringLenght)
+        {
+            if (MainLevelBuilder.keyboardState.IsKeyDown(Keys.Left) && MainLevelBuilder.lastKeyboardState.IsKeyUp(Keys.Left) && position > 0)
+            {
+                position--;
+            }
+            else if ((MainLevelBuilder.keyboardState.IsKeyDown(Keys.Right) && MainLevelBuilder.lastKeyboardState.IsKeyUp(Keys.Right) && position < stringLenght))
+            {
+                position++;
+            }
+            return position;
+        }
     }
+
+    
 }

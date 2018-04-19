@@ -95,20 +95,8 @@ namespace te16mono
 
         public static void MenyDraw()
         {
-
             meny.Draw(spriteBatch);
-
-
         }
-
-        
-        
-
-
-        
-
-
-
         public static State RunUpdate(GameTime gameTime)
         {
 

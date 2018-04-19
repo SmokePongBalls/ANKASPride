@@ -14,6 +14,7 @@ namespace te16mono.LevelBuilder.UI
         protected Vector2 position;
         protected string editString = "";
         protected bool isEditing = false;
+        protected int editPosition;
         //Metoder som alla subklasser måste ha
         protected abstract void SetEdit();
         protected abstract bool CheckHitbox();
@@ -28,7 +29,7 @@ namespace te16mono.LevelBuilder.UI
             {
                 Edit();
                 SetEdit();
-
+                editPosition = TextInput.CheckEditPosition(editPosition, editString.Length);
                 if (isEditing == false)
                 {
                     editing = Editing.Null;
@@ -42,14 +43,23 @@ namespace te16mono.LevelBuilder.UI
                     }
                     SetEdit();
                     SetValues();
-                    CheckHitbox();
+                    if (CheckHitbox())
+                    {
+                        editPosition = editString.Length;
+                        isEditing = true;
+                    }
                 }
                 
             }
             else
             {
                 SetValues();
-                isEditing = CheckHitbox();
+                if (CheckHitbox())
+                {
+                    editPosition = editString.Length;
+                    isEditing = true;
+                }
+
                 CheckForDelete();
             }
             //Kollar ifall exitknappen trycks
@@ -100,7 +110,9 @@ namespace te16mono.LevelBuilder.UI
             KeyboardState keyboardState = MainLevelBuilder.keyboardState;
             KeyboardState lastKeyboardState = MainLevelBuilder.lastKeyboardState;
             //Kollar ifall backspace är nertryckt
-            editString = TextInput.CheckForBackSpace(editString, keyboardState, lastKeyboardState);
+            string editStringTemp = TextInput.CheckForBackSpace(keyboardState, lastKeyboardState, editString, editPosition);
+            StringCompare(editStringTemp);
+
             //Ifall enterknappen trycks ner slutar man redigera
             if (keyboardState.IsKeyDown(Keys.Enter))
             {
@@ -109,10 +121,17 @@ namespace te16mono.LevelBuilder.UI
             //Kollar ifall någon siffra trycktes in
             else
             {
-                editString += TextInput.CheckNumbers(keyboardState, lastKeyboardState);
+                editStringTemp = TextInput.CheckForNumberInput(keyboardState, lastKeyboardState, editStringTemp, editPosition);
+                StringCompare(editStringTemp);
             }
-            
         }
+
+        private void StringCompare(string editStringTemp)
+        {
+            editPosition += TextInput.AdjustPosition(editStringTemp, editString);
+            editString = editStringTemp;
+        }
+
         //Kollar ifall deletknappen har blivit nertryckt och tar bort objektet isåfall
         void CheckForDelete()
         {
