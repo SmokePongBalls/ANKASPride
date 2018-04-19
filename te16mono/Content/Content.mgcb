@@ -279,7 +279,11 @@
 /processorParam:TextureFormat=Color
 /build:Meny.jpg
 
+<<<<<<< HEAD
 #begin Level.jpg
+=======
+#begin heart.png
+>>>>>>> a28af0fd933dbcb5beaebaabc03b26771c99b191
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -289,5 +293,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
+<<<<<<< HEAD
 /build:Level.jpg
+=======
+/build:heart.png
+>>>>>>> a28af0fd933dbcb5beaebaabc03b26771c99b191
 
