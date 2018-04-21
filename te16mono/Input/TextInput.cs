@@ -11,6 +11,8 @@ namespace te16mono.Input
     //Anton har gjort allt i den här klassen
     static class TextInput
     {
+        static int timerDrawLine = 500;
+        static int timerDrawNone = 500;
         //Metoden som ska kallas ifall man vill kolla efter A-Z, 0-9 "-" och "."
         public static string CheckForInput(KeyboardState keyboard, KeyboardState lastKeyboard, string input, int position)
         {
@@ -249,13 +251,39 @@ namespace te16mono.Input
             }
             return position;
         }
+
+
+
         //Retunerar input med ett "|" på input[position] ifall position är out of range så läggs den till i slutet
         public static string DrawWithMarker(int position, string input)
         {
+            string insert = CheckTimer();
+
+
             if (position != input.Length)
-                return input.Insert(position, "|");
+                return input.Insert(position, insert);
             else
-                return input + "|";
+                return input + insert;
+        }
+
+        static string CheckTimer()
+        {
+            if (timerDrawLine > 0)
+            {
+                timerDrawLine -= Game1.getGameTime.ElapsedGameTime.Milliseconds;
+                return "|";
+            }
+            else if (timerDrawNone > 0)
+            {
+                timerDrawNone -= Game1.getGameTime.ElapsedGameTime.Milliseconds;
+                return " ";
+            }
+            else
+            {
+                timerDrawLine = 500;
+                timerDrawNone = 500;
+                return " ";
+            }
         }
     }
 

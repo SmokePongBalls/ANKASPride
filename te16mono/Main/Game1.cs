@@ -26,7 +26,7 @@ namespace te16mono
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         public static GameSection gameSection;
-
+        static GameTime gameTime;
 
 
         public Game1()
@@ -88,7 +88,7 @@ namespace te16mono
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-
+            Game1.gameTime = gameTime;
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Main.currentState = Main.State.Pause;
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Q))
@@ -205,6 +205,13 @@ namespace te16mono
                     Main.GameOverDraw(GraphicsDevice);
                     break;
 
+            }
+        }
+        public static GameTime getGameTime
+        {
+            get
+            {
+                return gameTime;
             }
         }
     }

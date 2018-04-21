@@ -58,8 +58,8 @@ namespace te16mono.LevelBuilder
             spriteBatch.Draw(MainLevelBuilder.square, Save, Color.White);
             spriteBatch.Draw(MainLevelBuilder.square, ExitRectangle, Color.White);
             spriteBatch.DrawString(MainLevelBuilder.spriteFont, TextInput.DrawWithMarker(editPosition, toSave), new Vector2(810, 300), Color.Black);
-            spriteBatch.DrawString(MainLevelBuilder.spriteFont, "Back", new Vector2(810, 350), Color.Black);
             spriteBatch.Draw(MainLevelBuilder.square, Back, Color.White);
+            spriteBatch.DrawString(MainLevelBuilder.spriteFont, "Back", new Vector2(810, 350), Color.Black);
             spriteBatch.DrawString(MainLevelBuilder.spriteFont, "Save", new Vector2(1010, 350), Color.Black);
         }
 
