@@ -20,6 +20,7 @@ namespace te16mono
 
         public override Player PlayerIntersect(Player player)
         {
+            health = -4;
             //ser till så att programmet vet att player är under en effekt
             player.underEffect = true;
             //ser till så att programmet vet vilken sorts effect det är

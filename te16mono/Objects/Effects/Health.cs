@@ -20,6 +20,7 @@ namespace te16mono
 
         public override Player PlayerIntersect(Player player)
         {
+            health = -4;
             //ser till så att players health inte kan gå över "maxHealth"
             if (player.health < player.maxHealth)
                 //"worth" är då en int som används för alla objekten i XmlLoader. Just för health så används det för att öka player health med det värde worth har.

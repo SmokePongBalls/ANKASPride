@@ -16,6 +16,7 @@ namespace te16mono
         //Körs ifall den krockar med  player Anton
         public override Player PlayerIntersect(Player player)
         {
+            health = -4;
             player.points += worth;
             return player;
         }

@@ -23,6 +23,8 @@ namespace te16mono
 
         }
 
+        public override void ProjectileIntersect(int damage, Oriantations oriantation){}
+
         public override Rectangle Hitbox
         {
             get
