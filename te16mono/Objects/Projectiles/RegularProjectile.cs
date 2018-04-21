@@ -21,8 +21,6 @@ namespace te16mono
         {
             position += velocity;
             health -= gameTime.ElapsedGameTime.Milliseconds;
-            if (health < 0)
-                isDead = true;
         }
         
     }

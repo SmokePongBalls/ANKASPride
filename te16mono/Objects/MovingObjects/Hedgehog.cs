@@ -22,6 +22,7 @@ namespace te16mono
             this.minX = minX;
             health = 1;
             canStandOn = false;
+            solid = true;
         }
     }
 }

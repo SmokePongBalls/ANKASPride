@@ -265,19 +265,22 @@ namespace te16mono.Input
             else
                 return input + insert;
         }
-
+        //Retunerar den string som ska vara textmarkör
         static string CheckTimer()
         {
+            //Om timerdrawline är mer än ett ska det minska med elapsedgametime och retunera |
             if (timerDrawLine > 0)
             {
                 timerDrawLine -= Game1.getGameTime.ElapsedGameTime.Milliseconds;
                 return "|";
             }
+            //Om timerDrawNone är över 0 och timerdrawline är under ska timerdrawnone minska med elapsedgametime och retunera " "
             else if (timerDrawNone > 0)
             {
                 timerDrawNone -= Game1.getGameTime.ElapsedGameTime.Milliseconds;
                 return " ";
             }
+            //Om båda är noll ska värdena återställa och retunera " "
             else
             {
                 timerDrawLine = 500;

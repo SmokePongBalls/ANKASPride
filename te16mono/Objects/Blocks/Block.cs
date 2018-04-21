@@ -6,20 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace te16mono
+namespace te16mono 
 {
 
     //Anton, Hugo F
-    public class Block
+    public class Block : ObjectsBase
     {
-        public string name;
-        protected Texture2D texture;
         public int width, height;
-        public int damage = 0;
-        public bool canStandOn;
-        public Vector2 position, velocity;
 
-        
         public Block(Vector2 position, int width, int height, Vector2 velocity, Texture2D texture)
         {
             name = "Block";
@@ -29,9 +23,18 @@ namespace te16mono
             this.height = height;
             this.texture = texture;
             canStandOn = true;
+            damage = 0;
+            solid = true;
         }
 
-        public virtual Rectangle Hitbox
+        public override void Update(GameTime gameTime){}
+        public override void ProjectileIntersect(int damage, Oriantations oriantation){}
+
+        public override ObjectsBase Intersect(ObjectsBase collided)
+        {
+            return collided;
+        }
+        public override Rectangle Hitbox
         {
             get
             {
@@ -39,8 +42,22 @@ namespace te16mono
                 return hitbox;
             }
         }
+        public override int Width
+        {
+            get
+            {
+                return width;
+            }
+        }
+        public override int Height
+        {
+            get
+            {
+                return height;
+            }
+        }
 
-        public virtual void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, Hitbox, Color.Pink);
         }

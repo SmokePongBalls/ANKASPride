@@ -128,7 +128,7 @@ namespace te16mono
                     Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
             }
             //Lägger till objektet i listan
-            Main.effects.Add(new FinishLine(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
+            Main.objects.Add(new FinishLine(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
         }
         //Om det är ett poäng som ska läggas till Anton
         static void AddPoint(ContentManager Content, XmlNode child)
@@ -149,7 +149,7 @@ namespace te16mono
                     Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
             }
             //Lägger till objektet i listan
-            Main.effects.Add(new Point(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
+            Main.objects.Add(new Point(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
         }
         //Om det är HighGravity som ska läggas till Hugo F
         static void AddHighGravity(ContentManager Content, XmlNode child)
@@ -171,7 +171,7 @@ namespace te16mono
                     Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
             }
             //Lägger till objektet i listan
-            Main.effects.Add(new HighGravity(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
+            Main.objects.Add(new HighGravity(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
         }
         //Om det är whammy som ska läggas till Hugo F
         static void AddWhammy(ContentManager Content, XmlNode child)
@@ -193,7 +193,7 @@ namespace te16mono
                     Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
             }
             //Lägger till objektet i listan
-            Main.effects.Add(new Whammy(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
+            Main.objects.Add(new Whammy(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
         }
         //Om det är immortality som ska läggas till Hugo F
         static void AddImmortality(ContentManager Content, XmlNode child)
@@ -215,7 +215,7 @@ namespace te16mono
                     Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
             }
             //Lägger till objektet i listan
-            Main.effects.Add(new Immortality(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
+            Main.objects.Add(new Immortality(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
         }
         //Om det är health som ska läggas till Hugo F
         static void AddHealth(ContentManager Content, XmlNode child)
@@ -237,7 +237,7 @@ namespace te16mono
                     Y = float.Parse(childNode.InnerXml, CultureInfo.InvariantCulture);
             }
             //Lägger till objektet i listan
-            Main.effects.Add(new Health(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
+            Main.objects.Add(new Health(new Vector2(X, Y), Content.Load<Texture2D>(texture), worth));
         }
         //Om det är ett block som ska läggas till Hugo F
         static void AddBlock(ContentManager Content, XmlNode child)
@@ -269,7 +269,7 @@ namespace te16mono
 
                 }
                 //Lägger till objektet i listan
-                Main.testBlocks.Add(new Block(new Vector2(X, Y), width, height, new Vector2(velocityX, velocityY), Content.Load<Texture2D>(texture)));
+                Main.objects.Add(new Block(new Vector2(X, Y), width, height, new Vector2(velocityX, velocityY), Content.Load<Texture2D>(texture)));
             }
         }
         //Om det är en katt som ska läggas till Anton
@@ -298,7 +298,7 @@ namespace te16mono
                     walkLeft = bool.Parse(childNode.InnerXml);
             }
             //Lägger till objektet i listan
-            Main.testObjects.Add(new Katt(Content.Load<Texture2D>(texture), new Vector2(X, Y), walkLeft, maxSpeed, maxX, minX));
+            Main.objects.Add(new Katt(Content.Load<Texture2D>(texture), new Vector2(X, Y), walkLeft, maxSpeed, maxX, minX));
         }
         //Om det är en groda som ska läggas till Anton
         static void AddFrog(ContentManager Content, XmlNode child)
@@ -326,7 +326,7 @@ namespace te16mono
                     walkLeft = bool.Parse(childNode.InnerXml);
             }
             //Lägger till objektet i listan
-            Main.testObjects.Add(new Frog(Content.Load<Texture2D>(texture), new Vector2(X, Y), walkLeft, maxSpeed, maxX, minX));
+            Main.objects.Add(new Frog(Content.Load<Texture2D>(texture), new Vector2(X, Y), walkLeft, maxSpeed, maxX, minX));
         }
         //Om det är en fågel som ska läggas till Anton
         static void AddBird(ContentManager Content, XmlNode child)
@@ -354,7 +354,7 @@ namespace te16mono
                     walkLeft = bool.Parse(childNode.InnerXml);
             }
             //Lägger till objektet i listan
-            Main.testObjects.Add(new Bird(Content.Load<Texture2D>(texture), new Vector2(X, Y), walkLeft, maxSpeed, maxX, minX));
+            Main.objects.Add(new Bird(Content.Load<Texture2D>(texture), new Vector2(X, Y), walkLeft, maxSpeed, maxX, minX));
         }
         //Om det är en igelkott som ska läggas till Anton
         static void AddHedgehog(ContentManager Content, XmlNode child)
@@ -382,7 +382,7 @@ namespace te16mono
                     walkLeft = bool.Parse(childNode.InnerXml);
             }
             //Lägger till objektet i listan
-            Main.testObjects.Add(new Hedgehog(Content.Load<Texture2D>(texture), new Vector2(X, Y), walkLeft, maxSpeed, maxX, minX));
+            Main.objects.Add(new Hedgehog(Content.Load<Texture2D>(texture), new Vector2(X, Y), walkLeft, maxSpeed, maxX, minX));
         }
     }
 }

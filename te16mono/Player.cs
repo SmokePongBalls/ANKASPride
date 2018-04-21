@@ -7,7 +7,6 @@ using System.Collections.Generic;
 namespace te16mono
 {
     //Anton, Hugo F
-    //Hela effekt delen är gjord enbart 
     public class Player : MovingObjects
     {
         
@@ -17,7 +16,7 @@ namespace te16mono
         private int shootCooldown;
         private int whammy = 10;
         private double gravity = Program.Gravity;
-        private Oriantation lastTouchedSurface;
+        public Oriantations lastTouchedSurface;
         private bool holdingJump = true;
         public bool underEffect;
         public bool canBeDamaged = true;
@@ -45,6 +44,7 @@ namespace te16mono
             
             //Initiera värden
         }
+
 
         public override void Update(GameTime gameTime)
         {
@@ -132,25 +132,25 @@ namespace te16mono
 
         private void ShotDown()
         {
-            Main.Shoot("regular", new Vector2(velocity.X / 4, velocity.Y / 2 + 10), new Vector2(position.X + texture.Width / 2, position.Y + texture.Height), 1, 100000);
+            Main.Shoot("regular", new Vector2(velocity.X / 4, velocity.Y / 2 + 10), new Vector2(position.X + texture.Width / 2, position.Y + texture.Height + velocity.Y), 1, 100000);
             shootCooldown = 500;
         }
 
         private void ShotRight()
         {
-            Main.Shoot("regular", new Vector2(+10 + velocity.X / 2, 0), new Vector2(position.X + texture.Width + 1, position.Y), 1, 100000);
+            Main.Shoot("regular", new Vector2(+10 + velocity.X / 2, 0), new Vector2(position.X + texture.Width + velocity.X, position.Y), 1, 100000);
             shootCooldown = 500;
         }
 
         private void ShotUp()
         {
-            Main.Shoot("regular", new Vector2(0 + velocity.X / 4, velocity.Y / 2 - 10), new Vector2(position.X, position.Y - 21), 1, 100000);
+            Main.Shoot("regular", new Vector2(0 + velocity.X / 4, velocity.Y / 2 - 10), new Vector2(position.X, position.Y - 21 + velocity.Y), 1, 100000);
             shootCooldown = 500;
         }
 
         private void ShotLeft()
         {
-            Main.Shoot("regular", new Vector2(-10 + velocity.X / 2, 0), new Vector2(position.X - 21, position.Y), 1, 100000);
+            Main.Shoot("regular", new Vector2(-10 + velocity.X / 2, 0), new Vector2(position.X - 21 + velocity.X, position.Y), 1, 100000);
             shootCooldown = 500;
         }
 
@@ -225,166 +225,16 @@ namespace te16mono
 
             }
         }
-
-        public override void ProjectileIntersect(Rectangle collided, int damage)
+        //Kollar ifall man ska få hoppa
+        public void SetCanJump(Oriantations oriantation)
         {
-            //overridear projectile intersect för player så att Immortality effecten kan användas. Hugo F
-            if (canBeDamaged)
+            if (oriantation != Oriantations.Up)
             {
-                if (Hitbox.Intersects(new Rectangle(collided.X - collided.Width, collided.Y, collided.Width, collided.Height)))
-                    velocity.X += 20 * damage;
-                //Om den är till höger
-                if (Hitbox.Intersects(new Rectangle(collided.X + collided.Width, collided.Y, collided.Width, collided.Height)))
-                    velocity.X -= 20 * damage;
-                //Om den är över
-                if (Hitbox.Intersects(new Rectangle(collided.X, collided.Y - collided.Height, collided.Width, collided.Height)))
-                    velocity.Y += 20 * damage;
-                //Om den är under
-                if (Hitbox.Intersects(new Rectangle(collided.X, collided.Y + collided.Height, collided.Width, collided.Height)))
-                    velocity.Y -= 20 * damage;
-
-                health -= damage;
-            }
-        }
-        //Main delen för intersect Anton
-        public override void Intersect(Rectangle collided,  Vector2 collidedVelocity, int damage, bool collidedCanStandOn)
-        {
-            //Ser till så att den inte krockat med sig själv
-            //Är mest ett failsafe ifall alla movingObjects ligger i samma lista
-            if (Hitbox != collided)
-            {
-                //Får reda på vilken sida objektet krockade ifrån (Upp ner höger vänster)
-                Oriantation oriantation = CheckCollision(collided);
-
-                //Om objektet har en damage
-                if (damage > 0 && canBeDamaged)
-                {
-                    DamageFunction(collided, collidedVelocity, damage, collidedCanStandOn, oriantation);
-                }
-
-                //Om objektet inte har någon damage (plattformar)
-                else
-                {
-                    NoDamageFunction(collided, collidedVelocity, oriantation);
-                }
-            }
-        }
-        //Ifall objektet har krockat med något men inte tar skada på player körs dem här Anton
-        private void NoDamageFunction(Rectangle collided, Vector2 collidedVelocity, Oriantation oriantation)
-        {
-            if (oriantation == Oriantation.Up)
-            {
-                //Får samma y velocity som objektet det krockar med
-                //Vi kanske kan göra fungerande hissar med det här
-                velocity.Y = collidedVelocity.Y;
-                //Ser till så att objekten inte längre är innuti varandra
-                position.Y = collided.Y - Hitbox.Height;
-                //Står på solid mark så man får hoppa igen
-                canJump = true;
-                lastTouchedSurface = Oriantation.Up;
-            }
-            else if (oriantation == Oriantation.Down)
-            {
-                //Ifall player åker upp i objektet
-                if (velocity.Y < 0)
-                    position.Y -= velocity.Y;
-
-                //Återstället velocity
-                velocity.Y = 0;
-            }
-            else if (oriantation == Oriantation.Right)
-            {
-                //Ser till så att objekten inte längre är innuti varandra
-                position.X -= velocity.X;
-
-                //position.X = collided.X + collided.Width - velocity.X;
-                //Återställer velocity så den inte fortsätter in i objektet
-                velocity.X = 0;
-
-                //Om man inte rörde en högervägg senast
-                if (lastTouchedSurface != Oriantation.Right)
+                if (lastTouchedSurface != oriantation)
                     canJump = true;
-
-                lastTouchedSurface = Oriantation.Right;
-
             }
-            else if (oriantation == Oriantation.Left)
-            {
-                //Ser till så att objekten inte längre är innuti varandra
-                position.X -= velocity.X;
-
-                //position.X = collided.X - velocity.X - texture.Width;
-                //Återställer velocity så den inte fortsätter in i objektet
-                velocity.X = 0;
-
-
-                //Om inte rörde en vänstervägg senast
-                if (lastTouchedSurface != Oriantation.Left)
-                    canJump = true;
-
-                lastTouchedSurface = Oriantation.Left;
-            }
-        }
-        //Ifall objektet har krockat med något och tar skada på player körs den här. Den körs också ifall objektet som krockats med tar skada men kan stås på Anton
-        private void DamageFunction(Rectangle collided, Vector2 collidedVelocity, int damage, bool collidedCanStandOn, Oriantation oriantation)
-        {
-            if (oriantation == Oriantation.Up && collidedCanStandOn)
-            {
-                //Får samma y velocity som objektet det krockar med
-                //Vi kanske kan göra fungerande hissar med det här
-                velocity.Y = collidedVelocity.Y;
-                //Ser till så att objekten inte längre är innuti varandra
-                position.Y = collided.Y - Hitbox.Height;
-                //Står på solid mark så man får hoppa igen
+            else
                 canJump = true;
-                lastTouchedSurface = Oriantation.Up;
-            }
-            else if (oriantation == Oriantation.Up && collidedCanStandOn == false)
-            {
-                //Slänger den upp i luften
-                velocity.Y = -25;
-
-                if (rng.Next(0, 2) == 1)
-                    velocity.X = -10;
-                else
-                    velocity.X = 10;
-
-                health -= damage;
-                //Ser till så att objekten inte längre är innuti varandra
-                position += velocity;
-            }
-            else if (oriantation == Oriantation.Down)
-            {
-
-                //Ifall player åker upp i objektet
-                if (velocity.Y < 0)
-                    position.Y -= velocity.Y;
-
-                //Återstället velocity
-                velocity.Y = 0;
-
-                //Ser till så att objekten inte längre är innuti varandra
-
-            }
-            else if (oriantation == Oriantation.Right)
-            {
-                //Ser till så att objekten inte längre är innuti varandra
-                position.X = collided.X + collided.Width - velocity.X;
-                //Ger den en slänger den åt sidan skadad
-                velocity.X = 25;
-                velocity.Y = 10;
-                health -= damage;
-
-            }
-            else if (oriantation == Oriantation.Left)
-            {
-                //Ser till så att objekten inte längre är innuti varandra
-                position.X = collided.X - velocity.X - texture.Width;
-                //Återställer velocity så den inte fortsätter in i objektet
-                velocity.X = -25;
-                velocity.Y = 10;
-                health -= damage;
-            }
         }
     }
 }

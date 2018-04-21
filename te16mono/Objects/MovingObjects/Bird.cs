@@ -25,6 +25,7 @@ namespace te16mono
             this.minX = minX;
             timeToShoot = 4000; //Tiden innan första skottet skjuts (milisekunder)
             health = 5;
+            solid = true;
         }
         //Anton
         public override void Update(GameTime gameTime)
@@ -84,16 +85,16 @@ namespace te16mono
             position.X += velocity.X;
         }
 
-        //Om den krockar med ett objekt (OBS INTE PROJECTILES) Anton
-        public override void Intersect(Rectangle collided, Vector2 collidedVelocity, int damage, bool collidedCanStandOn)
+        //Om den krockar med ett objekt Anton
+        public override ObjectsBase Intersect(ObjectsBase collided)
         {
             //Ser till så att den inte krockat med sig själv
             //Är mest ett failsafe ifall alla movingObjects ligger i samma lista
-            if (Hitbox != collided)
+            if (Hitbox != collided.Hitbox)
             {
-                Oriantation oriantation = CheckCollision(collided);
+                Oriantations oriantation = CheckCollision(collided.Hitbox);
 
-                if (oriantation == Oriantation.Right)
+                if (oriantation == Oriantations.Right)
                 {
                     //Ser till så att objekten inte längre är innuti varandra
                     position.X -= velocity.X;
@@ -103,7 +104,7 @@ namespace te16mono
                     acceleration = 0;
                     velocity.X = acceleration;
                 }
-                else if (oriantation == Oriantation.Left)
+                else if (oriantation == Oriantations.Left)
                 {
                     //Ser till så att objekten inte längre är innuti varandra
                     position.X -= velocity.X;
@@ -114,9 +115,10 @@ namespace te16mono
                     velocity.X = acceleration;
                 }
             }
+            return collided;
         }
         //Om objektet blir träffad av en projektil Anton
-        public override void ProjectileIntersect(Rectangle collided, int damage)
+        public override void ProjectileIntersect(int damage, Oriantations oriantation)
         {
             health -= damage;
         }

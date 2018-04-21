@@ -13,7 +13,12 @@ namespace te16mono
              name = "Health"; 
         }
 
-        public override Player Intersect(GameTime gameTime, Player player)
+        public override void Update(GameTime gameTime)
+        {
+
+        }
+
+        public override Player PlayerIntersect(Player player)
         {
             //ser till så att players health inte kan gå över "maxHealth"
             if (player.health < player.maxHealth)

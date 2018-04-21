@@ -10,6 +10,14 @@ namespace te16mono
         {
            
         }
+
+        public override void Update(GameTime gameTime){}
+
+        public override Player PlayerIntersect(Player player)
+        {
+            return player;
+        }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
         }

@@ -26,12 +26,8 @@ namespace te16mono
         static Song music;
         static double countdown = 0;
         static ContentManager Content;
-        
-        public static List<Block> testBlocks;
-        public static List<Projectiles> projectiles;
-        public static List<Effect> effects;
-        //TestKatten
-        public static List<MovingObjects> testObjects;
+        static List<Projectiles> addQueue;
+        public static List<ObjectsBase> objects;
         static new Vector2 heartposition;
 
 
@@ -45,10 +41,8 @@ namespace te16mono
 
             Content = content;
             heartposition = new Vector2((float)20, (float)10);
-            testBlocks = new List<Block>();
-            testObjects = new List<MovingObjects>();
-            projectiles = new List<Projectiles>();
-            effects = new List<Effect>();
+            objects = new List<ObjectsBase>();
+            addQueue = new List<Projectiles>();
             // TODO: Add your initialization logic here
             player = new Player(1, Content.Load<Texture2D>("square"));
             player.up = Keys.W;
@@ -101,109 +95,50 @@ namespace te16mono
         {
 
             player.Update(gameTime);
-
-            //Testkatten
-            foreach (Block testBlock in testBlocks.ToArray())
-            {
-                if (player.Hitbox.Intersects(testBlock.Hitbox))
-                {
-                    player.Intersect(testBlock.Hitbox, testBlock.velocity, testBlock.damage, testBlock.canStandOn);
-                }
-            }
-
-
-            //Om katten rör hitboxen
-            foreach (MovingObjects testObject in testObjects.ToArray())
-            {
-                if (player.Hitbox.Intersects(testObject.Hitbox))
-                {
-                    player.Intersect(testObject.Hitbox, testObject.velocity, testObject.damage, testObject.canStandOn);
-                    testObject.Intersect(player.Hitbox, player.velocity, player.damage, player.canStandOn);
-                }
-                foreach (Block testblock in testBlocks)
-                    if (testObject.Hitbox.Intersects(testblock.Hitbox))
-                    {
-                        testObject.Intersect(testblock.Hitbox, testblock.velocity, testblock.damage, testblock.canStandOn);
-                    }
-                if (testObject.Hitbox.Intersects(player.Hitbox))
-                {
-
-                }
-                foreach (MovingObjects obj in testObjects)
-                {
-                    if (testObject.Hitbox.Intersects(obj.Hitbox))
-                    {
-                        testObject.Intersect(obj.Hitbox, obj.velocity, obj.damage, obj.canStandOn);
-                    }
-                }
-
-                Rectangle screenRectangle = Camera.Rectangle(player.Hitbox);
-                if (screenRectangle.Intersects(testObject.Hitbox))
-                testObject.Update(gameTime);
-
-
-
-                if (testObject.health <= 0)
-                    testObjects.Remove(testObject);
-            }
-            foreach (Projectiles projectile in projectiles.ToArray())
-            {
-                projectile.Update(gameTime);
-                bool hasCollided = false;
-                //Kollar först ifall den krockar med någonting
-                if (projectile.Hitbox.Intersects(player.Hitbox))
-                {
-                    hasCollided = true;
-                }
-                foreach (MovingObjects testObject in testObjects)
-                {
-                    if (projectile.Hitbox.Intersects(testObject.Hitbox))
-                        hasCollided = true;
-                }
-                foreach (Block testBlock in testBlocks)
-                    {
-                        if (projectile.Hitbox.Intersects(testBlock.Hitbox))
-                            hasCollided = true;
-                    }
-                if (hasCollided)
-                {
-                    
-                    if (projectile.BlastRadious.Intersects(player.Hitbox))
-                    {
-                        player.ProjectileIntersect(projectile.BlastRadious, projectile.damage);
-                    }
-                        foreach (MovingObjects testObject in testObjects)
-                        {
-                            if (projectile.BlastRadious.Intersects(testObject.Hitbox))
-                                testObject.ProjectileIntersect(projectile.Hitbox, projectile.damage);
-                        }
-                    projectile.isDead = true;
-
-                }
-                
-                if (projectile.isDead)
-                    projectiles.Remove(projectile);
-            }
-
-            foreach (Effect effect in effects.ToArray())
-            {
-                if (effect.Hitbox.Intersects(player.Hitbox))
-                {
-
-                    player = effect.Intersect(gameTime, player);
-                    effects.Remove(effect);
-                }
-            }
-
+            ObjectsUpdate(gameTime);
             countdown -= gameTime.ElapsedGameTime.TotalMilliseconds;
-            
-
-
+            MergeWithQueue();
             if (player.health <= 0)
                 currentState = State.GameOver;
 
             return currentState; // Stannar kvar i run 
 
+        }
+        //Updaterar alla saker i objects listan 
+        private static void ObjectsUpdate(GameTime gameTime)
+        {
+            var screenRectangle = Camera.Rectangle(player.Hitbox);
+            //Går igenom alla objekt och uppdaterar ifall de är nära nog till player
+            foreach (ObjectsBase obj in objects)
+            {
+                if (screenRectangle.Intersects(obj.Hitbox))
+                    obj.Update(gameTime);
+            }
+            //En array som används för att man ska kunna ändra värden på objekten i listan utan att förstöra något
+            ObjectsBase[] outOfLoopStorage = objects.ToArray();
+            for (int i = 0; i < objects.Count; i++)
+            {
+                for (int u = 0; u < objects.Count; u++)
+                {
+                    if (objects[u] != objects[i] && objects[i].Hitbox.Intersects(objects[u].Hitbox))
+                    {
+                        outOfLoopStorage[u] = outOfLoopStorage[i].Intersect(objects[u]);
+                        outOfLoopStorage[i] = outOfLoopStorage[u].Intersect(objects[i]);
+                    }
+                }
+                //Kollar om den krockar med player
+                if (objects[i].Hitbox.Intersects(player.Hitbox))
+                {
+                    player = objects[i].PlayerIntersect(player);
+                }
+            }
+            objects = new List<ObjectsBase>(outOfLoopStorage);
+            //Tar bort alla objekt som har "dött" under loopen
+            foreach (ObjectsBase obj in objects.ToArray())
+            {
+                if (obj.health < 0)
+                    objects.Remove(obj);
+            }
         }
 
         public static void GameOverUpdate()
@@ -255,18 +190,10 @@ namespace te16mono
             //Här i ska alla saker som kan hamna utanför skärmen vara
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, DepthStencilState.None, null, null, Camera.Position(player, graphicsDevice.DisplayMode.Width, graphicsDevice.DisplayMode.Height));
 
-            //Testkatten
-            foreach (MovingObjects testObjekt in testObjects)
-                testObjekt.Draw(spriteBatch);
-
-            foreach (Block testblock in testBlocks)
-                testblock.Draw(spriteBatch);
-
-            foreach (Projectiles projectile in projectiles)
-                projectile.Draw(spriteBatch);
-
-            foreach (Effect point in effects)
-                point.Draw(spriteBatch);
+            foreach (ObjectsBase obj in objects)
+            {
+                obj.Draw(spriteBatch);
+            }
 
             player.Draw(spriteBatch);
 
@@ -292,10 +219,16 @@ namespace te16mono
             
         }
         //Gör en ny projectile och lägger till den i projectiles Anton
-        public static void Shoot(string type, Vector2 position, Vector2 velocity, int damage, int health)
+        public static void Shoot(string type, Vector2 velocity, Vector2 position, int damage, int health)
         {
             if (type == "regular")
-                projectiles.Add(new RegularProjectile(health, damage, position, velocity, Content.Load<Texture2D>("RegularProjectile")));
+                addQueue.Add(new RegularProjectile(health, damage, velocity, position, Content.Load<Texture2D>("RegularProjectile")));
+        }
+        static void MergeWithQueue()
+        {
+            foreach (Projectiles projectile in addQueue)
+                objects.Add(projectile);
+            addQueue = new List<Projectiles>();
         }
         //Laddar in en bana. Anton
         public static void LoadMap()
@@ -305,9 +238,7 @@ namespace te16mono
             player.position = new Vector2(0);
             player.velocity = new Vector2(0);
             player.health = 10;
-            testObjects = new List<MovingObjects>();
-            testBlocks = new List<Block>();
-            effects = new List<Effect>();
+            objects = new List<ObjectsBase>();
 
 
             try
