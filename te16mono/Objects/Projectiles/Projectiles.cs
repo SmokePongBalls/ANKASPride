@@ -1,10 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿
 
 namespace te16mono
 {
-    //Anton har gjort allt i den här klassen
-
     abstract class Projectiles : ObjectsBase
     {
         //Hur många milisekunder till som det ska leva
@@ -19,6 +16,7 @@ namespace te16mono
             health = -1;
             return player;
         }
+        //Gör skada på objektet som den krockat med. Ifall någon skada blev gjord blir health -1 och objektet blir borttaget ifrån objects listan
         public override ObjectsBase Intersect(ObjectsBase collided)
         {
             Oriantations oriantation = CheckPlayerCollision(collided.Hitbox, collided.velocity);

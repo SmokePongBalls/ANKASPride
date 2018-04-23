@@ -15,7 +15,7 @@ namespace te16mono.LevelBuilder.ObjectEditing
                 Place();
             }
         }
-        //Kollar ifall rektangeln som ska placeras ut kolliderar med något. Returnerar true ifall det gör det
+        //Kollar ifall rektangeln som ska placeras ut kolliderar med något. Returnerar true ifall det gör det 
         public static bool CheckPosition()
         {
             Rectangle checkRectangle = CheckRectangle;

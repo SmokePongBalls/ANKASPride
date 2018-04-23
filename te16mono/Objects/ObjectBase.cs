@@ -31,10 +31,11 @@ namespace te16mono
         {
             get
             {
-                return new Rectangle((int)Math.Round(position.X), (int)Math.Round(position.Y), texture.Width, texture.Height);
+                return new Rectangle((int)Math.Round(position.X), (int)Math.Round(position.Y), Width, Height);
             }
         }
 
+        //Metoden som ska köras ifall något krockar med en projectil. Ändrar velocity på objektet baserat på skadan som projektilen har. Anton
         public virtual bool ProjectileIntersect(int damage, Oriantations oriantation)
         {
             if (oriantation == Oriantations.Left)
@@ -52,7 +53,7 @@ namespace te16mono
             health -= damage;
             return true;
         }
-        //Standard intersectmetod 
+        //Standard intersectmetoden Anton
         public virtual ObjectsBase Intersect(ObjectsBase collided)
         {
             //Ser till så att den inte krockat med sig själv
@@ -107,7 +108,9 @@ namespace te16mono
             }
             return collided;
         }
-
+        //Tar reda på vilken sida utav objektet som hitboxen befinner sig
+        //Fungerar hyfsat bra men kollisionen underifrån kan göras bättre
+        //Anton
         protected Oriantations CheckCollision(Rectangle collided)
         {
             //Om den är till vänster
@@ -127,6 +130,7 @@ namespace te16mono
 
         //Tar reda på vilken sida utav objektet som hitboxen befinner sig
         //Fungerar hyfsat bra men kollisionen underifrån kan göras bättre
+        //Är likadan som CheckCollision med enda skillnaden att denna metod gör de fyra rektanglarna runt objektet som metoden kallas ifrån.
         //Anton
         protected virtual Oriantations CheckPlayerCollision(Rectangle collided, Vector2 collidedVelocity)
         {
@@ -281,7 +285,9 @@ namespace te16mono
             return player;
         }
 
-
+        //Används för att få bredd och höjd på objektet. Ska i de flesta fall retunera texture.[Width/Height]. 
+        //Block.cs är den enda klassen som just nu skriver över detta då den använder ett utdraget texture.
+        //Anton
         public virtual int Width
         {
             get

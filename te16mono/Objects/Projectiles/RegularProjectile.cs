@@ -16,7 +16,7 @@ namespace te16mono
             this.texture = texture;
         }
 
-
+        //Ändrar position åt det hållet den ska och drar ner health. Ifall health < 0 tas den bort ur objects listan 
         public override void Update(GameTime gameTime)
         {
             position += velocity;
