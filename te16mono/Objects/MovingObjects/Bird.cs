@@ -118,9 +118,10 @@ namespace te16mono
             return collided;
         }
         //Om objektet blir träffad av en projektil Anton
-        public override void ProjectileIntersect(int damage, Oriantations oriantation)
+        public override bool ProjectileIntersect(int damage, Oriantations oriantation)
         {
             health -= damage;
+            return true;
         }
     }
 

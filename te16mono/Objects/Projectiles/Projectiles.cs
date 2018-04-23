@@ -23,8 +23,9 @@ namespace te16mono
         {
             Oriantations oriantation = CheckPlayerCollision(collided.Hitbox, collided.velocity);
 
-            collided.ProjectileIntersect(damage, oriantation);
+            if(collided.ProjectileIntersect(damage, oriantation))
             health = -1;
+
             return collided;
         }
 

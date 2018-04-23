@@ -28,7 +28,10 @@ namespace te16mono
         }
 
         public override void Update(GameTime gameTime){}
-        public override void ProjectileIntersect(int damage, Oriantations oriantation){}
+        public override bool ProjectileIntersect(int damage, Oriantations oriantation)
+        {
+            return true;
+        }
 
         public override ObjectsBase Intersect(ObjectsBase collided)
         {

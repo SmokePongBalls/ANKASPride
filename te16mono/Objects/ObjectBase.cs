@@ -35,7 +35,7 @@ namespace te16mono
             }
         }
 
-        public virtual void ProjectileIntersect(int damage, Oriantations oriantation)
+        public virtual bool ProjectileIntersect(int damage, Oriantations oriantation)
         {
             if (oriantation == Oriantations.Left)
                 velocity.X += 20 * damage;
@@ -50,6 +50,7 @@ namespace te16mono
                 velocity.Y -= 20 * damage;
 
             health -= damage;
+            return true;
         }
         //Standard intersectmetod 
         public virtual ObjectsBase Intersect(ObjectsBase collided)

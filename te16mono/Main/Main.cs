@@ -104,7 +104,7 @@ namespace te16mono
             return currentState; // Stannar kvar i run 
 
         }
-        //Updaterar alla saker i objects listan 
+        //Updaterar alla saker i objects listan  Anton
         private static void ObjectsUpdate(GameTime gameTime)
         {
             var screenRectangle = Camera.Rectangle(player.Hitbox);
@@ -116,10 +116,14 @@ namespace te16mono
             }
             //En array som används för att man ska kunna ändra värden på objekten i listan utan att förstöra något
             ObjectsBase[] outOfLoopStorage = objects.ToArray();
+            //Loopar igenom alla objekt i bojects listan
             for (int i = 0; i < objects.Count; i++)
             {
+                //En annan loop som går igenom samma lista 
                 for (int u = 0; u < objects.Count; u++)
                 {
+                    //Om de två olika objectet intersectar med varandra och inte är samma objekt ska bådas intersect metoder köras.
+                    //Värdet som kommer ut förvaras i outOfLoopStorage för att inte förstöra forlooperna
                     if (objects[u] != objects[i] && objects[i].Hitbox.Intersects(objects[u].Hitbox))
                     {
                         outOfLoopStorage[u] = outOfLoopStorage[i].Intersect(objects[u]);
@@ -224,6 +228,7 @@ namespace te16mono
             if (type == "regular")
                 addQueue.Add(new RegularProjectile(health, damage, velocity, position, Content.Load<Texture2D>("RegularProjectile")));
         }
+        //Flyttar över alla objekt i addQueue till objects listan Anton
         static void MergeWithQueue()
         {
             foreach (Projectiles projectile in addQueue)
