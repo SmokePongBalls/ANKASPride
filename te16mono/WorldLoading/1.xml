@@ -4,7 +4,7 @@
     <Bird>
       <Texture>bird</Texture>
       <X>900</X>
-      <Y>800</Y>
+      <Y>300</Y>
       <WalkLeft>false</WalkLeft>
       <MaxSpeed>0.25</MaxSpeed>
       <MaxX>1700</MaxX>
@@ -59,15 +59,6 @@
     </Block>
     <Block>
       <Texture>square</Texture>
-      <X>500</X>
-      <Y>-1100</Y>
-      <Width>400</Width>
-      <Height>1700</Height>
-      <VelocityX>0</VelocityX>
-      <VelocityY>0</VelocityY>
-    </Block>
-    <Block>
-      <Texture>square</Texture>
       <X>2500</X>
       <Y>800</Y>
       <Width>300</Width>
@@ -99,7 +90,7 @@
       <Texture>iceblock</Texture>
       <X>350</X>
       <Y>500</Y>
-      <Worth>1</Worth> jnjnh 
+      <Worth>1</Worth>
     </Whammy>
     <HighGravity>
       <Texture>weight</Texture>
