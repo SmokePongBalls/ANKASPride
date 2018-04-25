@@ -12,7 +12,7 @@ namespace te16mono
     public abstract class ObjectsBase
     {
         public string name;
-        public Vector2 velocity, position;
+        public Vector2 velocity, position, extraVelocity; //ExtraVelocity ska användas ifall något ett annat object vill påverka hastigheten t.ex när man står på plattformar/fiender som rör på sig.
         protected Texture2D texture;
         public int health, damage;
         public bool canStandOn, canJump, walkLeft, solid;
@@ -68,16 +68,15 @@ namespace te16mono
                     //Får samma y velocity som objektet det krockar med
                     //Vi kanske kan göra fungerande hissar med det här
                     position.Y -= velocity.Y;
-                    velocity.Y = collided.velocity.Y;
+                    extraVelocity.Y = collided.velocity.Y;
                     //Ser till så att objekten inte längre är innuti varandra
                     canJump = true;
 
                 }
                 else if (oriantation == Oriantations.Down)
                 {
-                    //Ifall det åker upp i objektet
-                    if (velocity.Y < 0)
-                        position.Y -= velocity.Y;
+                    //Ser till så att objekten inte krockar med varandra
+                    position.Y = collided.position.Y + collided.Height;
 
                     //Återstället velocity
                     velocity.Y = 0;
@@ -154,6 +153,9 @@ namespace te16mono
         public virtual Player PlayerIntersect(Player player)
         {
 
+            if (name == "Bird")
+            { }
+
             //Får reda på vilken sida objektet krockade ifrån (Upp ner höger vänster)
             Oriantations oriantation = CheckPlayerCollision(player.Hitbox, player.velocity);
 
@@ -178,8 +180,13 @@ namespace te16mono
                 //Får samma y velocity som objektet det krockar med
                 //Vi kanske kan göra fungerande hissar med det här
                 player.velocity.Y = velocity.Y;
+
+                //Ifall man står på ett rörande objekt så gör det att man följer med objektet
+                if (velocity.X != 0)
+                    player.velocity.X += velocity.X;
+
                 //Ser till så att objekten inte längre är innuti varandra
-                player.position.Y = position.Y - player.Hitbox.Height + 0.5f;
+                player.position.Y = position.Y - player.Hitbox.Height;
                 //Står på solid mark så man får hoppa igen
                 player.SetCanJump(Oriantations.Up);
                 player.lastTouchedSurface = Oriantations.Up;
@@ -187,16 +194,15 @@ namespace te16mono
             else if (oriantation == Oriantations.Down)
             {
                 //Ifall player åker upp i objektet
-                if (player.velocity.Y < 0)
-                    player.position.Y -= player.velocity.Y;
+                player.position.Y = position.Y + Height;
 
                 //Återstället velocity
-                player.velocity.Y = 0;
+                player.velocity.Y = velocity.Y;
             }
             else if (oriantation == Oriantations.Right)
             {
-                //Ser till så att objekten inte längre är innuti varandra
-                player.position.X -= player.velocity.X;
+                //Ser till så att objekten inte längre är innuti varandra ser också till så att player blir knuffad ifall velocity.X = 0;
+                player.position.X -= player.velocity.X - velocity.X;
 
                 //position.X = collided.X + collided.Width - velocity.X;
                 //Återställer velocity så den inte fortsätter in i objektet
@@ -210,8 +216,8 @@ namespace te16mono
             }
             else if (oriantation == Oriantations.Left)
             {
-                //Ser till så att objekten inte längre är innuti varandra
-                player.position.X -= player.velocity.X;
+                //Ser till så att objekten inte längre är innuti varandra ser också till så att player blir knuffad ifall velocity.X = 0;
+                player.position.X -= player.velocity.X - velocity.X;
 
                 //position.X = collided.X - velocity.X - texture.Width;
                 //Återställer velocity så den inte fortsätter in i objektet
@@ -234,7 +240,7 @@ namespace te16mono
                 //Vi kanske kan göra fungerande hissar med det här
                 player.velocity.Y = velocity.Y;
                 //Ser till så att objekten inte längre är innuti varandra
-                player.position.Y = position.Y - player.Hitbox.Height;
+                player.position.Y = position.Y - player.Height;
                 //Står på solid mark så man får hoppa igen
                 player.SetCanJump(oriantation);
 
@@ -253,14 +259,14 @@ namespace te16mono
             else if (oriantation == Oriantations.Down)
             {
 
-                //Ifall player åker upp i objektet
-                if (player.velocity.Y < 0)
-                    player.position.Y -= player.velocity.Y;
+                //Fixar så att player inte åker upp i objektet
+                player.position.Y = position.Y + Height;
 
                 //Återstället velocity
                 player.velocity.Y = 0;
 
-                //Ser till så att objekten inte längre är innuti varandra
+                player.health -= damage;
+
 
             }
             else if (oriantation == Oriantations.Right)
@@ -268,8 +274,8 @@ namespace te16mono
                 //Ser till så att objekten inte längre är innuti varandra
                 player.position.X = position.X + texture.Width - velocity.X;
                 //Ger den en slänger den åt sidan skadad
-                player.velocity.X = 25;
-                player.velocity.Y = 10;
+                player.velocity.X = 35;
+                player.velocity.Y = -10;
                 player.health -= damage;
 
             }
@@ -278,8 +284,8 @@ namespace te16mono
                 //Ser till så att objekten inte längre är innuti varandra
                 player.position.X = position.X - player.velocity.X - player.texture.Width;
                 //Återställer velocity så den inte fortsätter in i objektet
-                player.velocity.X = -25;
-                player.velocity.Y = 10;
+                player.velocity.X = -35;
+                player.velocity.Y = -10;
                 player.health -= damage;
             }
             return player;

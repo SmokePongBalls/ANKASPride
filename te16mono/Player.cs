@@ -35,6 +35,7 @@ namespace te16mono
             name = "Player";
             position = new Vector2();
             velocity = new Vector2();
+            extraVelocity = new Vector2(0);
             this.texture = texture;
             canJump = true;
             health = 10;
@@ -64,7 +65,7 @@ namespace te16mono
                 position = new Vector2(0);
             }
 
-            position += velocity;
+            position += velocity + extraVelocity;
 
             //kollar om player är under någon effect. Det är vad boolen är till för Hugo F
             if (underEffect == true)
@@ -76,7 +77,7 @@ namespace te16mono
                 
                 Effects(gameTime);              
             }
-
+            extraVelocity = new Vector2(0);
         }
 
         private void KeyActions(GameTime gameTime)
