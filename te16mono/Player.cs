@@ -23,6 +23,7 @@ namespace te16mono
         public bool isWhammy = false;
         public List<string> effects = new List<string>();
         public string effect;
+        bool resetNextUpdate;
         
         //kontroller
         public Keys up, down, left, right;
@@ -77,7 +78,16 @@ namespace te16mono
                 
                 Effects(gameTime);              
             }
-            extraVelocity = new Vector2(0);
+
+            if (extraVelocity != new Vector2(0))
+            {
+                resetNextUpdate = true;
+            }
+            else if (resetNextUpdate)
+            {
+                extraVelocity = new Vector2(0);
+                resetNextUpdate = false;
+            }
         }
 
         private void KeyActions(GameTime gameTime)
