@@ -18,7 +18,7 @@ namespace te16mono
             this.maxSpeed = maxSpeed;
             velocity = new Vector2(0);
             acceleration = 0;
-            damage = 0;
+            damage = 1;
             canStandOn = true;
             //Bestämmer hur långt den får gå
             this.maxX = maxX;
