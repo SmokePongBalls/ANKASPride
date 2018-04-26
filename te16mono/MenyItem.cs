@@ -84,10 +84,9 @@ namespace te16mono
 
             KeyboardState keyboardState = Keyboard.GetState();
 
-            if (lastChange+130<gameTime.TotalGameTime.TotalMilliseconds)
-            {
+           
 
-                if (keyboardState.IsKeyDown(Keys.Down))
+                if (keyboardState.IsKeyDown(Keys.Down) && Game1.lastKeyboardstate.IsKeyUp(Keys.Down))
                 {
 
                     selected++;
@@ -97,7 +96,7 @@ namespace te16mono
 
                 }
 
-                if (keyboardState.IsKeyDown(Keys.Up))
+                if (keyboardState.IsKeyDown(Keys.Up)&&Game1.lastKeyboardstate.IsKeyUp(Keys.Up))
                 {
                     selected--;
 
@@ -110,15 +109,20 @@ namespace te16mono
 
                 lastChange = gameTime.TotalGameTime.TotalMilliseconds;
 
-                if (keyboardState.IsKeyDown(Keys.Enter))
+            if (keyboardState.IsKeyDown(Keys.Enter) && Game1.lastKeyboardstate.IsKeyUp(Keys.Enter))
+            {
+                if (selected == 2)
+                    Game1.gameSection = GameSection.LevelBuilding;
 
-                    return meny[selected].State;
+                return meny[selected].State;
+            }
+                    
 
 
 
                
 
-            }
+            
 
             return defaultMenyState; 
 
