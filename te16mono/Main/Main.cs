@@ -15,7 +15,7 @@ namespace te16mono
 
         public enum State { Meny, Quit, Run, Finish ,Pause, GameOver};
 
-
+        
         public static State currentState;
 
         public static int map;
@@ -256,9 +256,7 @@ namespace te16mono
         {
 
             //Återställer alla variabler tills nästa bana
-            player.position = new Vector2(0);
-            player.velocity = new Vector2(0);
-            player.health = 10;
+            player = new Player(0, Content.Load<Texture2D>("square"));
             objects = new List<ObjectsBase>();
 
 
