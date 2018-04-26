@@ -44,12 +44,17 @@ namespace te16mono
             objects = new List<ObjectsBase>();
             addQueue = new List<Projectiles>();
             // TODO: Add your initialization logic here
+            CreatePlayer();
+            map = 1;
+        }
+
+        private static void CreatePlayer()
+        {
             player = new Player(1, Content.Load<Texture2D>("square"));
             player.up = Keys.W;
             player.down = Keys.S;
             player.left = Keys.A;
             player.right = Keys.D;
-            map = 1;
         }
 
         public static void LoadContent(GraphicsDevice graphicsDevice , GameWindow window)
@@ -256,7 +261,7 @@ namespace te16mono
         {
 
             //Återställer alla variabler tills nästa bana
-            player = new Player(0, Content.Load<Texture2D>("square"));
+            CreatePlayer();
             objects = new List<ObjectsBase>();
 
 
