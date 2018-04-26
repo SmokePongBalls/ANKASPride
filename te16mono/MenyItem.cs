@@ -22,37 +22,37 @@ namespace te16mono
         Vector2 position; // Positionen för menyvalet 
         int currentState; // meny valets state 
 
-        public MenyItem(Texture2D texture, Vector2 position , int currentState)
+        public MenyItem(Texture2D texture, Vector2 position, int currentState)
         {
             this.texture = texture;
             this.position = position;
             this.currentState = currentState;
 
 
-            
+
         }
 
         public Texture2D Texture { get { return texture; } }
         public Vector2 Position { get { return position; } }       // get egenskaper för menyitems 
-        public int State { get { return currentState; } }             
+        public int State { get { return currentState; } }
 
 
     }
 
 
-     class Menyer
-     {
+    class Menyer
+    {
 
-        List<MenyItem> meny; // Lista på meny items 
-        int selected = 0; //Highligtar första valet 
+        protected List<MenyItem> meny; // Lista på meny items 
+        protected int selected = 0; //Highligtar första valet 
 
         float currentheight = 0; // används för att välja höjden på valerna 
 
-        double lastChange = 0; // används för att sakta ner menyvalen 
+        protected double lastChange = 0; // används för att sakta ner menyvalen 
 
-        int defaultMenyState;
+      protected  int defaultMenyState;
 
-        public  Menyer (int defaultMenystate) // konstruktor som skapar en listan med menyvalen 
+        public Menyer(int defaultMenystate) // konstruktor som skapar en listan med menyvalen 
         {
             meny = new List<MenyItem>();
             this.defaultMenyState = defaultMenystate;
@@ -79,35 +79,35 @@ namespace te16mono
         }
 
 
-        public int Update(GameTime gameTime) // fortsätt här 
+        public virtual int Update(GameTime gameTime) // fortsätt här 
         {
 
             KeyboardState keyboardState = Keyboard.GetState();
 
-           
-
-                if (keyboardState.IsKeyDown(Keys.Down) && Game1.lastKeyboardstate.IsKeyUp(Keys.Down))
-                {
-
-                    selected++;
-
-                    if (selected > meny.Count - 1)
-                        selected = 0;
-
-                }
-
-                if (keyboardState.IsKeyDown(Keys.Up)&&Game1.lastKeyboardstate.IsKeyUp(Keys.Up))
-                {
-                    selected--;
-
-                    if (selected < 0)
-                        selected = meny.Count - 1; 
-                
 
 
-                }
+            if (keyboardState.IsKeyDown(Keys.Down) && Game1.lastKeyboardstate.IsKeyUp(Keys.Down))
+            {
 
-                lastChange = gameTime.TotalGameTime.TotalMilliseconds;
+                selected++;
+
+                if (selected > meny.Count - 1)
+                    selected = 0;
+
+            }
+
+            if (keyboardState.IsKeyDown(Keys.Up) && Game1.lastKeyboardstate.IsKeyUp(Keys.Up))
+            {
+                selected--;
+
+                if (selected < 0)
+                    selected = meny.Count - 1;
+
+
+
+            }
+
+            lastChange = gameTime.TotalGameTime.TotalMilliseconds;
 
             if (keyboardState.IsKeyDown(Keys.Enter) && Game1.lastKeyboardstate.IsKeyUp(Keys.Enter))
             {
@@ -116,24 +116,24 @@ namespace te16mono
 
                 return meny[selected].State;
             }
-                    
 
 
 
-               
 
-            
 
-            return defaultMenyState; 
+
+
+
+            return defaultMenyState;
 
         }
 
 
         public void Draw(SpriteBatch spritebatch)
-        { 
+        {
             spritebatch.Begin();
 
-            for( int i = 0; i< meny.Count;i++)
+            for (int i = 0; i < meny.Count; i++)
             {
 
                 if (i == selected)
@@ -151,7 +151,7 @@ namespace te16mono
 
 
 
-     }
+    }
 
 
     class PauseMenyItem : MenyItem
@@ -171,16 +171,64 @@ namespace te16mono
     {
         public PauseMeny(int defaultMenystate) : base(defaultMenystate)
         {
+            
+        }
+        public override int Update(GameTime gameTime)
+        {
 
-             
+            KeyboardState keyboardState = Keyboard.GetState();
+            if (keyboardState.IsKeyDown(Keys.Down) && Game1.lastKeyboardstate.IsKeyUp(Keys.Down))
+            {
+                selected++;
+
+                if (selected > meny.Count - 1)
+                    selected = 0;
+
+
+
+            }
+
+            if (keyboardState.IsKeyDown(Keys.Up) && Game1.lastKeyboardstate.IsKeyUp(Keys.Up))
+            {
+                selected--;
+
+                if (selected < 0)
+                    selected = meny.Count - 1;
+
+
+
+            }
+
+            lastChange = gameTime.TotalGameTime.TotalMilliseconds;
+
+            if (keyboardState.IsKeyDown(Keys.Enter) && Game1.lastKeyboardstate.IsKeyUp(Keys.Enter))
+            {
+                
+               return meny[selected].State;
+
+            }
+
+
+            return defaultMenyState;
 
 
         }
 
-        
     }
 
-
-
-
 }
+
+
+
+ 
+
+             
+
+        
+    
+
+
+
+
+
+
