@@ -28,7 +28,7 @@ namespace te16mono
         static ContentManager Content;
         static List<Projectiles> addQueue;
         public static List<ObjectsBase> objects;
-        static new Vector2 heartposition;
+        static Vector2 heartposition;
 
 
 
