@@ -40,6 +40,7 @@ namespace te16mono
             this.texture = texture;
             canJump = true;
             health = 10;
+            points = 0;
             holdingJump = false;
             shootCooldown = 0;
             rng = new Random(seed);
