@@ -118,7 +118,11 @@ namespace te16mono
                 {
                 MainLevelBuilder.Update(GraphicsDevice);
                 if (gameSection == GameSection.CoreGame)
+                {
                     MainLevelBuilder.Reset();
+                    Main.currentState = Main.State.Meny;
+                }
+                    
                 }
             lastKeyboardstate = keyboardState;
 
