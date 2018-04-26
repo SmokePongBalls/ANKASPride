@@ -208,6 +208,11 @@ namespace te16mono
 
             }
 
+            if(selected==2)
+            {
+                Main.LoadMap();
+
+            }
 
             return defaultMenyState;
 
