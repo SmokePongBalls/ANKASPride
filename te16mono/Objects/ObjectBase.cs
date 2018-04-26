@@ -67,8 +67,8 @@ namespace te16mono
                 {
                     //Får samma y velocity som objektet det krockar med
                     //Vi kanske kan göra fungerande hissar med det här
-                    position.Y -= velocity.Y;
-                    extraVelocity.Y = collided.velocity.Y;
+                    position.Y = collided.position.Y - Height;
+                    velocity.Y = 0;
                     //Ser till så att objekten inte längre är innuti varandra
                     canJump = true;
 
