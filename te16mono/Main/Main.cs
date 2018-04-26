@@ -13,7 +13,7 @@ namespace te16mono
     {
 
 
-        public enum State { Meny, Quit, Run, Finish ,Pause, GameOver };
+        public enum State { Meny, Quit, Run, Finish ,Pause, GameOver};
 
 
         public static State currentState;
@@ -65,6 +65,8 @@ namespace te16mono
 
             pauseMeny = new PauseMeny((int)State.Pause);
             pauseMeny.AddItem((int)GameSection.CoreGame, Content.Load<Texture2D>("Meny"));
+            pauseMeny.AddItem((int)State.Run, Content.Load<Texture2D>("Resume"));
+            pauseMeny.AddItem((int)State.Run, Content.Load<Texture2D>("Retry"));
             pauseMeny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));
 
 
@@ -92,6 +94,8 @@ namespace te16mono
         {
             meny.Draw(spriteBatch);
         }
+       
+
         public static State RunUpdate(GameTime gameTime)
         {
 
@@ -267,7 +271,7 @@ namespace te16mono
                 map = 1;
                 XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
             }
-            
+          
         }
     }
 
