@@ -28,7 +28,7 @@ namespace te16mono
         static ContentManager Content;
         static List<Projectiles> addQueue;
         public static List<ObjectsBase> objects;
-        static Vector2 heartposition;
+        static Vector2 heartPosition;
 
 
 
@@ -40,7 +40,7 @@ namespace te16mono
         {
 
             Content = content;
-            heartposition = new Vector2((float)20, (float)10);
+            heartPosition = new Vector2((float)20, (float)10);
             objects = new List<ObjectsBase>();
             addQueue = new List<Projectiles>();
             // TODO: Add your initialization logic here
@@ -211,10 +211,10 @@ namespace te16mono
             spriteBatch.Begin();
             for (int i = 0; i < player.health; i++)
             {
-                spriteBatch.Draw(Content.Load<Texture2D>("heart"), heartposition, Color.White);
-                heartposition.X += 60;
+                spriteBatch.Draw(Content.Load<Texture2D>("heart"), heartPosition, Color.White);
+                heartPosition.X += 60;
             }
-            heartposition.X = 20;
+            heartPosition.X = 20;
             //spriteBatch.DrawString(font, "Health: " + player.health + " Time: " + gameTime.TotalGameTime.Minutes + ":" +  gameTime.TotalGameTime.Seconds + ":" + gameTime.TotalGameTime.Milliseconds, Vector2.Zero, Color.White);
             spriteBatch.End();
 
