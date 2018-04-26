@@ -13,7 +13,7 @@ namespace te16mono
     {
 
 
-        public enum State { Meny, Quit, Run, Finish ,Pause, GameOver };
+        public enum State { Meny, Quit, Run, Finish ,Pause, GameOver};
 
         
         public static State currentState;
@@ -66,13 +66,15 @@ namespace te16mono
             pauseMeny = new PauseMeny((int)State.Pause);
             pauseMeny.AddItem((int)GameSection.CoreGame, Content.Load<Texture2D>("Meny"));
             pauseMeny.AddItem((int)State.Run, Content.Load<Texture2D>("Resume"));
+            pauseMeny.AddItem((int)State.Run, Content.Load<Texture2D>("Retry"));
             pauseMeny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));
 
 
             //Hugo F
+            
             font = Content.Load<SpriteFont>("Font");
             pointFont = Content.Load<SpriteFont>("pointFont");
-
+            
 
             //music = Content.Load<Song>("megaman2");
             //MediaPlayer.Play(music);
@@ -92,6 +94,8 @@ namespace te16mono
         {
             meny.Draw(spriteBatch);
         }
+       
+
         public static State RunUpdate(GameTime gameTime)
         {
 
@@ -191,7 +195,7 @@ namespace te16mono
 
         public static void RunDraw( GraphicsDevice  graphicsDevice , GameTime gameTime)
         {
-            
+
             //Här i ska alla saker som kan hamna utanför skärmen vara
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, DepthStencilState.None, null, null, Camera.Position(player, graphicsDevice.DisplayMode.Width, graphicsDevice.DisplayMode.Height));
 
@@ -207,22 +211,33 @@ namespace te16mono
             //Här ska alla saker som stannar i skärmen vara
             // (UI)
             //Hugo F
-           
-            
+
+
+            UI();
+        }
+
+        private static void UI()
+        {
             spriteBatch.Begin();
             for (int i = 0; i < player.health; i++)
             {
                 spriteBatch.Draw(Content.Load<Texture2D>("heart"), heartPosition, Color.White);
                 heartPosition.X += 60;
             }
-            heartPosition.X = 20;
+            heartPosition.X += 30;
+            heartPosition.Y += 10;
+            spriteBatch.DrawString(pointFont, player.points.ToString(), heartPosition, Color.White);
+            ResetHeartPosition();
             //spriteBatch.DrawString(font, "Health: " + player.health + " Time: " + gameTime.TotalGameTime.Minutes + ":" +  gameTime.TotalGameTime.Seconds + ":" + gameTime.TotalGameTime.Milliseconds, Vector2.Zero, Color.White);
             spriteBatch.End();
-
-            // TODO: Add your drawing code here
-
-            
         }
+
+        private static void ResetHeartPosition()
+        {
+            heartPosition.X = 20;
+            heartPosition.Y = 10;
+        }
+
         //Gör en ny projectile och lägger till den i projectiles Anton
         public static void Shoot(string type, Vector2 velocity, Vector2 position, int damage, int health)
         {
@@ -254,7 +269,7 @@ namespace te16mono
                 map = 1;
                 XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
             }
-            
+          
         }
     }
 
