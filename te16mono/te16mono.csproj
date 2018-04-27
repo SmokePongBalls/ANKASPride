@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BlinkBlink\Blink.cs" />
     <Compile Include="Objects\Blocks\BlockDummy.cs" />
     <Compile Include="Objects\Effects\EffectDummy.cs" />
     <Compile Include="Objects\Effects\Effects.cs" />

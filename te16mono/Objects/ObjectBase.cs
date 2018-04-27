@@ -153,10 +153,6 @@ namespace te16mono
         //Main delen för intersect Anton
         public virtual Player PlayerIntersect(Player player)
         {
-
-            if (name == "Bird")
-            { }
-
             //Får reda på vilken sida objektet krockade ifrån (Upp ner höger vänster)
             Oriantations oriantation = CheckPlayerCollision(player.Hitbox, player.velocity);
 
