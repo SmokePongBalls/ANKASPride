@@ -28,7 +28,7 @@ namespace te16mono
         static ContentManager Content;
         static List<Projectiles> addQueue;
         public static List<ObjectsBase> objects;
-        static Vector2 heartPosition;
+        
 
 
 
@@ -41,11 +41,12 @@ namespace te16mono
         {
 
             Content = content;
-            heartPosition = new Vector2((float)20, (float)10);
+            
             objects = new List<ObjectsBase>();
             addQueue = new List<Projectiles>();
             // TODO: Add your initialization logic here
             CreatePlayer();
+            UI.Initialize(content);
             map = 1;
         }
 
@@ -209,9 +210,13 @@ namespace te16mono
         public static void RunDraw( GraphicsDevice  graphicsDevice , GameTime gameTime)
         {
 
+            spriteBatch.Begin();
+            UI.DrawBackground(spriteBatch);
+            spriteBatch.End();
+
             //Här i ska alla saker som kan hamna utanför skärmen vara
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, DepthStencilState.None, null, null, Camera.Position(player, graphicsDevice.DisplayMode.Width, graphicsDevice.DisplayMode.Height));
-
+           
             foreach (ObjectsBase obj in objects)
             {
                 obj.Draw(spriteBatch);
@@ -224,31 +229,18 @@ namespace te16mono
             //Här ska alla saker som stannar i skärmen vara
             // (UI)
             //Hugo F
+            UIDraw();
 
 
-            UI();
+
         }
 
-        private static void UI()
+        private static void UIDraw()
         {
             spriteBatch.Begin();
-            for (int i = 0; i < player.health; i++)
-            {
-                spriteBatch.Draw(Content.Load<Texture2D>("heart"), heartPosition, Color.White);
-                heartPosition.X += 60;
-            }
-            heartPosition.X += 30;
-            heartPosition.Y += 10;
-            spriteBatch.DrawString(pointFont, player.points.ToString(), heartPosition, Color.White);
-            ResetHeartPosition();
-            //spriteBatch.DrawString(font, "Health: " + player.health + " Time: " + gameTime.TotalGameTime.Minutes + ":" +  gameTime.TotalGameTime.Seconds + ":" + gameTime.TotalGameTime.Milliseconds, Vector2.Zero, Color.White);
+            UI.Draw(spriteBatch);
+            
             spriteBatch.End();
-        }
-
-        private static void ResetHeartPosition()
-        {
-            heartPosition.X = 20;
-            heartPosition.Y = 10;
         }
 
         //Gör en ny projectile och lägger till den i projectiles Anton
