@@ -38,7 +38,6 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Compile Include="Main\UI.cs" />
     <Compile Include="BlinkBlink\Blink.cs" />
     <Compile Include="Objects\Blocks\BlockDummy.cs" />

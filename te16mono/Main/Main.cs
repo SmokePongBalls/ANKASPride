@@ -28,7 +28,7 @@ namespace te16mono
         static ContentManager Content;
         static List<Projectiles> addQueue;
         public static List<ObjectsBase> objects;
-        static Vector2 heartPosition;
+        
 
 
 
@@ -202,9 +202,13 @@ namespace te16mono
         public static void RunDraw( GraphicsDevice  graphicsDevice , GameTime gameTime)
         {
 
+            spriteBatch.Begin();
+            UI.DrawBackground(spriteBatch);
+            spriteBatch.End();
+
             //Här i ska alla saker som kan hamna utanför skärmen vara
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, DepthStencilState.None, null, null, Camera.Position(player, graphicsDevice.DisplayMode.Width, graphicsDevice.DisplayMode.Height));
-
+           
             foreach (ObjectsBase obj in objects)
             {
                 obj.Draw(spriteBatch);
