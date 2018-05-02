@@ -65,11 +65,12 @@ namespace te16mono
 
                 if (oriantation == Oriantations.Up)
                 {
+                    //Ser till så att objekten inte längre är innuti varandra
+                    position.Y -= velocity.Y + collided.velocity.Y;
                     //Får samma y velocity som objektet det krockar med
                     //Vi kanske kan göra fungerande hissar med det här
-                    position.Y = collided.position.Y - Height;
-                    velocity.Y = 0;
-                    //Ser till så att objekten inte längre är innuti varandra
+                    velocity.Y = collided.velocity.Y;
+                    
                     canJump = true;
 
                 }
@@ -77,7 +78,7 @@ namespace te16mono
                 {
                     //Ser till så att objekten inte krockar med varandra
                     position.Y = collided.position.Y + collided.Height;
-
+                    
                     //Återstället velocity
                     velocity.Y = 0;
                 }
@@ -152,10 +153,6 @@ namespace te16mono
         //Main delen för intersect Anton
         public virtual Player PlayerIntersect(Player player)
         {
-
-            if (name == "Bird")
-            { }
-
             //Får reda på vilken sida objektet krockade ifrån (Upp ner höger vänster)
             Oriantations oriantation = CheckPlayerCollision(player.Hitbox, player.velocity);
 
@@ -177,13 +174,12 @@ namespace te16mono
         {
             if (oriantation == Oriantations.Up)
             {
-                //Får samma y velocity som objektet det krockar med
-                //Vi kanske kan göra fungerande hissar med det här
-                player.velocity.Y = velocity.Y;
-
+                //extraVelocity får samma velocity som objektet player krockar med
                 //Ifall man står på ett rörande objekt så gör det att man följer med objektet
-                if (velocity.X != 0)
-                    player.velocity.X += velocity.X;
+                player.extraVelocity = velocity;
+
+                player.velocity.X += velocity.X;
+
 
                 //Ser till så att objekten inte längre är innuti varandra
                 player.position.Y = position.Y - player.Hitbox.Height;
@@ -244,6 +240,9 @@ namespace te16mono
                 //Står på solid mark så man får hoppa igen
                 player.SetCanJump(oriantation);
 
+                //Lägger till Y velocityn av det objektet player kolliderade med
+                player.extraVelocity.X = velocity.X;
+
                 player.lastTouchedSurface = Oriantations.Up;
             }
             else if (oriantation == Oriantations.Up && canStandOn == false)
@@ -251,6 +250,9 @@ namespace te16mono
                 //Slänger upp player i luften
                 player.velocity.Y = -25;
                 player.velocity.X = 10;
+
+                //Lägger till Y velocityn av det objektet player kolliderade med
+                player.extraVelocity.X = velocity.X;
 
                 player.health -= damage;
                 //Ser till så att objekten inte längre är innuti varandra

@@ -34,15 +34,6 @@ namespace te16mono
 
             position.Y += velocity.Y;
             position.X += velocity.X;
-        }
-        //Ifall objektet krockar med en projektil Anton
-        
-
-        //All de olika update är så olika varande att de alla måste skriva över
+        }   
     }
-
-
-
-
-
 }
