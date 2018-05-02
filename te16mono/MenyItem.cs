@@ -129,23 +129,23 @@ namespace te16mono
         }
 
 
-        public void Draw(SpriteBatch spritebatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spritebatch.Begin();
+            spriteBatch.Begin();
 
             for (int i = 0; i < meny.Count; i++)
             {
 
                 if (i == selected)
-                    spritebatch.Draw(meny[i].Texture, meny[i].Position, Color.RosyBrown);
+                    spriteBatch.Draw(meny[i].Texture, meny[i].Position, Color.RosyBrown);
 
                 else
-                    spritebatch.Draw(meny[i].Texture, meny[i].Position, Color.White);
+                    spriteBatch.Draw(meny[i].Texture, meny[i].Position, Color.White);
 
 
             };
 
-            spritebatch.End();
+            spriteBatch.End();
         }
 
 
@@ -240,6 +240,29 @@ namespace te16mono
         {
         }
 
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Begin();
+
+            for (int i = 0; i < meny.Count; i++)
+            {
+
+                if (i == selected)
+                    spriteBatch.Draw(meny[i].Texture, meny[i].Position, Color.RosyBrown);
+
+                else
+                    spriteBatch.Draw(meny[i].Texture, meny[i].Position, Color.White);
+
+
+            };
+
+
+            spriteBatch.DrawString(Main.pointFont, Convert.ToString(Main.player.points), new Vector2(1920/ 2 - 30, 1080 / 2 - 250), Color.White);
+
+            spriteBatch.End();
+        }
+
+
         public override int Update(GameTime gameTime)
         {
             KeyboardState keyboardState = Keyboard.GetState();
@@ -282,6 +305,8 @@ namespace te16mono
 
             }
 
+
+
             return defaultMenyState;
 
 
@@ -291,14 +316,7 @@ namespace te16mono
         }
 
 
-        public void Draw(SpriteBatch spriteBatch,GraphicsDevice graphicsDevice)
-        {
-
-            spriteBatch.Begin();
-            spriteBatch.DrawString(Main.pointFont, Convert.ToString(Main.player.points), new Vector2(graphicsDevice.DisplayMode.Width / 2 - 30, graphicsDevice.DisplayMode.Height / 2 - 250), Color.White);
-            spriteBatch.End();
-
-        }
+        
 
 
 
