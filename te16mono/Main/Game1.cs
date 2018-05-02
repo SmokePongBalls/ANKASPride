@@ -30,7 +30,7 @@ namespace te16mono
         SpriteBatch spriteBatch;
         public static GameSection gameSection;
         static GameTime gameTime;
-
+        public static Random rng = new Random();
 
         public Game1()
         {

@@ -256,7 +256,7 @@ namespace te16mono
             {
                 //Slänger upp player i luften
                 player.velocity.Y = -25;
-                player.velocity.X = 10;
+                player.velocity.X = Game1.rng.Next(-25, 25); ;
 
                 player.health -= damage;
                 //Ser till så att objekten inte längre är innuti varandra

@@ -56,7 +56,8 @@ namespace te16mono
 
         public override void Update(GameTime gameTime)
         {
-
+            //Kollar om position är utanför tillåtna spelområdet
+            CheckOutOfBounds();
             velocity = velocity * (float)0.95;
             velocity.Y += (float)gravity;
             //Spellogik
@@ -69,7 +70,7 @@ namespace te16mono
             //startar om din position till 0
             if (Keyboard.GetState().IsKeyDown(Keys.R))
             {
-                position = new Vector2(0);
+                ResetPosition();
             }
 
             position += velocity + extraVelocity;
@@ -94,6 +95,11 @@ namespace te16mono
                 extraVelocity = new Vector2(0);
                 resetNextUpdate = false;
             }
+        }
+
+        private void ResetPosition()
+        {
+            position = new Vector2(0);
         }
 
         private void KeyActions(GameTime gameTime)
@@ -242,6 +248,15 @@ namespace te16mono
 
             }
         }
+        //
+        private void CheckOutOfBounds()
+        {
+            if (position.Y > 2080)
+            {
+                ResetPosition();
+            }
+        }
+
         //Kollar ifall man ska få hoppa
         public void SetCanJump(Oriantations oriantation)
         {
