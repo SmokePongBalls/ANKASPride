@@ -12,12 +12,12 @@
     </Bird>
     <Hedgehog>
       <Texture>hedgehog</Texture>
-      <X>2350</X>
-      <Y>0</Y>
+      <X>0</X>
+      <Y>100</Y>
       <WalkLeft>true</WalkLeft>
       <MaxSpeed>0</MaxSpeed>
-      <MaxX>2600</MaxX>
-      <MinX>2300</MinX>
+      <MaxX>1</MaxX>
+      <MinX>0</MinX>
     </Hedgehog>
   </MovingObjects>
   <Blocks>
@@ -54,15 +54,6 @@
       <Y>600</Y>
       <Width>1000</Width>
       <Height>100</Height>
-      <VelocityX>0</VelocityX>
-      <VelocityY>0</VelocityY>
-    </Block>
-    <Block>
-      <Texture>square</Texture>
-      <X>500</X>
-      <Y>-1100</Y>
-      <Width>400</Width>
-      <Height>1700</Height>
       <VelocityX>0</VelocityX>
       <VelocityY>0</VelocityY>
     </Block>
