@@ -20,7 +20,7 @@ namespace te16mono
 
     //Anton, Hugo F, Filip
 
-    public enum GameSection { CoreGame, LevelBuilding, BlinkBlink}
+    public enum GameSection { CoreGame, LevelBuilding}
 
     public class Game1 : Game
     {
@@ -44,7 +44,7 @@ namespace te16mono
             Main.currentState = Main.State.Meny;
             Main.Initialize(Content);
             MainLevelBuilder.Initialize(Content, GraphicsDevice);
-            gameSection = GameSection.BlinkBlink;
+            gameSection = GameSection.CoreGame;
 
             IsMouseVisible = true;
             lastKeyboardstate = new KeyboardState();
@@ -108,26 +108,18 @@ namespace te16mono
 
 
             // TODO: Add your update logic here
-
+            
 
             if (gameSection == GameSection.CoreGame)
             {
                 Menus(gameTime);
             }
             else if (gameSection == GameSection.LevelBuilding)
-            {
+                {
                 MainLevelBuilder.Update(GraphicsDevice);
                 if (gameSection == GameSection.CoreGame)
-                {
                     MainLevelBuilder.Reset();
-                    Main.currentState = Main.State.Meny;
                 }
-
-            }
-            else if (gameSection == GameSection.BlinkBlink)
-            {
-                BlinkBlink.Blink.Update(gameTime);
-            }
             lastKeyboardstate = keyboardState;
 
             base.Update(gameTime);
@@ -193,8 +185,7 @@ namespace te16mono
             {
                 MainLevelBuilder.Draw(GraphicsDevice);
             }
-            else if (gameSection == GameSection.BlinkBlink)
-                BlinkBlink.Blink.Draw(spriteBatch, Content);
+            
 
 
             base.Draw(gameTime);

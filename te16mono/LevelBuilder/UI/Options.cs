@@ -27,7 +27,6 @@ namespace te16mono.LevelBuilder.UI
             if (lastUpdate)
             {
                 Game1.gameSection = GameSection.CoreGame;
-                lastUpdate = false;
             }
             else
             {
