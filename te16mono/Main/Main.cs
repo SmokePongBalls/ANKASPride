@@ -22,7 +22,7 @@ namespace te16mono
 
         static SpriteBatch spriteBatch;
         public static Player player;
-        static SpriteFont font, pointFont;
+        public static SpriteFont font, pointFont;
         static Song music;
         static double countdown = 0;
         static ContentManager Content;
@@ -34,6 +34,7 @@ namespace te16mono
 
         static Menyer meny;
         static PauseMeny pauseMeny;
+        static GameOverMeny gameoverMeny;
 
 
         static public void Initialize(ContentManager content)
@@ -75,8 +76,15 @@ namespace te16mono
             pauseMeny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));
 
 
+            gameoverMeny = new GameOverMeny((int)State.GameOver);
+            gameoverMeny.AddItem((int)GameSection.CoreGame, Content.Load<Texture2D>("Meny"));
+            gameoverMeny.AddItem((int)State.Run, Content.Load<Texture2D>("Retry"));
+            gameoverMeny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));
+
+
+
             //Hugo F
-            
+
             font = Content.Load<SpriteFont>("Font");
             pointFont = Content.Load<SpriteFont>("pointFont");
             
@@ -155,17 +163,17 @@ namespace te16mono
             }
         }
 
-        public static void GameOverUpdate()
+        public static State GameoverUpdate (GameTime gameTime)
         {
-            GameOver.Update();
+            return (State)gameoverMeny.Update(gameTime);
+            
         }
 
         public static void GameOverDraw(GraphicsDevice graphicsDevice)
         {
-            spriteBatch.Begin();
-            spriteBatch.Draw(Content.Load<Texture2D>("GameOver"), Finish.Rectangle(graphicsDevice), Color.White);
-            spriteBatch.DrawString(pointFont, Convert.ToString(player.points), new Vector2(graphicsDevice.DisplayMode.Width / 2, graphicsDevice.DisplayMode.Height / 2 - 145), Color.White);
-            spriteBatch.End();
+            gameoverMeny.Draw(spriteBatch);
+
+
         }
 
         public static void FinishUpdate()

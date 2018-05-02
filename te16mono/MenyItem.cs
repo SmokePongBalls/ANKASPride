@@ -18,8 +18,8 @@ namespace te16mono
 
 
 
-        Texture2D texture; //Bilden för meny valet 
-        Vector2 position; // Positionen för menyvalet 
+       protected Texture2D texture; //Bilden för meny valet 
+        protected  Vector2 position; // Positionen för menyvalet 
         int currentState; // meny valets state 
 
         public MenyItem(Texture2D texture, Vector2 position, int currentState)
@@ -159,11 +159,10 @@ namespace te16mono
         public PauseMenyItem(Texture2D texture, Vector2 position, int currentState) : base(texture, position, currentState)
         {
 
-
-
-
-
         }
+
+        
+
 
     }
 
@@ -221,7 +220,96 @@ namespace te16mono
 
     }
 
+
+    class GameOverMenyItem : MenyItem
+    {
+        public GameOverMenyItem(Texture2D texture, Vector2 position, int currentState) : base(texture, position, currentState)
+        {
+        }
+
+
+
+
+
+
+    }
+
+    class GameOverMeny : Menyer
+    {
+        public GameOverMeny(int defaultMenystate) : base(defaultMenystate)
+        {
+        }
+
+        public override int Update(GameTime gameTime)
+        {
+            KeyboardState keyboardState = Keyboard.GetState();
+
+            if (keyboardState.IsKeyDown(Keys.Down) && Game1.lastKeyboardstate.IsKeyUp(Keys.Down))
+            {
+                selected++;
+
+                if (selected > meny.Count - 1)
+                    selected = 0;
+
+
+
+            }
+
+            if (keyboardState.IsKeyDown(Keys.Up) && Game1.lastKeyboardstate.IsKeyUp(Keys.Up))
+            {
+                selected--;
+
+                if (selected < 0)
+                    selected = meny.Count - 1;
+
+
+
+            }
+
+
+            lastChange = gameTime.TotalGameTime.TotalMilliseconds;
+
+            if (keyboardState.IsKeyDown(Keys.Enter) && Game1.lastKeyboardstate.IsKeyUp(Keys.Enter))
+            {
+
+                return meny[selected].State;
+
+            }
+
+            if (selected == 2)
+            {
+                Main.LoadMap();
+
+            }
+
+            return defaultMenyState;
+
+
+            
+
+
+        }
+
+
+        public void Draw(SpriteBatch spriteBatch,GraphicsDevice graphicsDevice)
+        {
+
+            spriteBatch.Begin();
+            spriteBatch.DrawString(Main.pointFont, Convert.ToString(Main.player.points), new Vector2(graphicsDevice.DisplayMode.Width / 2 - 30, graphicsDevice.DisplayMode.Height / 2 - 250), Color.White);
+            spriteBatch.End();
+
+        }
+
+
+
+    }
 }
+
+
+
+
+
+
 
 
 

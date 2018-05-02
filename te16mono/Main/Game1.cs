@@ -44,7 +44,7 @@ namespace te16mono
             Main.currentState = Main.State.Meny;
             Main.Initialize(Content);
             MainLevelBuilder.Initialize(Content, GraphicsDevice);
-            gameSection = GameSection.BlinkBlink;
+            gameSection = GameSection.CoreGame;
 
             IsMouseVisible = true;
             lastKeyboardstate = new KeyboardState();
@@ -158,9 +158,8 @@ namespace te16mono
 
 
                 case Main.State.GameOver:
-                    Main.GameOverUpdate();
-                    if (Main.currentState == Main.State.Run)
-                        Main.LoadMap();
+                    Main.currentState = Main.GameoverUpdate(gameTime);
+                   
                     break;
 
 
