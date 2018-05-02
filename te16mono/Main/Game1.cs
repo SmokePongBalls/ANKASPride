@@ -158,9 +158,8 @@ namespace te16mono
 
 
                 case Main.State.GameOver:
-                    Main.GameOverUpdate();
-                    if (Main.currentState == Main.State.Run)
-                        Main.LoadMap();
+                    Main.currentState = Main.GameoverUpdate(gameTime);
+                   
                     break;
 
 
