@@ -18,7 +18,7 @@ namespace te16mono
         static public void Initialize(ContentManager content)
         {            
             Content = content;
-            backgroundPosition = new Vector2((float)0, (float)0);
+           
             pointPosition = new Vector2((float)1700,(float) 5);
             heartPosition = new Vector2((float)20, (float)10);
             leftUIBackgroundPosition = new Vector2((float)0, (float)-10);
@@ -27,7 +27,7 @@ namespace te16mono
         }
         static public void DrawBackground(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Content.Load<Texture2D>("background"), backgroundPosition, Color.White);
+            spriteBatch.Draw(Content.Load<Texture2D>("background"), Vector2.Zero, Color.White);
         }
         static public void Draw(SpriteBatch spriteBatch)
         {
@@ -43,7 +43,6 @@ namespace te16mono
             spriteBatch.DrawString(pointFont, Main.player.points.ToString(), pointPosition, Color.White);
             ResetHeartPosition();
             
-            //spriteBatch.DrawString(font, "Health: " + player.health + " Time: " + gameTime.TotalGameTime.Minutes + ":" +  gameTime.TotalGameTime.Seconds + ":" + gameTime.TotalGameTime.Milliseconds, Vector2.Zero, Color.White);
         }
         static void ResetHeartPosition()
         {

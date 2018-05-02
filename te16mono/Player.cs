@@ -47,7 +47,12 @@ namespace te16mono
             
             //Initiera värden
         }
-
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+           
+            base.Draw(spriteBatch);
+            spriteBatch.Draw(texture, Hitbox, Color.Black);
+        }
 
         public override void Update(GameTime gameTime)
         {
