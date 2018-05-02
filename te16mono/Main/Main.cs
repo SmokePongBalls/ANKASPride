@@ -39,7 +39,7 @@ namespace te16mono
 
         static public void Initialize(ContentManager content)
         {
-
+            
             Content = content;
             
             objects = new List<ObjectsBase>();
@@ -52,7 +52,7 @@ namespace te16mono
 
         private static void CreatePlayer()
         {
-            player = new Player(1, Content.Load<Texture2D>("square"));
+            player = new Player(1, Content.Load<Texture2D>("bird"), Content.Load<Texture2D>("gunbird"));
             player.up = Keys.W;
             player.down = Keys.S;
             player.left = Keys.A;

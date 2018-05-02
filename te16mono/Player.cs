@@ -24,6 +24,7 @@ namespace te16mono
         public List<string> effects = new List<string>();
         public string effect;
         bool resetNextUpdate;
+        Texture2D shootingTexture;
         
         //kontroller
         public Keys up, down, left, right;
@@ -31,9 +32,10 @@ namespace te16mono
 
         // "Seed" är tillför att se till så att alla object som -->
         // --> vill ha ett random värde får olika värde. Olika seeds olika random värden.
-        public Player(int seed, Texture2D texture)
+        public Player(int seed, Texture2D texture, Texture2D shootingTexture)
         {
             name = "Player";
+            this.shootingTexture = shootingTexture;
             position = new Vector2();
             velocity = new Vector2();
             extraVelocity = new Vector2(0);
@@ -51,7 +53,10 @@ namespace te16mono
         {
            
             base.Draw(spriteBatch);
-            spriteBatch.Draw(texture, Hitbox, Color.Black);
+            if (shootCooldown < -500)
+             spriteBatch.Draw(texture, Hitbox, Color.White);
+            else
+                spriteBatch.Draw(shootingTexture, Hitbox,null, Color.White, 0f,new Vector2(0),SpriteEffects.FlipHorizontally, 1f);
         }
 
         public override void Update(GameTime gameTime)
