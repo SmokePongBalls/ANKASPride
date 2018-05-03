@@ -58,7 +58,7 @@ namespace te16mono
             timeToShoot -= gameTime.ElapsedGameTime.Milliseconds;
             if (timeToShoot <= 0)
             {
-                Main.Shoot("regular", new Vector2(0, 5), new Vector2(position.X + texture.Width / 2, position.Y + texture.Height + 1), 1, 100000);
+                Main.Shoot("regular", new Vector2(0, 5), new Vector2(position.X + texture.Width / 2, position.Y + texture.Height + 1), 1, 100000, false);
                 timeToShoot = 500;
             }
             velocity.Y = 0;
@@ -120,6 +120,7 @@ namespace te16mono
         //Om objektet blir träffad av en projektil Anton
         public override bool ProjectileIntersect(int damage, Oriantations oriantation)
         {
+           
             health -= damage;
             return true;
         }

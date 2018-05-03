@@ -19,7 +19,6 @@ namespace te16mono
         public static State currentState;
 
         public static int map;
-
         static SpriteBatch spriteBatch;
         public static Player player;
         public static SpriteFont font, pointFont;
@@ -119,7 +118,7 @@ namespace te16mono
         {
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Main.currentState = Main.State.Pause;
+                currentState = State.Pause;
 
 
             player.Update(gameTime);
@@ -250,10 +249,11 @@ namespace te16mono
         }
 
         //Gör en ny projectile och lägger till den i projectiles Anton
-        public static void Shoot(string type, Vector2 velocity, Vector2 position, int damage, int health)
+        public static void Shoot(string type, Vector2 velocity, Vector2 position, int damage, int health, bool playerShooter)
         {
             if (type == "regular")
-                addQueue.Add(new RegularProjectile(health, damage, velocity, position, Content.Load<Texture2D>("RegularProjectile")));
+                addQueue.Add(new RegularProjectile(health, damage, velocity, position, Content.Load<Texture2D>("RegularProjectile"),playerShooter));
+            
         }
         //Flyttar över alla objekt i addQueue till objects listan Anton
         static void MergeWithQueue()
