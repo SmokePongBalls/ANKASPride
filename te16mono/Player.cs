@@ -192,25 +192,25 @@ namespace te16mono
 
         private void ShotDown()
         {
-            Main.Shoot("regular", new Vector2(velocity.X / 2, velocity.Y / 4 + 15), new Vector2(position.X + texture.Width / 2, position.Y + texture.Height + velocity.Y ), 1, 100000);
+            Main.Shoot("regular", new Vector2(velocity.X / 2, velocity.Y / 4 + 10), new Vector2(position.X + texture.Width / 2, position.Y + texture.Height + velocity.Y ), 1, 100000, true );
             shootCooldown = 500;
         }
 
         private void ShotRight()
         {
-            Main.Shoot("regular", new Vector2(+10 + velocity.X / 2, 0), new Vector2(position.X + texture.Width + velocity.X, position.Y), 1, 100000);
+            Main.Shoot("regular", new Vector2(+10 + velocity.X / 2, 0), new Vector2(position.X + texture.Width + velocity.X, position.Y), 1, 100000, true);
             shootCooldown = 500;
         }
 
         private void ShotUp()
         {
-            Main.Shoot("regular", new Vector2(0 + velocity.X / 2, velocity.Y / 4 - 15), new Vector2(position.X, position.Y - 21 + velocity.Y ), 1, 100000);
+            Main.Shoot("regular", new Vector2(0 + velocity.X / 2, velocity.Y / 4 - 10), new Vector2(position.X, position.Y - 21 + velocity.Y ), 1, 100000, true);
             shootCooldown = 500;
         }
 
         private void ShotLeft()
         {
-            Main.Shoot("regular", new Vector2(-10 + velocity.X / 2, 0), new Vector2(position.X - 21 + velocity.X, position.Y), 1, 100000);
+            Main.Shoot("regular", new Vector2(-10 + velocity.X / 2, 0), new Vector2(position.X - 21 + velocity.X, position.Y), 1, 100000, true);
             shootCooldown = 500;
         }
 
