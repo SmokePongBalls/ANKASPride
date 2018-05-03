@@ -22,9 +22,10 @@ namespace te16mono
         public bool canBeDamaged = true;
         public bool isWhammy = false;
         public List<string> effects = new List<string>();
-        public string effect;
+        public string effect, shootingDirection, walkDirection;
         bool resetNextUpdate;
-        Texture2D shootingTexture;
+        Texture2D shootingTexture, choosentexture;
+        
         
         //kontroller
         public Keys up, down, left, right;
@@ -50,13 +51,21 @@ namespace te16mono
             //Initiera värden
         }
         public override void Draw(SpriteBatch spriteBatch)
-        {
-           
-            base.Draw(spriteBatch);
+        {         
             if (shootCooldown < -500)
-             spriteBatch.Draw(texture, Hitbox, Color.White);
+              choosentexture = texture;
+
+           else 
+             choosentexture = shootingTexture;
+
+            if (shootingDirection == "left" || walkDirection == "left")
+                spriteBatch.Draw(choosentexture,position, null, Color.White,0f,Vector2.Zero,1f,SpriteEffects.FlipHorizontally,1f);
+
+            else if(shootingDirection == "right" || walkDirection == "rigth")
+                spriteBatch.Draw(choosentexture, position, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+
             else
-                spriteBatch.Draw(shootingTexture, Hitbox,null, Color.White, 0f,new Vector2(0),SpriteEffects.FlipHorizontally, 1f);
+                spriteBatch.Draw(choosentexture, position, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
         }
 
         public override void Update(GameTime gameTime)
@@ -112,16 +121,27 @@ namespace te16mono
             if (pressedKeys.GetPressedKeys() != null)
 
                 if (pressedKeys.IsKeyDown(left))
+                {
                     velocity.X -= acceleration;
+                    walkDirection = "left";
+                }
+
             if (pressedKeys.IsKeyDown(down))
+            {
                 velocity.Y += acceleration;
+                walkDirection = "down";
+            }
+
             if (pressedKeys.IsKeyDown(right))
+            {
                 velocity.X += acceleration;
+                walkDirection = "right";
+            }
 
             //Om man har fått whammy efekten på sig så blir canJump false och då går det icke att hoppa. Hugo F = just den if-satsen 
             if (Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Space))
             {
-
+                walkDirection = "up";
                 if (isWhammy)
                 {
                     Whammy();
@@ -138,29 +158,41 @@ namespace te16mono
 
 
             //<summary>De som kollar ifall man trycker på skjutknapparna</summary>
-            if (Keyboard.GetState().IsKeyDown(Keys.Left) && shootCooldown <= 0)
+            // if (Keyboard.GetState().IsKeyDown(Keys.Left) && shootCooldown <= 0)
+            if (Keyboard.GetState().IsKeyDown(Keys.RightControl) && shootCooldown <= 0)
             {
-                ShotLeft();
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Up) && shootCooldown <= 0)
-            {
-                ShotUp();
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Right) && shootCooldown <= 0)
-            {
-                ShotRight();
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Down) && shootCooldown <= 0)
-            {
-                ShotDown();
+                if (walkDirection == "left")
+                {
+                    ShotLeft();
+                    shootingDirection = "left";
+                }
+                //else if (Keyboard.GetState().IsKeyDown(Keys.Up) && shootCooldown <= 0)
+                else if (walkDirection == "up")
+                {
+                    ShotUp();
+                    shootingDirection = "up";
+                }
+                //else if (Keyboard.GetState().IsKeyDown(Keys.Right) && shootCooldown <= 0)
+                else if (walkDirection == "right")
+                {
+                    ShotRight();
+                    shootingDirection = "right";
+                }
+                //else if (Keyboard.GetState().IsKeyDown(Keys.Down) && shootCooldown <= 0)
+                else if (walkDirection == "down")
+                {
+                    ShotDown();
+                    shootingDirection = "down";
+                }
             }
             else
                 shootCooldown -= gameTime.ElapsedGameTime.Milliseconds;
+
         }
 
         private void ShotDown()
         {
-            Main.Shoot("regular", new Vector2(velocity.X / 4, velocity.Y / 2 + 10), new Vector2(position.X + texture.Width / 2, position.Y + texture.Height + velocity.Y), 1, 100000);
+            Main.Shoot("regular", new Vector2(velocity.X / 2, velocity.Y / 4 + 15), new Vector2(position.X + texture.Width / 2, position.Y + texture.Height + velocity.Y ), 1, 100000);
             shootCooldown = 500;
         }
 
@@ -172,7 +204,7 @@ namespace te16mono
 
         private void ShotUp()
         {
-            Main.Shoot("regular", new Vector2(0 + velocity.X / 4, velocity.Y / 2 - 10), new Vector2(position.X, position.Y - 21 + velocity.Y), 1, 100000);
+            Main.Shoot("regular", new Vector2(0 + velocity.X / 2, velocity.Y / 4 - 15), new Vector2(position.X, position.Y - 21 + velocity.Y ), 1, 100000);
             shootCooldown = 500;
         }
 
@@ -189,6 +221,7 @@ namespace te16mono
                 {
                     velocity.Y -= 30;
                     canJump = false;
+                    
                 }
             holdingJump = true;
         }
