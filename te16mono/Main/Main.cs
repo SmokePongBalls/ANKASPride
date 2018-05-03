@@ -113,6 +113,10 @@ namespace te16mono
         public static State RunUpdate(GameTime gameTime)
         {
 
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                Main.currentState = Main.State.Pause;
+
+
             player.Update(gameTime);
             ObjectsUpdate(gameTime);
             countdown -= gameTime.ElapsedGameTime.TotalMilliseconds;
