@@ -120,6 +120,7 @@ namespace te16mono
         //Om objektet blir träffad av en projektil Anton
         public override bool ProjectileIntersect(int damage, Oriantations oriantation)
         {
+           
             health -= damage;
             return true;
         }
