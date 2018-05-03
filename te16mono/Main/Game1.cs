@@ -96,11 +96,7 @@ namespace te16mono
             keyboardState = Keyboard.GetState();
 
             Game1.gameTime = gameTime;
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Main.currentState = Main.State.Pause;
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Q))
-                Main.currentState = Main.State.Quit;
-
+            
             if (Keyboard.GetState().IsKeyDown(Keys.T))
             {
                 graphics.ToggleFullScreen();
@@ -155,6 +151,11 @@ namespace te16mono
                     if (Main.currentState == Main.State.Run)
                         Main.LoadMap();
                     break;
+
+                case Main.State.RetryMap:
+                    Main.currentState = Main.RetryMap();
+                    break;
+
 
 
                 case Main.State.GameOver:
