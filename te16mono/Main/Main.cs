@@ -13,7 +13,7 @@ namespace te16mono
     {
 
 
-        public enum State { Meny, Quit, Run, Finish ,Pause, GameOver, RetryMap};
+        public enum State { Meny, Quit, Run, Finish ,Pause, GameOver, RetryMap,LoadMap};
 
         
         public static State currentState;
@@ -34,6 +34,7 @@ namespace te16mono
         static Menyer meny;
         static PauseMeny pauseMeny;
         static GameOverMeny gameoverMeny;
+        static FinishMeny finishMeny;
 
 
         static public void Initialize(ContentManager content)
@@ -82,6 +83,10 @@ namespace te16mono
             gameoverMeny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));
 
 
+            finishMeny = new FinishMeny((int)State.Finish);
+            finishMeny.AddItem((int)State.LoadMap,Content.Load<Texture2D>("Next"));
+            finishMeny.AddItem((int)State.RetryMap, Content.Load<Texture2D>("Retry"));
+            finishMeny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));
 
             //Hugo F
 
@@ -180,17 +185,14 @@ namespace te16mono
 
         }
 
-        public static void FinishUpdate()
+        public static State FinishUpdate(GameTime gameTime)
         {
-            Finish.Update();
+            return (State)finishMeny.Update(gameTime);
         }
         //Målas när state är finish Anton
         public static void FinishDraw(GraphicsDevice graphicsDevice)
         {
-            spriteBatch.Begin();
-            spriteBatch.Draw(Content.Load<Texture2D>("finish"), Finish.Rectangle(graphicsDevice), Color.White);
-            spriteBatch.DrawString(pointFont, Convert.ToString(player.points), new Vector2(graphicsDevice.DisplayMode.Width / 2 - 30, graphicsDevice.DisplayMode.Height / 2 - 250), Color.White);
-            spriteBatch.End();
+            finishMeny.Draw(spriteBatch);
         }
 
         public static State PauseUpdate(GameTime gameTime)
@@ -261,7 +263,7 @@ namespace te16mono
             addQueue = new List<Projectiles>();
         }
         //Laddar in en bana. Anton
-        public static void LoadMap()
+        public static State LoadMap()
         {
 
             
@@ -274,11 +276,13 @@ namespace te16mono
             try
             {
                 XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
+                return State.Run;
             }
             catch
             {
                 map = 1;
                 XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
+                return State.Meny;
             }
           
         }

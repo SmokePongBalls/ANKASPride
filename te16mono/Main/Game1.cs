@@ -147,16 +147,18 @@ namespace te16mono
                     break;
 
                 case Main.State.Finish:
-                    Main.FinishUpdate();
-                    if (Main.currentState == Main.State.Run)
-                        Main.LoadMap();
+                   Main.currentState = Main.FinishUpdate(gameTime);
+                    
                     break;
 
                 case Main.State.RetryMap:
                     Main.currentState = Main.RetryMap();
                     break;
 
-
+                case Main.State.LoadMap:
+                    Main.map++;
+                    Main.currentState = Main.RetryMap();
+                    break;
 
                 case Main.State.GameOver:
                     Main.currentState = Main.GameoverUpdate(gameTime);
