@@ -18,8 +18,8 @@ namespace te16mono
 
 
 
-       protected Texture2D texture; //Bilden för meny valet 
-        protected  Vector2 position; // Positionen för menyvalet 
+        protected Texture2D texture; //Bilden för meny valet 
+        protected Vector2 position; // Positionen för menyvalet 
         int currentState; // meny valets state 
 
         public MenyItem(Texture2D texture, Vector2 position, int currentState)
@@ -50,7 +50,7 @@ namespace te16mono
 
         protected double lastChange = 0; // används för att sakta ner menyvalen 
 
-      protected  int defaultMenyState;
+        protected int defaultMenyState;
 
         public Menyer(int defaultMenystate) // konstruktor som skapar en listan med menyvalen 
         {
@@ -161,7 +161,7 @@ namespace te16mono
 
         }
 
-        
+
 
 
     }
@@ -170,7 +170,7 @@ namespace te16mono
     {
         public PauseMeny(int defaultMenystate) : base(defaultMenystate)
         {
-            
+
         }
         public override int Update(GameTime gameTime)
         {
@@ -202,15 +202,15 @@ namespace te16mono
 
             if (keyboardState.IsKeyDown(Keys.Enter) && Game1.lastKeyboardstate.IsKeyUp(Keys.Enter))
             {
-                
-               return meny[selected].State;
+
+                return meny[selected].State;
 
             }
 
-            if(selected==2)
+            if (selected == 2)
             {
                 Main.LoadMap();
-                
+
             }
 
             return defaultMenyState;
@@ -257,7 +257,7 @@ namespace te16mono
             };
 
 
-            spriteBatch.DrawString(Main.pointFont, Convert.ToString(Main.player.points), new Vector2(1920/ 2 - 30, 1080 / 2 - 250), Color.White);
+            spriteBatch.DrawString(Main.pointFont, Convert.ToString(Main.player.points), new Vector2(1920 / 2 - 30, 1080 / 2 - 250), Color.White);
 
             spriteBatch.End();
         }
@@ -299,41 +299,124 @@ namespace te16mono
 
             }
 
-           
+
 
 
 
             return defaultMenyState;
 
 
+
+
+
+        }
+
+
+    }
+
+    class FinishMenyitem : MenyItem
+    {
+        public FinishMenyitem(Texture2D texture, Vector2 position, int currentState) : base(texture, position, currentState)
+        {
+        }
+    }
+
+
+
+
+
+
+    class FinishMeny : Menyer
+    {
+        public FinishMeny(int defaultMenystate) : base(defaultMenystate)
+        {
+        }
+
+        public override int Update(GameTime gameTime)
+        {
+
+
+            KeyboardState keyboardState = Keyboard.GetState();
+            if (keyboardState.IsKeyDown(Keys.Down) && Game1.lastKeyboardstate.IsKeyUp(Keys.Down))
+            {
+                selected++;
+
+                if (selected > meny.Count - 1)
+                    selected = 0;
+
+
+
+            }
+
+
+            if (keyboardState.IsKeyDown(Keys.Up) && Game1.lastKeyboardstate.IsKeyUp(Keys.Up))
+            {
+                selected--;
+
+                if (selected < 0)
+                    selected = meny.Count - 1;
+
+
+
+            }
+
+
+            lastChange = gameTime.TotalGameTime.TotalMilliseconds;
+
+            if (keyboardState.IsKeyDown(Keys.Enter) && Game1.lastKeyboardstate.IsKeyUp(Keys.Enter))
+            {
+
+                return meny[selected].State;
+
+            }
+
             
 
+            return defaultMenyState;
+
+
 
         }
 
-
-        class FinishMenyItem : MenyItem
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            public FinishMenyItem(Texture2D texture, Vector2 position, int currentState) : base(texture, position, currentState)
+
+
+            spriteBatch.Begin();
+
+            for (int i = 0; i < meny.Count; i++)
             {
-            }
+
+                if (i == selected)
+                    spriteBatch.Draw(meny[i].Texture, meny[i].Position, Color.RosyBrown);
+
+                else
+                    spriteBatch.Draw(meny[i].Texture, meny[i].Position, Color.White);
+
+
+            };
+
+
+            spriteBatch.DrawString(Main.pointFont, Convert.ToString(Main.player.points), new Vector2(1920 / 2 - 30, 1080 / 2 - 250), Color.White);
+
+            spriteBatch.End();
+
+
+
+
+
+
+
+
         }
 
-
-        class FinishMeny : Menyer
-        {
-            public FinishMeny(int defaultMenystate) : base(defaultMenystate)
-            {
-            }
-
-
-
-        }
 
 
 
     }
+
 }
+
 
 
 
