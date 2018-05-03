@@ -13,7 +13,7 @@ namespace te16mono
     {
 
 
-        public enum State { Meny, Quit, Run, Finish ,Pause, GameOver};
+        public enum State { Meny, Quit, Run, Finish ,Pause, GameOver, RetryMap};
 
         
         public static State currentState;
@@ -79,7 +79,7 @@ namespace te16mono
 
             gameoverMeny = new GameOverMeny((int)State.GameOver);
             gameoverMeny.AddItem((int)GameSection.CoreGame, Content.Load<Texture2D>("Meny"));
-            gameoverMeny.AddItem((int)State.Run, Content.Load<Texture2D>("Retry"));
+            gameoverMeny.AddItem((int)State.RetryMap, Content.Load<Texture2D>("Retry"));
             gameoverMeny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));
 
 
@@ -260,6 +260,8 @@ namespace te16mono
         public static void LoadMap()
         {
 
+            
+
             //Återställer alla variabler tills nästa bana
             CreatePlayer();
             objects = new List<ObjectsBase>();
@@ -275,6 +277,30 @@ namespace te16mono
                 XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
             }
           
+        }
+        //Laddar in en bana. Anton
+        public static State RetryMap()
+        {
+
+
+            int tempStorage = player.points;
+            //Återställer alla variabler tills nästa bana
+            CreatePlayer();
+
+            player.points = tempStorage;
+            objects = new List<ObjectsBase>();
+
+
+            try
+            {
+                XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
+            }
+            catch
+            {
+                map = 1;
+                XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
+            }
+            return currentState;
         }
     }
 
