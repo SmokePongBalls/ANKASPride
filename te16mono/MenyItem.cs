@@ -299,11 +299,7 @@ namespace te16mono
 
             }
 
-            if (selected == 2)
-            {
-                Main.LoadMap();
-
-            }
+           
 
 
 
@@ -316,7 +312,23 @@ namespace te16mono
         }
 
 
-        
+        class FinishMenyItem : MenyItem
+        {
+            public FinishMenyItem(Texture2D texture, Vector2 position, int currentState) : base(texture, position, currentState)
+            {
+            }
+        }
+
+
+        class FinishMeny : Menyer
+        {
+            public FinishMeny(int defaultMenystate) : base(defaultMenystate)
+            {
+            }
+
+
+
+        }
 
 
 

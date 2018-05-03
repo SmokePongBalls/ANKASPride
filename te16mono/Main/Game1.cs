@@ -156,6 +156,11 @@ namespace te16mono
                         Main.LoadMap();
                     break;
 
+                case Main.State.RetryMap:
+                    Main.currentState = Main.RetryMap();
+                    break;
+
+
 
                 case Main.State.GameOver:
                     Main.currentState = Main.GameoverUpdate(gameTime);

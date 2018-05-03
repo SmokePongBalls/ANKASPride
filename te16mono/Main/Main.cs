@@ -294,14 +294,19 @@ namespace te16mono
             try
             {
                 XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
+                return State.Run;
             }
             catch
             {
                 map = 1;
                 XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
+                return State.Meny;
             }
-            return currentState;
+          
+
         }
     }
+       
+     
 
 }
