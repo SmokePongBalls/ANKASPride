@@ -120,11 +120,22 @@ namespace te16mono
         {
             if (pressedKeys.GetPressedKeys() != null)
 
-                if (pressedKeys.IsKeyDown(left))
-                {
-                    velocity.X -= acceleration;
-                    walkDirection = "left";
-                }
+            if (pressedKeys.IsKeyDown(up))
+            {
+                walkDirection = "up";
+            }
+
+            if (pressedKeys.IsKeyDown(left))
+            {               
+                if (pressedKeys.IsKeyDown(up))
+                    walkDirection = "up";
+
+                else if (pressedKeys.IsKeyDown(down))
+                    walkDirection = "down";
+
+                else
+                walkDirection = "left";
+            }
 
             if (pressedKeys.IsKeyDown(down))
             {
@@ -135,13 +146,20 @@ namespace te16mono
             if (pressedKeys.IsKeyDown(right))
             {
                 velocity.X += acceleration;
+                if(pressedKeys.IsKeyDown(up))
+                    walkDirection = "up";
+
+                else if(pressedKeys.IsKeyDown(down))
+                    walkDirection = "down";
+
+                else               
                 walkDirection = "right";
             }
 
             //Om man har fått whammy efekten på sig så blir canJump false och då går det icke att hoppa. Hugo F = just den if-satsen 
-            if (Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Space))
+            if (Keyboard.GetState().IsKeyDown(Keys.Space))
             {
-                walkDirection = "up";
+                
                 if (isWhammy)
                 {
                     Whammy();
