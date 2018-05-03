@@ -7,13 +7,14 @@ namespace te16mono
 
     class RegularProjectile : Projectiles
     {
-        public RegularProjectile(int health, int damage, Vector2 velocity, Vector2 position, Texture2D texture)
+        public RegularProjectile(int health, int damage, Vector2 velocity, Vector2 position, Texture2D texture, bool playerShot)
         {
             this.health = health;
             this.damage = damage;
             this.velocity = velocity;
             this.position = position;
             this.texture = texture;
+            this.playerShot = playerShot;
         }
 
         //Ändrar position åt det hållet den ska och drar ner health. Ifall health < 0 tas den bort ur objects listan 
