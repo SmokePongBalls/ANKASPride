@@ -113,7 +113,7 @@ namespace te16mono
         {
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Main.currentState = Main.State.Pause;
+                currentState = State.Pause;
 
 
             player.Update(gameTime);
