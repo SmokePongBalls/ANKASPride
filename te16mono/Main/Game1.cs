@@ -44,7 +44,7 @@ namespace te16mono
             Main.currentState = Main.State.Meny;
             Main.Initialize(Content);
             MainLevelBuilder.Initialize(Content, GraphicsDevice);
-            gameSection = GameSection.CoreGame;
+            gameSection = te16mono.GameSection.CoreGame;
 
             IsMouseVisible = true;
             lastKeyboardstate = new KeyboardState();
@@ -96,31 +96,33 @@ namespace te16mono
             keyboardState = Keyboard.GetState();
 
             Game1.gameTime = gameTime;
-            
+
             if (Keyboard.GetState().IsKeyDown(Keys.T))
             {
                 graphics.ToggleFullScreen();
             }
 
+            //refractorade denna här. Ändra namn om du vet något bättre. Hugo F
+            GameSectionUpdate(gameTime);
+        }
 
-            // TODO: Add your update logic here
-
-
-            if (gameSection == GameSection.CoreGame)
+        private void GameSectionUpdate(GameTime gameTime)
+        {
+            if (gameSection == te16mono.GameSection.CoreGame)
             {
                 Menus(gameTime);
             }
-            else if (gameSection == GameSection.LevelBuilding)
+            else if (gameSection == te16mono.GameSection.LevelBuilding)
             {
                 MainLevelBuilder.Update(GraphicsDevice);
-                if (gameSection == GameSection.CoreGame)
+                if (gameSection == te16mono.GameSection.CoreGame)
                 {
                     MainLevelBuilder.Reset();
                     Main.currentState = Main.State.Meny;
                 }
 
             }
-            else if (gameSection == GameSection.BlinkBlink)
+            else if (gameSection == te16mono.GameSection.BlinkBlink)
             {
                 BlinkBlink.Blink.Update(gameTime);
             }
@@ -182,20 +184,21 @@ namespace te16mono
         /// This is called when the game should draw itself.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        /// 
         protected override void Draw(GameTime gameTime )
         {
             
 
             GraphicsDevice.Clear(Color.CornflowerBlue); // Rensar skärmen 
-            if (gameSection == GameSection.CoreGame)
+            if (gameSection == te16mono.GameSection.CoreGame)
             {
                 DrawMenus(gameTime);
             }
-            else if (gameSection == GameSection.LevelBuilding)
+            else if (gameSection == te16mono.GameSection.LevelBuilding)
             {
                 MainLevelBuilder.Draw(GraphicsDevice);
             }
-            else if (gameSection == GameSection.BlinkBlink)
+            else if (gameSection == te16mono.GameSection.BlinkBlink)
                 BlinkBlink.Blink.Draw(spriteBatch, Content);
 
 

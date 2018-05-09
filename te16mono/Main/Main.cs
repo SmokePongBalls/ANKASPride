@@ -60,45 +60,69 @@ namespace te16mono
         }
 
         public static void LoadContent(GraphicsDevice graphicsDevice , GameWindow window)
-        {       
+        {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(graphicsDevice);
 
-            meny = new Menyer((int)State.Meny);
-            meny.AddItem((int)State.Run, Content.Load<Texture2D>("Start"));
-            meny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));
-            meny.AddItem((int)GameSection.LevelBuilding, Content.Load<Texture2D>("Level"));
+            //refractorade denna här. Ändra namn om du vet något bättre. Hugo F
+            MenuItems();
 
+            //refractorade denna här. Ändra namn om du vet något bättre. Hugo F
+            PauseMenyItems();
 
-            pauseMeny = new PauseMeny((int)State.Pause);
-            pauseMeny.AddItem((int)GameSection.CoreGame, Content.Load<Texture2D>("Meny"));
-            pauseMeny.AddItem((int)State.Run, Content.Load<Texture2D>("Resume"));
-            pauseMeny.AddItem((int)State.Run, Content.Load<Texture2D>("Retry"));
-            pauseMeny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));
+            //refractorade denna här. Ändra namn om du vet något bättre. Hugo F
+            GameOverItems();
 
-
-            gameoverMeny = new GameOverMeny((int)State.GameOver);
-            gameoverMeny.AddItem((int)GameSection.CoreGame, Content.Load<Texture2D>("Meny"));
-            gameoverMeny.AddItem((int)State.RetryMap, Content.Load<Texture2D>("Retry"));
-            gameoverMeny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));
-
-
-            finishMeny = new FinishMeny((int)State.Finish);
-            finishMeny.AddItem((int)State.LoadMap,Content.Load<Texture2D>("Next"));
-            finishMeny.AddItem((int)State.RetryMap, Content.Load<Texture2D>("Retry"));
-            finishMeny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));
+            //refractorade denna här. Ändra namn om du vet något bättre. Hugo F
+            FinishMenyItems();
 
             //Hugo F
+            Fonts();
 
-            font = Content.Load<SpriteFont>("Font");
-            pointFont = Content.Load<SpriteFont>("pointFont");
-            
 
             //music = Content.Load<Song>("megaman2");
             //MediaPlayer.Play(music);
         }
 
-     
+        private static void Fonts()
+        {
+            font = Content.Load<SpriteFont>("Font");
+            pointFont = Content.Load<SpriteFont>("pointFont");
+        }
+
+        private static void FinishMenyItems()
+        {
+            finishMeny = new FinishMeny((int)State.Finish);
+            finishMeny.AddItem((int)State.LoadMap, Content.Load<Texture2D>("Next"));
+            finishMeny.AddItem((int)State.RetryMap, Content.Load<Texture2D>("Retry"));
+            finishMeny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));
+        }
+
+        private static void GameOverItems()
+        {
+            gameoverMeny = new GameOverMeny((int)State.GameOver);
+            gameoverMeny.AddItem((int)GameSection.CoreGame, Content.Load<Texture2D>("Meny"));
+            gameoverMeny.AddItem((int)State.RetryMap, Content.Load<Texture2D>("Retry"));
+            gameoverMeny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));
+        }
+
+        private static void PauseMenyItems()
+        {
+            pauseMeny = new PauseMeny((int)State.Pause);
+            pauseMeny.AddItem((int)GameSection.CoreGame, Content.Load<Texture2D>("Meny"));
+            pauseMeny.AddItem((int)State.Run, Content.Load<Texture2D>("Resume"));
+            pauseMeny.AddItem((int)State.Run, Content.Load<Texture2D>("Retry"));
+            pauseMeny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));
+        }
+
+        private static void MenuItems()
+        {
+            meny = new Menyer((int)State.Meny);
+            meny.AddItem((int)State.Run, Content.Load<Texture2D>("Start"));
+            meny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));
+            meny.AddItem((int)GameSection.LevelBuilding, Content.Load<Texture2D>("Level"));
+        }
+
 
         public static State MenyUpdate(GameTime gameTime)
         {
@@ -135,15 +159,44 @@ namespace te16mono
         private static void ObjectsUpdate(GameTime gameTime)
         {
             var screenRectangle = Camera.Rectangle(player.Hitbox);
+
             //Går igenom alla objekt och uppdaterar ifall de är nära nog till player
+            //refractorade denna här. Ändra namn om du vet något bättre. Hugo F
+            CheckPlayerVicinity(gameTime, screenRectangle);
+
+            //En array som används för att man ska kunna ändra värden på objekten i listan utan att förstöra något
+            ObjectsBase[] outOfLoopStorage = objects.ToArray();
+
+            //Loopar igenom alla objekt i objects listan. 
+            //refractorade denna här. Ändra namn om du vet något bättre namn. Hugo F
+            LoopObjectList(outOfLoopStorage);
+
+
+            //Tar bort alla objekt som har "dött" under loopen
+            //refractorade denna här. Ändra namn om du vet något bättre. Hugo F
+            RemoveDeadObjects();
+        }
+
+        private static void CheckPlayerVicinity(GameTime gameTime, Rectangle screenRectangle)
+        {
             foreach (ObjectsBase obj in objects)
             {
                 if (screenRectangle.Intersects(obj.Hitbox))
                     obj.Update(gameTime);
             }
-            //En array som används för att man ska kunna ändra värden på objekten i listan utan att förstöra något
-            ObjectsBase[] outOfLoopStorage = objects.ToArray();
-            //Loopar igenom alla objekt i bojects listan
+        }
+
+        private static void RemoveDeadObjects()
+        {
+            foreach (ObjectsBase obj in objects.ToArray())
+            {
+                if (obj.health < 0)
+                    objects.Remove(obj);
+            }
+        }
+
+        private static void LoopObjectList(ObjectsBase[] outOfLoopStorage)
+        {
             for (int i = 0; i < objects.Count; i++)
             {
                 //En annan loop som går igenom samma lista 
@@ -162,13 +215,8 @@ namespace te16mono
                 {
                     player = objects[i].PlayerIntersect(player);
                 }
-            }
-            objects = new List<ObjectsBase>(outOfLoopStorage);
-            //Tar bort alla objekt som har "dött" under loopen
-            foreach (ObjectsBase obj in objects.ToArray())
-            {
-                if (obj.health < 0)
-                    objects.Remove(obj);
+                objects = new List<ObjectsBase>(outOfLoopStorage);
+
             }
         }
 
@@ -214,14 +262,24 @@ namespace te16mono
 
         public static void RunDraw( GraphicsDevice  graphicsDevice , GameTime gameTime)
         {
-
-            //spriteBatch.Begin();
-            //UI.DrawBackground(spriteBatch,player);
-            //spriteBatch.End();
-
             //Här i ska alla saker som kan hamna utanför skärmen vara
+            DrawWithoutCameraPosition(graphicsDevice);
+
+         
+            //Det som ritas ut i den här draw metoden har som default att ritas med kamerans position som bas om inte annat sägs. Hugo F
+            DrawWithCameraPosition();
+
+
+
+        }
+
+        private static void DrawWithoutCameraPosition(GraphicsDevice graphicsDevice)
+        {
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, DepthStencilState.None, null, null, Camera.Position(player, graphicsDevice.DisplayMode.Width, graphicsDevice.DisplayMode.Height));
+
+            //Backgrunden ritas här för att den inte ska följa med cameran som allt annat i UI ska. Hugo F
             UI.DrawBackground(spriteBatch, player);
+
             foreach (ObjectsBase obj in objects)
             {
                 obj.Draw(spriteBatch);
@@ -230,21 +288,15 @@ namespace te16mono
             player.Draw(spriteBatch);
 
             spriteBatch.End();
-
-            //Här ska alla saker som stannar i skärmen vara
-            // (UI)
-            //Hugo F
-            UIDraw();
-
-
-
         }
 
-        private static void UIDraw()
+        private static void DrawWithCameraPosition()
         {
             spriteBatch.Begin();
-            UI.Draw(spriteBatch);
-            
+
+            //Användar informationen ligger här för att det ska följa kameran. 
+            UI.DrawUI(spriteBatch);
+     
             spriteBatch.End();
         }
 
