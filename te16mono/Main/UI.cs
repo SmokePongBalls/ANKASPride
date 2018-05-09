@@ -13,26 +13,33 @@ namespace te16mono
     {       
         static ContentManager Content;
         static SpriteFont pointFont;
-        static Vector2 heartPosition, pointPosition,leftUIBackgroundPosition,rightUIBackgroundPosition,backgroundPosition;
+        static Texture2D mountainTexture;
+        static Vector2 heartPosition, pointPosition,leftUIBackgroundPosition,rightUIBackgroundPosition,mountainBackgroundPosition, secondMountainBackgroundPosition;
         
         static public void Initialize(ContentManager content)
         {            
             Content = content;
-            backgroundPosition = new Vector2((float)-500, (float)-1000);
+            mountainTexture = Content.Load<Texture2D>("mountainBackground");
+            mountainBackgroundPosition = new Vector2((float)1, (float)-10);
+            secondMountainBackgroundPosition = new Vector2(mountainBackgroundPosition.X + mountainTexture.Width , mountainBackgroundPosition.Y);
             pointPosition = new Vector2((float)1700,(float) 5);
             heartPosition = new Vector2((float)20, (float)10);
             leftUIBackgroundPosition = new Vector2((float)0, (float)-10);
             rightUIBackgroundPosition = new Vector2((float)10, (float)-10);
             pointFont = Content.Load<SpriteFont>("pointFont");
         }
+
         static public void DrawBackground(SpriteBatch spriteBatch, Player player)
         {
-            backgroundPosition.X += player.velocity.X/2;
-            spriteBatch.Draw(Content.Load<Texture2D>("background"), backgroundPosition, null, Color.White, 0f, Vector2.Zero, 1.5f, SpriteEffects.None, 1f);
+            
+            mountainBackgroundPosition.X += player.velocity.X/2;
+            secondMountainBackgroundPosition.X = mountainBackgroundPosition.X + mountainTexture.Width;
+            spriteBatch.Draw(mountainTexture, mountainBackgroundPosition, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+            spriteBatch.Draw(mountainTexture, secondMountainBackgroundPosition, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
         }
 
-        
-        
+
+
         static public void Draw(SpriteBatch spriteBatch)
         {
             
@@ -52,6 +59,13 @@ namespace te16mono
         {
             heartPosition.X = 20;
             heartPosition.Y = 10;
+        }
+
+        static public void Update()
+        {
+
+
+
         }
 
     }
