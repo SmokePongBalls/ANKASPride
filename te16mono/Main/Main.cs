@@ -215,13 +215,13 @@ namespace te16mono
         public static void RunDraw( GraphicsDevice  graphicsDevice , GameTime gameTime)
         {
 
-            spriteBatch.Begin();
-            UI.DrawBackground(spriteBatch);
-            spriteBatch.End();
+            //spriteBatch.Begin();
+            //UI.DrawBackground(spriteBatch,player);
+            //spriteBatch.End();
 
             //Här i ska alla saker som kan hamna utanför skärmen vara
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, DepthStencilState.None, null, null, Camera.Position(player, graphicsDevice.DisplayMode.Width, graphicsDevice.DisplayMode.Height));
-           
+            UI.DrawBackground(spriteBatch, player);
             foreach (ObjectsBase obj in objects)
             {
                 obj.Draw(spriteBatch);
@@ -294,7 +294,7 @@ namespace te16mono
             int tempStorage = player.points;
             //Återställer alla variabler tills nästa bana
             CreatePlayer();
-
+            UI.Initialize(Content);
             player.points = tempStorage;
             objects = new List<ObjectsBase>();
 

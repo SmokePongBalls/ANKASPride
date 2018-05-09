@@ -25,8 +25,7 @@ namespace te16mono
         public string effect, shootingDirection, walkDirection;
         bool resetNextUpdate;
         Texture2D shootingTexture, choosentexture;
-        
-        
+     
         //kontroller
         public Keys up, down, left, right;
         KeyboardState pressedKeys;
@@ -35,6 +34,7 @@ namespace te16mono
         // --> vill ha ett random värde får olika värde. Olika seeds olika random värden.
         public Player(int seed, Texture2D texture, Texture2D shootingTexture)
         {
+            
             name = "Player";
             this.shootingTexture = shootingTexture;
             position = new Vector2();
@@ -52,16 +52,19 @@ namespace te16mono
         }
         public override void Draw(SpriteBatch spriteBatch)
         {         
-            if (shootCooldown < -500)
+            if (shootCooldown < -100)
               choosentexture = texture;
 
            else 
              choosentexture = shootingTexture;
 
-            if (shootingDirection == "left" || walkDirection == "left")
+            if (walkDirection == "left")
                 spriteBatch.Draw(choosentexture,position, null, Color.White,0f,Vector2.Zero,1f,SpriteEffects.FlipHorizontally,1f);
 
-            else if(shootingDirection == "right" || walkDirection == "rigth")
+            else if(walkDirection == "rigth")
+                spriteBatch.Draw(choosentexture, position, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+
+            else if (walkDirection == "up")
                 spriteBatch.Draw(choosentexture, position, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
 
             else
@@ -70,6 +73,7 @@ namespace te16mono
 
         public override void Update(GameTime gameTime)
         {
+           
             //Kollar om position är utanför tillåtna spelområdet
             CheckOutOfBounds();
             velocity = velocity * (float)0.95;
@@ -126,7 +130,8 @@ namespace te16mono
             }
 
             if (pressedKeys.IsKeyDown(left))
-            {               
+            {
+                velocity.X -= acceleration;
                 if (pressedKeys.IsKeyDown(up))
                     walkDirection = "up";
 
@@ -138,8 +143,7 @@ namespace te16mono
             }
 
             if (pressedKeys.IsKeyDown(down))
-            {
-                velocity.Y += acceleration;
+            {               
                 walkDirection = "down";
             }
 
@@ -176,31 +180,30 @@ namespace te16mono
 
 
             //<summary>De som kollar ifall man trycker på skjutknapparna</summary>
-            // if (Keyboard.GetState().IsKeyDown(Keys.Left) && shootCooldown <= 0)
             if (Keyboard.GetState().IsKeyDown(Keys.RightControl) && shootCooldown <= 0)
             {
                 if (walkDirection == "left")
                 {
                     ShotLeft();
-                    shootingDirection = "left";
+                    
                 }
-                //else if (Keyboard.GetState().IsKeyDown(Keys.Up) && shootCooldown <= 0)
+                
                 else if (walkDirection == "up")
                 {
                     ShotUp();
-                    shootingDirection = "up";
+                    
                 }
-                //else if (Keyboard.GetState().IsKeyDown(Keys.Right) && shootCooldown <= 0)
+ 
                 else if (walkDirection == "right")
                 {
                     ShotRight();
-                    shootingDirection = "right";
+                    
                 }
-                //else if (Keyboard.GetState().IsKeyDown(Keys.Down) && shootCooldown <= 0)
+                
                 else if (walkDirection == "down")
                 {
                     ShotDown();
-                    shootingDirection = "down";
+                    
                 }
             }
             else
@@ -237,7 +240,7 @@ namespace te16mono
             if (canJump == true && holdingJump == false)
                 if (holdingJump == false)
                 {
-                    velocity.Y -= 30;
+                    velocity.Y -= 40;
                     canJump = false;
                     
                 }
@@ -279,6 +282,7 @@ namespace te16mono
                 {
                     isWhammy = false;
                     underEffect = false;
+                    //mängden gånger man måste "hoppa" för att whammy ska tas bort
                     whammy = 10;
                 }
                 else

@@ -13,26 +13,30 @@ namespace te16mono
     {       
         static ContentManager Content;
         static SpriteFont pointFont;
-        static Vector2 heartPosition, pointPosition,leftUIBackgroundPosition,rightUIBackgroundPosition;
+        static Vector2 heartPosition, pointPosition,leftUIBackgroundPosition,rightUIBackgroundPosition,backgroundPosition;
         
         static public void Initialize(ContentManager content)
         {            
             Content = content;
-           
+            backgroundPosition = new Vector2((float)-500, (float)-1000);
             pointPosition = new Vector2((float)1700,(float) 5);
             heartPosition = new Vector2((float)20, (float)10);
             leftUIBackgroundPosition = new Vector2((float)0, (float)-10);
             rightUIBackgroundPosition = new Vector2((float)10, (float)-10);
             pointFont = Content.Load<SpriteFont>("pointFont");
         }
-        static public void DrawBackground(SpriteBatch spriteBatch)
+        static public void DrawBackground(SpriteBatch spriteBatch, Player player)
         {
-            spriteBatch.Draw(Content.Load<Texture2D>("background"), Vector2.Zero, Color.White);
+            backgroundPosition.X += player.velocity.X/2;
+            spriteBatch.Draw(Content.Load<Texture2D>("background"), backgroundPosition, null, Color.White, 0f, Vector2.Zero, 1.5f, SpriteEffects.None, 1f);
         }
+
+        
+        
         static public void Draw(SpriteBatch spriteBatch)
         {
             
-            spriteBatch.Draw(Content.Load<Texture2D>("leftuibackground"), leftUIBackgroundPosition, Color.White);
+            spriteBatch.Draw(Content.Load<Texture2D>("leftuibackground"), Vector2.Zero, Color.White);
             spriteBatch.Draw(Content.Load<Texture2D>("uibackground"), rightUIBackgroundPosition, null, Color.White, 0f, Vector2.Zero,1f, SpriteEffects.FlipHorizontally,0f);
                 for (int i = 0; i < Main.player.health; i++)
             {
