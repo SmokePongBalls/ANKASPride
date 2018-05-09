@@ -288,6 +288,42 @@ namespace te16mono.Input
                 return " ";
             }
         }
+        //Används för att ta bort karaktärer som kan förstöra Anton
+        public static string Verify(string input)
+        {
+            input = RemoveSymbols(input);
+            if (input != "")
+                return input;
+            else
+                return "0";
+        }
+        //Tar bort allting som inte är en siffra förutom i första positionen där '-' också är tillåtet Anton
+        private static string RemoveSymbols(string input)
+        {
+            string toReturn = "";
+
+            for (int i = 0; i < input.Length; ++i)
+            {
+                if (i != 0)
+                {
+                    if (IsCharANumber(input[i]))
+                    {
+                        toReturn += input[i];
+                    }
+                }
+                else if (IsCharANumber(input[i]) || input[i] == '-')
+                {
+                    toReturn += input[i];
+                }
+            }
+
+            return toReturn;
+        }
+        //Kollar ifall input är ett nummer Anton
+        private static bool IsCharANumber(char input)
+        {
+            return (input == '0' || input == '1' || input == '2' || input == '3' || input == '4' || input == '5' || input == '6' || input == '7' || input == '8' || input == '9');
+        }
     }
 
     

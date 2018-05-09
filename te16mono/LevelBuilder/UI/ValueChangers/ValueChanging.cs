@@ -117,6 +117,7 @@ namespace te16mono.LevelBuilder.UI
             if (keyboardState.IsKeyDown(Keys.Enter))
             {
                 isEditing = false;
+                editString = TextInput.Verify(editString);
             }
             //Kollar ifall någon siffra trycktes in
             else
