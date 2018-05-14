@@ -42,7 +42,7 @@ namespace te16mono
 
     class Menyer
     {
-
+        private Texture2D logo;
         protected List<MenyItem> meny; // Lista på meny items 
         protected int selected = 0; //Highligtar första valet 
 
@@ -56,7 +56,7 @@ namespace te16mono
         {
             meny = new List<MenyItem>();
             this.defaultMenyState = defaultMenystate;
-
+            this.logo = Main.Content.Load<Texture2D>("Title");
 
         }
 
@@ -64,8 +64,8 @@ namespace te16mono
         {
 
             // sätter höjden på föremplerna (item)
-            float X = 0;
-            float Y = 0 + currentheight;
+            float X = 960 - itemTexture.Width/2;
+            float Y = 200 + currentheight;
 
             // ändrar valets höjd + 20 pixlar för lite extra mellan rum ;)
 
@@ -144,6 +144,8 @@ namespace te16mono
 
 
             };
+
+            spriteBatch.Draw(logo,new Vector2((float)960-logo.Width/2,(float) 20), Color.White);
 
             spriteBatch.End();
         }
@@ -257,7 +259,7 @@ namespace te16mono
             };
 
 
-            spriteBatch.DrawString(Main.pointFont, Convert.ToString(Main.player.points), new Vector2(1920 / 2 - 30, 1080 / 2 - 250), Color.White);
+            spriteBatch.DrawString(Main.pointFont, Convert.ToString(Main.player.points), new Vector2(1280 , 1080 / 2 - 250), Color.White);
 
             spriteBatch.End();
         }
@@ -397,7 +399,7 @@ namespace te16mono
             };
 
 
-            spriteBatch.DrawString(Main.pointFont, Convert.ToString(Main.player.points), new Vector2(1920 / 2 - 30, 1080 / 2 - 250), Color.White);
+            spriteBatch.DrawString(Main.pointFont, Convert.ToString(Main.player.points), new Vector2(1280, 1080 / 2 - 250), Color.White);
 
             spriteBatch.End();
 

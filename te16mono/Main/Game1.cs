@@ -207,25 +207,31 @@ namespace te16mono
 
         private void DrawMenus(GameTime gameTime)
         {
+            
             switch (Main.currentState)
             {
 
                 default:
+                    GraphicsDevice.Clear(Color.Gray);
                     Main.MenyDraw();
                     break;
 
                 case Main.State.Run:
+                    
                     Main.RunDraw(GraphicsDevice, gameTime);
                     break;
 
                 case Main.State.Pause:
+                    GraphicsDevice.Clear(Color.Gray);
                     Main.PauseDraw();
                     break;
                 case Main.State.Finish:
+                    GraphicsDevice.Clear(Color.Gray);
                     Main.FinishDraw(GraphicsDevice);
                     break;
 
                 case Main.State.GameOver:
+                    GraphicsDevice.Clear(Color.Gray);
                     Main.GameOverDraw(GraphicsDevice);
                     break;
 

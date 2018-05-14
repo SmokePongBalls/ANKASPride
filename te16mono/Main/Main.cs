@@ -24,7 +24,7 @@ namespace te16mono
         public static SpriteFont font, pointFont;
         static Song music;
         static double countdown = 0;
-        static ContentManager Content;
+      public static ContentManager Content;
         static List<Projectiles> addQueue;
         public static List<ObjectsBase> objects;
         
@@ -119,8 +119,9 @@ namespace te16mono
         {
             meny = new Menyer((int)State.Meny);
             meny.AddItem((int)State.Run, Content.Load<Texture2D>("Start"));
-            meny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));
             meny.AddItem((int)GameSection.LevelBuilding, Content.Load<Texture2D>("Level"));
+            meny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));
+            
         }
 
 
@@ -254,6 +255,7 @@ namespace te16mono
 
             pauseMeny.Draw(spriteBatch);
 
+            
 
         }
 
