@@ -178,7 +178,7 @@ namespace te16mono
                 //Ifall man står på ett rörande objekt så gör det att man följer med objektet
                 player.extraVelocity = velocity;
 
-                player.velocity.X += velocity.X;
+                
 
 
                 //Ser till så att objekten inte längre är innuti varandra
