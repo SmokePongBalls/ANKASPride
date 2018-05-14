@@ -57,7 +57,7 @@ namespace te16mono.LevelBuilder
         public static void Initialize(ContentManager Content, GraphicsDevice graphicsDevice)
         {
             MainLevelBuilder.Content = Content;
-            player = new Player(1, Content.Load<Texture2D>("square"), Content.Load<Texture2D>("square"));
+            player = new Player(1, Content.Load<Texture2D>("square"), Content.Load<Texture2D>("square"), Content.Load<Texture2D>("square"), Content.Load<Texture2D>("square"));
             spriteBatch = new SpriteBatch(graphicsDevice);
             movingObjects = new List<MovingObjects>();
             effects = new List<Effect>();

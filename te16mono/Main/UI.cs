@@ -52,8 +52,8 @@ namespace te16mono
             secondMountainBackgroundPosition.X = mountainBackgroundPosition.X + mountainTexture.Width;
             //--
 
-            spriteBatch.Draw(mountainTexture, mountainBackgroundPosition, null, Color.White, 0f, Vector2.Zero, mountainTextureScale, SpriteEffects.None, 1f);
-            spriteBatch.Draw(mountainTexture, secondMountainBackgroundPosition, null, Color.White, 0f, Vector2.Zero, 1.5f, SpriteEffects.None, 1f);
+            spriteBatch.Draw(mountainTexture, mountainBackgroundPosition, null, Color.White, 0f, Vector2.Zero, 1, SpriteEffects.None, 1f);
+            spriteBatch.Draw(mountainTexture, secondMountainBackgroundPosition, null, Color.White, 0f, Vector2.Zero, 1, SpriteEffects.None, 1f);
         }
 
 

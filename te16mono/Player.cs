@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -16,31 +17,34 @@ namespace te16mono
         private int shootCooldown;
         private int whammy = 10;
         private double gravity = Program.Gravity;
-        public Oriantations lastTouchedSurface;
+        public string effect, shootingDirection, walkDirection;
+        bool resetNextUpdate;
         private bool holdingJump = true;
         public bool underEffect;
         public bool canBeDamaged = true;
         public bool isWhammy = false;
+        public Oriantations lastTouchedSurface;
         public List<string> effects = new List<string>();
-        public string effect, shootingDirection, walkDirection;
-        bool resetNextUpdate;
-        Texture2D shootingTexture, choosentexture;
-     
+        Texture2D shootingTexture, choosentexture, shieldTexture, weightTexture;
+        public ContentManager Content;
+
         //kontroller
         public Keys up, down, left, right;
         KeyboardState pressedKeys;
 
         // "Seed" är tillför att se till så att alla object som -->
         // --> vill ha ett random värde får olika värde. Olika seeds olika random värden.
-        public Player(int seed, Texture2D texture, Texture2D shootingTexture)
+        public Player(int seed, Texture2D texture, Texture2D shootingTexture, Texture2D shieldTexture, Texture2D weightTexture)
         {
             
             name = "Player";
             this.shootingTexture = shootingTexture;
+            this.texture = texture;
+            this.shieldTexture = shieldTexture;
+            this.weightTexture = weightTexture;
             position = new Vector2();
             velocity = new Vector2();
-            extraVelocity = new Vector2(0);
-            this.texture = texture;
+            extraVelocity = new Vector2(0);            
             canJump = true;
             health = 10;
             points = 0;
@@ -52,6 +56,8 @@ namespace te16mono
         }
         public override void Draw(SpriteBatch spriteBatch)
         {         
+
+            //Byter mellan textures eller vänder på textures beroende på vad player gör. Exempel: går åt vänster: vänder sig åt vänster. Hugo F --
             if (shootCooldown < -100)
               choosentexture = texture;
 
@@ -69,6 +75,19 @@ namespace te16mono
 
             else
                 spriteBatch.Draw(choosentexture, position, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
+            //--
+
+            //player får en sköld över sig om han har immortality effekten. Gör det mer synligt att man är odödlig. Hugo F
+            //!OBS!
+            //kom ihåg att du måste byta sköldens bild storlek om du byter player texture.
+            if (underEffect && effects[0] == "Immortality")
+                spriteBatch.Draw(shieldTexture, new Vector2(position.X - 5, position.Y -5), Color.White);
+
+            if (underEffect && effects[0] == "HighGravity")
+                spriteBatch.Draw(weightTexture, new Vector2(position.X + weightTexture.Width/4, position.Y - weightTexture.Height), Color.White);
+
+
+
         }
 
         public override void Update(GameTime gameTime)

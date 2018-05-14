@@ -52,7 +52,7 @@ namespace te16mono
 
         private static void CreatePlayer()
         {
-            player = new Player(1, Content.Load<Texture2D>("bird"), Content.Load<Texture2D>("gunbird"));
+            player = new Player(1, Content.Load<Texture2D>("bird"), Content.Load<Texture2D>("gunbird"), Content.Load<Texture2D>("transparentshield"), Content.Load<Texture2D>("weight"));
             player.up = Keys.W;
             player.down = Keys.S;
             player.left = Keys.A;
