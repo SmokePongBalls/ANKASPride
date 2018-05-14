@@ -111,7 +111,7 @@ namespace te16mono
 
             if (keyboardState.IsKeyDown(Keys.Enter) && Game1.lastKeyboardstate.IsKeyUp(Keys.Enter))
             {
-                if (selected == 2)
+                if (selected == 1)
                     Game1.gameSection = GameSection.LevelBuilding;
 
                 return meny[selected].State;
