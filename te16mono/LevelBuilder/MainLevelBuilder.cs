@@ -34,7 +34,7 @@ namespace te16mono.LevelBuilder
         public static Block selectedBlock;
         public static Effect selectedEffect;
 
-        public static Player player; //Används så att användaren ska se vart spelaren börjar
+        static Player player; //Används så att användaren ska se vart spelaren börjar
 
         //Listorna med saker man har placerat ut 
         public static List<Block> blocks;

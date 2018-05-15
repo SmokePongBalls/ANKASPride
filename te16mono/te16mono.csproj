@@ -64,9 +64,6 @@
     <Compile Include="LevelBuilder\UI\Selection.cs" />
     <Compile Include="LevelBuilder\UI\ValueChangers\ValueChanging.cs" />
     <Compile Include="Main\Main.cs" />
-    <Compile Include="Main\Menus\Finish.cs" />
-    <Compile Include="Main\Menus\GameOver.cs" />
-    <Compile Include="Main\Menus\Meny.cs" />
     <Compile Include="MenyItem.cs" />
     <Compile Include="Objects\MovingObjects\Bird.cs" />
     <Compile Include="Objects\Blocks\Block.cs" />
