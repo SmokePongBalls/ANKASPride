@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using te16mono.LevelBuilder.UI;
 using te16mono.LevelBuilder.ObjectEditing;
-using te16mono.Input;
 
 namespace te16mono.LevelBuilder
 {
@@ -41,18 +40,18 @@ namespace te16mono.LevelBuilder
         public static List<MovingObjects> movingObjects;
         public static List<Effect> effects;
         //Alla textures som används
-        public static Texture2D
+        static Texture2D
             cat,
             pear,
             bird,
             hedgehog,
-            square,
             frog,
             finishFlag,
             weight,
             iceblock,
             shield,
-            goldBag;
+            goldBag,
+            square;
 
         public static void Initialize(ContentManager Content, GraphicsDevice graphicsDevice)
         {
@@ -341,6 +340,36 @@ namespace te16mono.LevelBuilder
                 return true;
             else
                 return false;
+        }
+
+        //Retunerar det texture som hör till rätt selectedobject som standar skickas en square
+        public static Texture2D GetTexture(SelectedObject input = SelectedObject.Null)
+        {
+            if (input == SelectedObject.Bird)
+                return bird;
+            else if (input == SelectedObject.Block)
+                return square;
+            else if (input == SelectedObject.Cat)
+                return cat;
+            else if (input == SelectedObject.FinishLine)
+                return finishFlag;
+            else if (input == SelectedObject.Frog)
+                return frog;
+            else if (input == SelectedObject.Health)
+                return pear;
+            else if (input == SelectedObject.Hedgehog)
+                return hedgehog;
+            else if (input == SelectedObject.HighGravity)
+                return weight;
+            else if (input == SelectedObject.Immortality)
+                return shield;
+            else if (input == SelectedObject.Point)
+                return goldBag;
+            else if (input == SelectedObject.Whammy)
+                return iceblock;
+            //Ifall det är null så retuneras en 50 x 50 ruta
+            else
+                return square;
         }
 
         //Musens position justerat efter kameran

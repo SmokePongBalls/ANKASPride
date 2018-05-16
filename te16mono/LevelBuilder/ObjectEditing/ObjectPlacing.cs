@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using te16mono.LevelBuilder.UI;
-using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace te16mono.LevelBuilder.ObjectEditing
 {
@@ -72,50 +72,52 @@ namespace te16mono.LevelBuilder.ObjectEditing
         //Placerar ut objektet
         static void Place()
         {
+            //Får texturen som senare ska användas
+            Texture2D texture = MainLevelBuilder.GetTexture(MainLevelBuilder.selectedObject);
             //Kollar vilket objekt som ska placeras ut
             if (MainLevelBuilder.selectedObject == SelectedObject.Block)
             {
-                MainLevelBuilder.blocks.Add(new Block(MainLevelBuilder.MousePosition, 50, 50, new Vector2(0), MainLevelBuilder.square));
+                MainLevelBuilder.blocks.Add(new Block(MainLevelBuilder.MousePosition, 50, 50, new Vector2(0), texture));
             }
             else if (MainLevelBuilder.selectedObject == SelectedObject.Cat)
             {
-                MainLevelBuilder.movingObjects.Add(new Katt(MainLevelBuilder.cat, MainLevelBuilder.MousePosition, true, 0.5f, 5000000, -500000));
+                MainLevelBuilder.movingObjects.Add(new Katt(texture, MainLevelBuilder.MousePosition, true, 0.5f, 5000000, -500000));
             }
             else if (MainLevelBuilder.selectedObject == SelectedObject.Frog)
             {
-                MainLevelBuilder.movingObjects.Add(new Frog(MainLevelBuilder.frog, MainLevelBuilder.MousePosition, true, 0.5f, 5000000, -500000));
+                MainLevelBuilder.movingObjects.Add(new Frog(texture, MainLevelBuilder.MousePosition, true, 0.5f, 5000000, -500000));
             }
             else if (MainLevelBuilder.selectedObject == SelectedObject.Hedgehog)
             {
-                MainLevelBuilder.movingObjects.Add(new Hedgehog(MainLevelBuilder.hedgehog, MainLevelBuilder.MousePosition, true, 0.5f, 5000000, -500000));
+                MainLevelBuilder.movingObjects.Add(new Hedgehog(texture, MainLevelBuilder.MousePosition, true, 0.5f, 5000000, -500000));
             }
             else if (MainLevelBuilder.selectedObject == SelectedObject.Bird)
             {
-                MainLevelBuilder.movingObjects.Add(new Bird(MainLevelBuilder.bird, MainLevelBuilder.MousePosition, true, 0.5f, 5000000, -500000));
+                MainLevelBuilder.movingObjects.Add(new Bird(texture, MainLevelBuilder.MousePosition, true, 0.5f, 5000000, -500000));
             }
             else if (MainLevelBuilder.selectedObject == SelectedObject.FinishLine)
             {
-                MainLevelBuilder.effects.Add(new FinishLine(MainLevelBuilder.MousePosition, MainLevelBuilder.finishFlag, 0));    
+                MainLevelBuilder.effects.Add(new FinishLine(MainLevelBuilder.MousePosition, texture, 0));    
             }
             else if (MainLevelBuilder.selectedObject == SelectedObject.Point)
             {
-                MainLevelBuilder.effects.Add(new Point(MainLevelBuilder.MousePosition, MainLevelBuilder.goldBag, 100));
+                MainLevelBuilder.effects.Add(new Point(MainLevelBuilder.MousePosition, texture, 100));
             }
             else if (MainLevelBuilder.selectedObject == SelectedObject.HighGravity)
             {
-                MainLevelBuilder.effects.Add(new Point(MainLevelBuilder.MousePosition, MainLevelBuilder.weight, 100));
+                MainLevelBuilder.effects.Add(new Point(MainLevelBuilder.MousePosition, texture, 100));
             }
             else if (MainLevelBuilder.selectedObject == SelectedObject.Whammy)
             {
-                MainLevelBuilder.effects.Add(new Point(MainLevelBuilder.MousePosition, MainLevelBuilder.iceblock, 100));
+                MainLevelBuilder.effects.Add(new Point(MainLevelBuilder.MousePosition, texture, 100));
             }
             else if (MainLevelBuilder.selectedObject == SelectedObject.Health)
             {
-                MainLevelBuilder.effects.Add(new Point(MainLevelBuilder.MousePosition, MainLevelBuilder.pear, 100));
+                MainLevelBuilder.effects.Add(new Point(MainLevelBuilder.MousePosition, texture, 100));
             }
             else if (MainLevelBuilder.selectedObject == SelectedObject.Immortality)
             {
-                MainLevelBuilder.effects.Add(new Point(MainLevelBuilder.MousePosition, MainLevelBuilder.shield, 100));
+                MainLevelBuilder.effects.Add(new Point(MainLevelBuilder.MousePosition, texture, 100));
             }
         }
     }

@@ -34,15 +34,19 @@ namespace te16mono.LevelBuilder
             //Annars ska det kolla ifall användaren försöker skriva något
             else
             {
-                
-                editPosition = TextInput.CheckEditPosition(editPosition, toSave.Length);
-                string tempToSave = TextInput.CheckForBackSpace(keyboardState, lastKeyboardState, toSave, editPosition);
-                StringCompare(tempToSave);
-                tempToSave = TextInput.CheckForInput(keyboardState, lastKeyboardState, toSave, editPosition);
-
-                StringCompare(tempToSave);
+                CheckForInput(keyboardState, lastKeyboardState);
             }
 
+        }
+
+        private void CheckForInput(KeyboardState keyboardState, KeyboardState lastKeyboardState)
+        {
+            editPosition = TextInput.CheckEditPosition(editPosition, toSave.Length);
+            string tempToSave = TextInput.CheckForBackSpace(keyboardState, lastKeyboardState, toSave, editPosition);
+            StringCompare(tempToSave);
+            tempToSave = TextInput.CheckForInput(keyboardState, lastKeyboardState, toSave, editPosition);
+
+            StringCompare(tempToSave);
         }
 
         private void StringCompare(string tempToSave)
@@ -54,11 +58,12 @@ namespace te16mono.LevelBuilder
         //Ritar ut allt som behöver synas
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(MainLevelBuilder.square, BackgroundRectangle, Color.Black);
-            spriteBatch.Draw(MainLevelBuilder.square, Save, Color.White);
-            spriteBatch.Draw(MainLevelBuilder.square, ExitRectangle, Color.White);
+            //Alla rektanglarna
+            spriteBatch.Draw(MainLevelBuilder.GetTexture(), BackgroundRectangle, Color.Black);
+            spriteBatch.Draw(MainLevelBuilder.GetTexture(), Save, Color.White);
+            spriteBatch.Draw(MainLevelBuilder.GetTexture(), ExitRectangle, Color.White);
             spriteBatch.DrawString(MainLevelBuilder.spriteFont, TextInput.DrawWithMarker(editPosition, toSave), new Vector2(810, 300), Color.Black);
-            spriteBatch.Draw(MainLevelBuilder.square, Back, Color.White);
+            spriteBatch.Draw(MainLevelBuilder.GetTexture(), Back, Color.White);
             spriteBatch.DrawString(MainLevelBuilder.spriteFont, "Back", new Vector2(810, 350), Color.Black);
             spriteBatch.DrawString(MainLevelBuilder.spriteFont, "Save", new Vector2(1010, 350), Color.Black);
         }
