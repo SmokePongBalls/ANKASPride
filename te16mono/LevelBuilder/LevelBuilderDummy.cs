@@ -1,9 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace te16mono.LevelBuilder
 {
@@ -16,9 +11,10 @@ namespace te16mono.LevelBuilder
         //Standard dummyvärdena
         public static void SetDummyValues()
         {
-            dummyMovingObjects = new MovingObjectsDummy(MainLevelBuilder.bird, new Vector2(0), true, 0, 0, 0);
-            dummyBlock = new BlockDummy(new Vector2(0), 0, 0, new Vector2(0), MainLevelBuilder.bird);
-            dummyEffect = new EffectDummy(new Vector2(0), MainLevelBuilder.bird, 0);
+            //Dummy objekten kommer aldrig målas ut så det kvittar vilka texture de har
+            dummyMovingObjects = new MovingObjectsDummy(MainLevelBuilder.GetTexture(), new Vector2(0), true, 0, 0, 0);
+            dummyBlock = new BlockDummy(new Vector2(0), 0, 0, new Vector2(0), MainLevelBuilder.GetTexture());
+            dummyEffect = new EffectDummy(new Vector2(0), MainLevelBuilder.GetTexture(), 0);
         }
         //Ger MainLevelBuilder objecten dummy värdena
         public static void DummyValues()
@@ -27,7 +23,7 @@ namespace te16mono.LevelBuilder
             MainLevelBuilder.selectedBlock = DummyBlock;
             MainLevelBuilder.selectedEffect = DummyEffect;
         }
-        //Komma åt de olika dummyvärdena
+        //Användas för att kunna komma åt de olika dummy värdena utan att kunna skriva över det
         public static MovingObjects DummyMovingObject
         {
             get
