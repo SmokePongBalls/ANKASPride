@@ -24,7 +24,7 @@ namespace te16mono
         public static SpriteFont font, pointFont;
         static Song music;
         static double countdown = 0;
-      public static ContentManager Content;
+        public static ContentManager Content;
         static List<Projectiles> addQueue;
         public static List<ObjectsBase> objects;
         
