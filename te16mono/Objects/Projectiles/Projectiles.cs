@@ -1,6 +1,4 @@
-﻿
-
-namespace te16mono
+﻿namespace te16mono
 {
     abstract class Projectiles : ObjectsBase
     {

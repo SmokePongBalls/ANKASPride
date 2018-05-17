@@ -39,7 +39,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Main\UI.cs" />
-    <Compile Include="BlinkBlink\Blink.cs" />
     <Compile Include="Objects\Blocks\BlockDummy.cs" />
     <Compile Include="Objects\Effects\EffectDummy.cs" />
     <Compile Include="Objects\Effects\Effects.cs" />
