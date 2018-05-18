@@ -12,19 +12,20 @@ namespace te16mono
         static SpriteFont pointFont;
         static Texture2D mountainTexture;
         static Vector2 heartPosition, pointPosition,leftUIBackgroundPosition,rightUIBackgroundPosition,mountainBackgroundPosition, secondMountainBackgroundPosition;
-        static double mountainScale;
-        static int mountainTextureScale;
-
+        static List<Vector2> backgroundPosition;
+    
         //Ger allt som behöver ett start värde ett värde. Namnet säger sig självt.
         static public void Initialize(ContentManager content)
         {
-            //Försöker kompensera för "scale" --
-            mountainScale = 1.5;
-            //mountainTextureScale = Convert.ToInt32(mountainTexture.Width*mountainScale);
-            //--
+        
+ 
 
             Content = content;
             mountainTexture = Content.Load<Texture2D>("mountainBackground");
+            backgroundPosition = new List<Vector2>();
+            backgroundPosition.Add(new Vector2(-mountainTexture.Width - mountainTexture.Width/2, -100));
+            backgroundPosition.Add(new Vector2(backgroundPosition[0].X + mountainTexture.Width, backgroundPosition[0].Y));
+            backgroundPosition.Add(new Vector2(backgroundPosition[1].X + mountainTexture.Width, backgroundPosition[1].Y));
 
             //Alla start kordinater.--
             mountainBackgroundPosition = new Vector2(1, -10);
@@ -41,14 +42,37 @@ namespace te16mono
         static public void DrawBackground(SpriteBatch spriteBatch, Player player)
         {
             //Bakgrunden för spelet.
-            
+            Vector2 temp;
             //Denna uträckning är här för att simulera en paralax. Om det inte redan är förstått så rör den sig med hälften av player hastighet för att det ser coolt ut.--
-            mountainBackgroundPosition.X += player.velocity.X/2;
-            secondMountainBackgroundPosition.X = mountainBackgroundPosition.X + mountainTexture.Width;
-            //--
+            
+            for (int i = 0; i < backgroundPosition.Count; i++)
+            {
+                temp = backgroundPosition[0];
+                backgroundPosition.RemoveAt(0);
+                backgroundPosition.Add(new Vector2(temp.X + player.velocity.X / 2, temp.Y));
+               
+            }
 
-            spriteBatch.Draw(mountainTexture, mountainBackgroundPosition, null, Color.White, 0f, Vector2.Zero, 1, SpriteEffects.None, 1f);
-            spriteBatch.Draw(mountainTexture, secondMountainBackgroundPosition, null, Color.White, 0f, Vector2.Zero, 1, SpriteEffects.None, 1f);
+            if(player.position.X > backgroundPosition[1].X+mountainTexture.Width)
+            {
+                
+                backgroundPosition.RemoveAt(0);
+                backgroundPosition.Add(new Vector2(backgroundPosition[1].X + mountainTexture.Width, backgroundPosition[1].Y));
+                
+            }
+            else if(player.position.X > backgroundPosition[1].X + mountainTexture.Width)
+            {
+
+                backgroundPosition.RemoveAt(2);
+                backgroundPosition.Add(new Vector2(backgroundPosition[0].X + mountainTexture.Width, backgroundPosition[0].Y));
+            }
+
+            //--
+            for (int i = 0; i < backgroundPosition.Count; i++)
+            {
+                spriteBatch.Draw(mountainTexture, backgroundPosition[i], null, Color.White, 0f, Vector2.Zero, 1, SpriteEffects.None, 1f);
+            }
+            
         }
 
 

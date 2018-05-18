@@ -57,7 +57,7 @@ namespace te16mono
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, Hitbox, Color.Pink);
+            spriteBatch.Draw(texture, Hitbox, Color.DarkGray);
         }
 
 
