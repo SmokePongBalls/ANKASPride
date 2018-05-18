@@ -23,7 +23,7 @@ namespace te16mono
         public static SpriteFont font, pointFont;
         static Song music;
         static double countdown = 0;
-      public static ContentManager Content;
+        public static ContentManager Content;
         static List<Projectiles> addQueue;
         public static List<ObjectsBase> objects;
         
@@ -141,7 +141,7 @@ namespace te16mono
         public static State RunUpdate(GameTime gameTime)
         {
 
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 currentState = State.Pause;
 
 
@@ -176,7 +176,9 @@ namespace te16mono
             //refractorade denna här. Ändra namn om du vet något bättre. Hugo F
             RemoveDeadObjects();
         }
-
+        //Kollar ifall objekten är inom ett visst avstånd ifrån player. Ifall det är nära nog så körs objektets update.
+        //Detta är så att fiender utanför skärmen inte ska börja gå av kanten innan spelaren är där för att se det
+        //Anton
         private static void CheckPlayerVicinity(GameTime gameTime, Rectangle screenRectangle)
         {
             foreach (ObjectsBase obj in objects)
@@ -185,7 +187,7 @@ namespace te16mono
                     obj.Update(gameTime);
             }
         }
-
+        //Tar bort alla objekten som har "dött"
         private static void RemoveDeadObjects()
         {
             foreach (ObjectsBase obj in objects.ToArray())
@@ -219,30 +221,29 @@ namespace te16mono
 
             }
         }
-
+        //Updating menu Filip
         public static State GameoverUpdate (GameTime gameTime)
         {
             return (State)gameoverMeny.Update(gameTime);
             
         }
-
+        //Updating menu Filip
         public static void GameOverDraw(GraphicsDevice graphicsDevice)
         {
             gameoverMeny.Draw(spriteBatch);
 
 
         }
-
+        //Updating menues Filip
         public static State FinishUpdate(GameTime gameTime)
         {
             return (State)finishMeny.Update(gameTime);
         }
-        //Målas när state är finish Anton
         public static void FinishDraw(GraphicsDevice graphicsDevice)
         {
             finishMeny.Draw(spriteBatch);
         }
-
+        //Updating menues Filip
         public static State PauseUpdate(GameTime gameTime)
         {
            return (State)pauseMeny.Update(gameTime);
@@ -253,14 +254,7 @@ namespace te16mono
         {
 
             pauseMeny.Draw(spriteBatch);
-
-            
-
         }
-
-
-
-
         public static void RunDraw( GraphicsDevice  graphicsDevice , GameTime gameTime)
         {
             //Här i ska alla saker som kan hamna utanför skärmen vara

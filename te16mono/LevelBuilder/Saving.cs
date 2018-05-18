@@ -38,7 +38,7 @@ namespace te16mono.LevelBuilder
             }
 
         }
-
+        
         private void CheckForInput(KeyboardState keyboardState, KeyboardState lastKeyboardState)
         {
             editPosition = TextInput.CheckEditPosition(editPosition, toSave.Length);

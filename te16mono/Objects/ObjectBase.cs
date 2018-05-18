@@ -4,6 +4,7 @@ using System;
 
 namespace te16mono
 {
+    //Anton har gjort hela klassen
     public enum Oriantations { Left, Right, Up, Down }
     public abstract class ObjectsBase
     {
