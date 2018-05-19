@@ -23,7 +23,7 @@ namespace te16mono
         //Lägger till alla efffects i dokument
         private static string SaveEffect(string document)
         {
-            foreach (Point effect in MainLevelBuilder.effects)
+            foreach (Effect effect in MainLevelBuilder.effects)
             {
                 document += "<" + effect.name + "><X>" + effect.position.X + "</X><Y>" + effect.position.Y + "</Y><Worth>" + effect.worth +
                     "</Worth></" + effect.name + ">";
