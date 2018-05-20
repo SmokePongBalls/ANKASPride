@@ -1,107 +1,161 @@
-﻿
-<Map>
+﻿<map>
   <MovingObjects>
-    <Bird>
-      <Texture>bird</Texture>
-      <X>900</X>
-      <Y>800</Y>
-      <WalkLeft>false</WalkLeft>
-      <MaxSpeed>0.25</MaxSpeed>
-      <MaxX>1700</MaxX>
-      <MinX>0</MinX>
-    </Bird>
-    <Hedgehog>
-      <Texture>hedgehog</Texture>
-      <X>0</X>
-      <Y>100</Y>
+    <Frog>
+      <X>1000</X>
+      <Y>-64</Y>
       <WalkLeft>true</WalkLeft>
-      <MaxSpeed>0</MaxSpeed>
-      <MaxX>1</MaxX>
-      <MinX>0</MinX>
+      <MaxSpeed>v</MaxSpeed>
+      <MaxX>1350</MaxX>
+      <MinX>-500000</MinX>
+    </Frog>
+    <Bird>
+      <X>2052</X>
+      <Y>-826</Y>
+      <WalkLeft>true</WalkLeft>
+      <MaxSpeed>0,1</MaxSpeed>
+      <MaxX>5000000</MaxX>
+      <MinX>-500000</MinX>
+    </Bird>
+    <Katt>
+      <X>2165</X>
+      <Y>-622</Y>
+      <WalkLeft>true</WalkLeft>
+      <MaxSpeed>0,1</MaxSpeed>
+      <MaxX>5000000</MaxX>
+      <MinX>-500000</MinX>
+    </Katt>
+    <Hedgehog>
+      <X>3586</X>
+      <Y>-609</Y>
+      <WalkLeft>true</WalkLeft>
+      <MaxSpeed>0,1</MaxSpeed>
+      <MaxX>5000000</MaxX>
+      <MinX>-3350</MinX>
     </Hedgehog>
   </MovingObjects>
   <Blocks>
     <Block>
-      <Texture>square</Texture>
-      <X>0</X>
-      <Y>900</Y>
-      <Width>1900</Width>
+      <X>-200</X>
+      <Y>50</Y>
+      <Width>750</Width>
       <Height>100</Height>
       <VelocityX>0</VelocityX>
       <VelocityY>0</VelocityY>
     </Block>
     <Block>
-      <Texture>square</Texture>
-      <X>2300</X>
-      <Y>900</Y>
-      <Width>300</Width>
+      <X>653</X>
+      <Y>50</Y>
+      <Width>750</Width>
       <Height>100</Height>
       <VelocityX>0</VelocityX>
       <VelocityY>0</VelocityY>
     </Block>
     <Block>
-      <Texture>square</Texture>
-      <X>2700</X>
-      <Y>700</Y>
-      <Width>300</Width>
+      <X>1400</X>
+      <Y>-450</Y>
+      <Width>50</Width>
+      <Height>600</Height>
+      <VelocityX>0</VelocityX>
+      <VelocityY>0</VelocityY>
+    </Block>
+    <Block>
+      <X>1203</X>
+      <Y>-1450</Y>
+      <Width>50</Width>
+      <Height>1350</Height>
+      <VelocityX>0</VelocityX>
+      <VelocityY>0</VelocityY>
+    </Block>
+    <Block>
+      <X>1450</X>
+      <Y>-450</Y>
+      <Width>500</Width>
       <Height>100</Height>
       <VelocityX>0</VelocityX>
       <VelocityY>0</VelocityY>
     </Block>
     <Block>
-      <Texture>square</Texture>
-      <X>3000</X>
-      <Y>600</Y>
+      <X>1400</X>
+      <Y>-350</Y>
+      <Width>1150</Width>
+      <Height>100</Height>
+      <VelocityX>0</VelocityX>
+      <VelocityY>0</VelocityY>
+    </Block>
+    <Block>
+      <X>2550</X>
+      <Y>-450</Y>
+      <Width>250</Width>
+      <Height>450</Height>
+      <VelocityX>0</VelocityX>
+      <VelocityY>0</VelocityY>
+    </Block>
+    <Block>
+      <X>3350</X>
+      <Y>-500</Y>
+      <Width>50</Width>
+      <Height>500</Height>
+      <VelocityX>0</VelocityX>
+      <VelocityY>0</VelocityY>
+    </Block>
+    <Block>
+      <X>2550</X>
+      <Y>0</Y>
+      <Width>850</Width>
+      <Height>100</Height>
+      <VelocityX>0</VelocityX>
+      <VelocityY>0</VelocityY>
+    </Block>
+    <Block>
+      <X>3050</X>
+      <Y>-900</Y>
+      <Width>50</Width>
+      <Height>750</Height>
+      <VelocityX>0</VelocityX>
+      <VelocityY>0</VelocityY>
+    </Block>
+    <Block>
+      <X>3400</X>
+      <Y>-500</Y>
       <Width>1000</Width>
       <Height>100</Height>
       <VelocityX>0</VelocityX>
       <VelocityY>0</VelocityY>
     </Block>
     <Block>
-      <Texture>square</Texture>
-      <X>2500</X>
-      <Y>800</Y>
-      <Width>300</Width>
-      <Height>100</Height>
+      <X>4300</X>
+      <Y>-900</Y>
+      <Width>100</Width>
+      <Height>400</Height>
       <VelocityX>0</VelocityX>
       <VelocityY>0</VelocityY>
     </Block>
   </Blocks>
   <Effects>
+    <Immortality>
+      <X>1317</X>
+      <Y>-606</Y>
+      <Worth>100</Worth>
+    </Immortality>
     <Point>
-      <Texture>goldbag</Texture>
-      <X>550</X>
-      <Y>700</Y>
+      <X>2869</X>
+      <Y>-508</Y>
       <Worth>100</Worth>
     </Point>
     <Health>
-      <Texture>pear</Texture>
-      <X>650</X>
-      <Y>500</Y>
-      <Worth>1</Worth>
+      <X>3209</X>
+      <Y>-462</Y>
+      <Worth>100</Worth>
     </Health>
-    <Immortality>
-      <Texture>sheild</Texture>
-      <X>450</X>
-      <Y>500</Y>
-      <Worth>1</Worth>
-    </Immortality>
-     <Whammy>
-      <Texture>iceblock</Texture>
-      <X>350</X>
-      <Y>500</Y>
-      <Worth>1</Worth> jnjnh 
+    <Whammy>
+      <X>3191</X>
+      <Y>-748</Y>
+      <Worth>100</Worth>
     </Whammy>
-    <HighGravity>
-      <Texture>weight</Texture>
-      <X>850</X>
-      <Y>500</Y>
-    </HighGravity>
     <Finish>
-      <Texture>finishFlag</Texture>
-      <X>3750</X>
-      <Y>432</Y>
+      <X>4046</X>
+      <Y>-669</Y>
       <Worth>0</Worth>
     </Finish>
   </Effects>
-</Map>
+</map>

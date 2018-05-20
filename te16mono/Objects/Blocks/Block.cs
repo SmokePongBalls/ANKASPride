@@ -21,7 +21,7 @@ namespace te16mono
             damage = 0;
             solid = true;
         }
-
+        //Blocken rör inte på sig så update  ska vara tom
         public override void Update(GameTime gameTime){}
         public override bool ProjectileIntersect(int damage, Oriantations oriantation)
         {

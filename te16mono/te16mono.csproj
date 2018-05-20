@@ -75,7 +75,7 @@
     <Compile Include="Objects\MovingObjects\MovingObjects.cs" />
     <Compile Include="Objects\MovingObjects\MovingObjectsDummy.cs" />
     <Compile Include="Objects\ObjectBase.cs" />
-    <Compile Include="Player.cs" />
+    <Compile Include="Objects\MovingObjects\Player.cs" />
     <Compile Include="Main\Program.cs" />
     <Compile Include="Objects\Projectiles\Projectiles.cs" />
     <Compile Include="Objects\Projectiles\RegularProjectile.cs" />

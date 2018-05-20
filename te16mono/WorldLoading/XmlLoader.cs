@@ -200,7 +200,7 @@ namespace te16mono
         {
             //Standardvärden ifall något går fel
             int worth = 1;
-            string texture = "shield";
+            string texture = "sheild";
             float X = 0, Y = 0;
             //Kollar ifall något ska ändras
             foreach (XmlNode childNode in child.ChildNodes)
