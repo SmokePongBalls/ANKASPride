@@ -122,11 +122,7 @@ namespace te16mono
                 }
 
             }
-<<<<<<< HEAD
-           
-=======
-            
->>>>>>> 93aaacb271cebad21d7e389af405d01c7c9c4545
+
             lastKeyboardstate = keyboardState;
 
             base.Update(gameTime);
@@ -200,10 +196,7 @@ namespace te16mono
                 MainLevelBuilder.Draw(GraphicsDevice);
             }
             
-<<<<<<< HEAD
-=======
 
->>>>>>> 93aaacb271cebad21d7e389af405d01c7c9c4545
 
             base.Draw(gameTime);
         }
