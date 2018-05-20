@@ -122,10 +122,7 @@ namespace te16mono
                 }
 
             }
-            else if (gameSection == te16mono.GameSection.BlinkBlink)
-            {
-                BlinkBlink.Blink.Update(gameTime);
-            }
+           
             lastKeyboardstate = keyboardState;
 
             base.Update(gameTime);
@@ -198,9 +195,7 @@ namespace te16mono
             {
                 MainLevelBuilder.Draw(GraphicsDevice);
             }
-            else if (gameSection == te16mono.GameSection.BlinkBlink)
-                BlinkBlink.Blink.Draw(spriteBatch, Content);
-
+            
 
             base.Draw(gameTime);
         }

@@ -136,6 +136,7 @@ namespace te16mono
 
         private void ResetPosition()
         {
+            Background.ResetPosition();
             position = new Vector2(0);
         }
 

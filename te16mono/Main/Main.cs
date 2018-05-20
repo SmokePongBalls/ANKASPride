@@ -39,13 +39,12 @@ namespace te16mono
         static public void Initialize(ContentManager content)
         {
             
-            Content = content;
-            
+            Content = content;         
             objects = new List<ObjectsBase>();
             addQueue = new List<Projectiles>();
-            // TODO: Add your initialization logic here
             CreatePlayer();
             UI.Initialize(content);
+            Background.Initialize(content);
             map = 1;
         }
 
@@ -144,7 +143,7 @@ namespace te16mono
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 currentState = State.Pause;
 
-
+            Background.Update(player);
             player.Update(gameTime);
             ObjectsUpdate(gameTime);
             countdown -= gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -279,8 +278,8 @@ namespace te16mono
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap, DepthStencilState.None, null, null, Camera.Position(player, graphicsDevice.DisplayMode.Width, graphicsDevice.DisplayMode.Height));
 
             //Backgrunden ritas här för att den inte ska följa med cameran som allt annat i UI ska. Hugo F
-            UI.DrawBackground(spriteBatch, player);
-
+            Background.Draw(spriteBatch, player);
+            
             foreach (ObjectsBase obj in objects)
             {
                 obj.Draw(spriteBatch);
@@ -296,7 +295,7 @@ namespace te16mono
             spriteBatch.Begin();
 
             //Användar informationen ligger här för att det ska följa kameran. 
-            UI.DrawUI(spriteBatch);
+            UI.Draw(spriteBatch);
      
             spriteBatch.End();
         }
@@ -347,6 +346,7 @@ namespace te16mono
             int tempStorage = player.points;
             //Återställer alla variabler tills nästa bana
             CreatePlayer();
+            Background.Initialize(Content);
             UI.Initialize(Content);
             player.points = tempStorage;
             objects = new List<ObjectsBase>();

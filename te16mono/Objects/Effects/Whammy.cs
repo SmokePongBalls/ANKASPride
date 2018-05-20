@@ -20,6 +20,7 @@ namespace te16mono
 
         public override Player PlayerIntersect(Player player)
         {
+            //ser till så att de försvinner när player vidrör dem. negativt "health" = död
             health = -4;
             //ser till så att programmet vet att player är under en effekt
             player.underEffect = true;

@@ -20,6 +20,7 @@ namespace te16mono
 
         public override Player PlayerIntersect(Player player)
         {
+            //ser till så att de försvinner när player vidrör dem. negativt "health" = död
             health = -4;
             //ser till så att players health inte kan gå över "maxHealth"
             if (player.health < player.maxHealth)
