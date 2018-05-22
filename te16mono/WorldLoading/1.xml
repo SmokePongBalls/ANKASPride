@@ -4,7 +4,7 @@
       <X>1000</X>
       <Y>-64</Y>
       <WalkLeft>true</WalkLeft>
-      <MaxSpeed>v</MaxSpeed>
+      <MaxSpeed>0.25</MaxSpeed>
       <MaxX>1350</MaxX>
       <MinX>-500000</MinX>
     </Frog>
@@ -12,7 +12,7 @@
       <X>2052</X>
       <Y>-826</Y>
       <WalkLeft>true</WalkLeft>
-      <MaxSpeed>0,1</MaxSpeed>
+      <MaxSpeed>0.25</MaxSpeed>
       <MaxX>5000000</MaxX>
       <MinX>-500000</MinX>
     </Bird>
@@ -20,7 +20,7 @@
       <X>2165</X>
       <Y>-622</Y>
       <WalkLeft>true</WalkLeft>
-      <MaxSpeed>0,1</MaxSpeed>
+      <MaxSpeed>0.25</MaxSpeed>
       <MaxX>5000000</MaxX>
       <MinX>-500000</MinX>
     </Katt>
@@ -28,7 +28,7 @@
       <X>3586</X>
       <Y>-609</Y>
       <WalkLeft>true</WalkLeft>
-      <MaxSpeed>0,1</MaxSpeed>
+      <MaxSpeed>0.25</MaxSpeed>
       <MaxX>5000000</MaxX>
       <MinX>-3350</MinX>
     </Hedgehog>
