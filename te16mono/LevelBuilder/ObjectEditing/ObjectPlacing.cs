@@ -105,19 +105,19 @@ namespace te16mono.LevelBuilder.ObjectEditing
             }
             else if (MainLevelBuilder.selectedObject == SelectedObject.HighGravity)
             {
-                MainLevelBuilder.effects.Add(new Point(MainLevelBuilder.MousePosition, texture, 100));
+                MainLevelBuilder.effects.Add(new HighGravity(MainLevelBuilder.MousePosition, texture, 100));
             }
             else if (MainLevelBuilder.selectedObject == SelectedObject.Whammy)
             {
-                MainLevelBuilder.effects.Add(new Point(MainLevelBuilder.MousePosition, texture, 100));
+                MainLevelBuilder.effects.Add(new Whammy(MainLevelBuilder.MousePosition, texture, 100));
             }
             else if (MainLevelBuilder.selectedObject == SelectedObject.Health)
             {
-                MainLevelBuilder.effects.Add(new Point(MainLevelBuilder.MousePosition, texture, 100));
+                MainLevelBuilder.effects.Add(new Health(MainLevelBuilder.MousePosition, texture, 100));
             }
             else if (MainLevelBuilder.selectedObject == SelectedObject.Immortality)
             {
-                MainLevelBuilder.effects.Add(new Point(MainLevelBuilder.MousePosition, texture, 100));
+                MainLevelBuilder.effects.Add(new Immortality(MainLevelBuilder.MousePosition, texture, 100));
             }
         }
     }
