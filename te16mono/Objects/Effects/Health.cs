@@ -23,9 +23,11 @@ namespace te16mono
             //ser till så att de försvinner när player vidrör dem. negativt "health" = död
             health = -4;
             //ser till så att players health inte kan gå över "maxHealth"
-            if (player.health < player.maxHealth)
+            if (player.health + worth <= player.maxHealth)
+            {
                 //"worth" är då en int som används för alla objekten i XmlLoader. Just för health så används det för att öka player health med det värde worth har.
                 player.health += worth;
+            }
             //ser till så att players "health" blir faktist ändrad. Den skickar tillbaka "player" och dess värden och dess värden som är ändrade
             return player;
         }
