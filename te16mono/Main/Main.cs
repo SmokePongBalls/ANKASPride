@@ -91,6 +91,7 @@ namespace te16mono
         private static void FinishMenyItems()
         {
             finishMeny = new FinishMeny((int)State.Finish);
+            finishMeny.AddItem((int)GameSection.CoreGame, Content.Load<Texture2D>("Meny"));
             finishMeny.AddItem((int)State.LoadMap, Content.Load<Texture2D>("Next"));
             finishMeny.AddItem((int)State.RetryMap, Content.Load<Texture2D>("Retry"));
             finishMeny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));

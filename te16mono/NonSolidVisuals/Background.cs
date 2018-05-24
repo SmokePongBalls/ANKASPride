@@ -10,8 +10,7 @@ namespace te16mono
     {
         static ContentManager Content;
         static Texture2D mountainTexture;
-        static List<Vector2> backgroundPosition;
-        static Vector2 groundPosition, skyPosition;
+        static List<Vector2> backgroundPosition;        
         static Vector2 temp;
         
 
@@ -49,7 +48,7 @@ namespace te16mono
             //ritar ut alla backgrunder.
             for (int i = 0; i < backgroundPosition.Count; i++)
             {
-                spriteBatch.Draw(Content.Load<Texture2D>("square"), Ground(new Vector2(backgroundPosition[i].X, backgroundPosition[i].Y - 5000)), new Color(0, 157, 236));
+                spriteBatch.Draw(Content.Load<Texture2D>("square"), Sky(new Vector2(backgroundPosition[i].X, backgroundPosition[i].Y - 5000)), new Color(0, 157, 236));
                 spriteBatch.Draw(Content.Load<Texture2D>("square"), Ground(new Vector2(backgroundPosition[i].X, backgroundPosition[i].Y + mountainTexture.Height)), new Color(81, 156, 0));
                 spriteBatch.Draw(mountainTexture, backgroundPosition[i], null, Color.White, 0f, Vector2.Zero, 1, SpriteEffects.None, 1f);
                
