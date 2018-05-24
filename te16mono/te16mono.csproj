@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <Content Include="WorldLoading\3.xml" />
     <None Include="ClassDiagram1.cd" />
     <None Include="WorldLoading\2.xml">
       <SubType>Designer</SubType>

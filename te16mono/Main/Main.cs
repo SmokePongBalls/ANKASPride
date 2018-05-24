@@ -41,7 +41,7 @@ namespace te16mono
             
             Content = content;         
             objects = new List<ObjectsBase>();
-            projectileStack = new List<Projectiles>();
+            projectileStack = new Stack<Projectiles>();
             CreatePlayer();
             UI.Initialize(content);
             Background.Initialize(content);
