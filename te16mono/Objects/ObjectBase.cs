@@ -194,33 +194,37 @@ namespace te16mono
             }
             else if (oriantation == Oriantations.Right)
             {
+                InvertWalk();
                 //Ser till så att objekten inte längre är innuti varandra ser också till så att player blir knuffad ifall velocity.X = 0;
-                player.position.X -= player.velocity.X - velocity.X;
+                player.position.X = position.X + Width;
 
                 //position.X = collided.X + collided.Width - velocity.X;
                 //Återställer velocity så den inte fortsätter in i objektet
+                player.extraVelocity.X = 0;
                 player.velocity.X = 0;
-
                 //Om man inte rörde en högervägg senast
                 player.SetCanJump(Oriantations.Right);
 
                 player.lastTouchedSurface = Oriantations.Right;
 
+                InvertWalk();
             }
             else if (oriantation == Oriantations.Left)
             {
                 //Ser till så att objekten inte längre är innuti varandra ser också till så att player blir knuffad ifall velocity.X = 0;
-                player.position.X -= player.velocity.X - velocity.X;
+                player.position.X = position.X - player.Width;
 
-                //position.X = collided.X - velocity.X - texture.Width;
+                //position.X = collided.X + collided.Width - velocity.X;
                 //Återställer velocity så den inte fortsätter in i objektet
+                player.extraVelocity.X = 0;
                 player.velocity.X = 0;
-
 
                 //Om inte rörde en vänstervägg senast
                 player.SetCanJump(Oriantations.Left);
 
                 player.lastTouchedSurface = Oriantations.Left;
+
+                InvertWalk();
             }
             return player;
         }
@@ -272,24 +276,38 @@ namespace te16mono
             {
                 //Ser till så att objekten inte längre är innuti varandra
                 player.position.X = position.X + texture.Width - velocity.X;
+
+                player.extraVelocity.X = 0;
+
                 //Ger den en slänger den åt sidan skadad
                 player.velocity.X = 35;
                 player.velocity.Y = -10;
                 player.health -= damage;
 
+                InvertWalk();
             }
             else if (oriantation == Oriantations.Left)
             {
                 //Ser till så att objekten inte längre är innuti varandra
                 player.position.X = position.X - player.velocity.X - player.texture.Width;
+
+                player.extraVelocity.X = 0;
+
                 //Återställer velocity så den inte fortsätter in i objektet
                 player.velocity.X = -35;
                 player.velocity.Y = -10;
                 player.health -= damage;
+
+                InvertWalk();
             }
             return player;
         }
-
+        //Byter håll för objektet
+        private void InvertWalk()
+        {
+           walkLeft = false != walkLeft;
+            velocity.X = -velocity.X;
+        }
         //Används för att få bredd och höjd på objektet. Ska i de flesta fall retunera texture.[Width/Height]. 
         //Block.cs är den enda klassen som just nu skriver över detta då den använder ett utdraget texture.
         //Anton

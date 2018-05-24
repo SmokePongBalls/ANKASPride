@@ -24,7 +24,7 @@ namespace te16mono
         static Song music;
         static double countdown = 0;
         public static ContentManager Content;
-        static List<Projectiles> addQueue;
+        static Stack<Projectiles> projectileStack;
         public static List<ObjectsBase> objects;
         
 
@@ -41,7 +41,7 @@ namespace te16mono
             
             Content = content;         
             objects = new List<ObjectsBase>();
-            addQueue = new List<Projectiles>();
+            projectileStack = new List<Projectiles>();
             CreatePlayer();
             UI.Initialize(content);
             Background.Initialize(content);
@@ -88,7 +88,7 @@ namespace te16mono
             pointFont = Content.Load<SpriteFont>("pointFont");
         }
 
-        private static void FinishMenyItems()
+        private static void FinishMenyItems() //filip
         {
             finishMeny = new FinishMeny((int)State.Finish);
             finishMeny.AddItem((int)GameSection.CoreGame, Content.Load<Texture2D>("Meny"));
@@ -97,7 +97,7 @@ namespace te16mono
             finishMeny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));
         }
 
-        private static void GameOverItems()
+        private static void GameOverItems()//filip
         {
             gameoverMeny = new GameOverMeny((int)State.GameOver);
             gameoverMeny.AddItem((int)GameSection.CoreGame, Content.Load<Texture2D>("Meny"));
@@ -105,7 +105,7 @@ namespace te16mono
             gameoverMeny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));
         }
 
-        private static void PauseMenyItems()
+        private static void PauseMenyItems() // filip
         {
             pauseMeny = new PauseMeny((int)State.Pause);
             pauseMeny.AddItem((int)GameSection.CoreGame, Content.Load<Texture2D>("Meny"));
@@ -114,7 +114,7 @@ namespace te16mono
             pauseMeny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));
         }
 
-        private static void MenuItems()
+        private static void MenuItems() //filip
         {
             meny = new Menyer((int)State.Meny);
             meny.AddItem((int)State.Run, Content.Load<Texture2D>("Start"));
@@ -124,7 +124,7 @@ namespace te16mono
         }
 
 
-        public static State MenyUpdate(GameTime gameTime)
+        public static State MenyUpdate(GameTime gameTime) //Updating menu Filip
         {
 
 
@@ -132,7 +132,7 @@ namespace te16mono
 
         }
 
-        public static void MenyDraw()
+        public static void MenyDraw() // Meny draw  Filip 
         {
             meny.Draw(spriteBatch);
         }
@@ -148,7 +148,7 @@ namespace te16mono
             player.Update(gameTime);
             ObjectsUpdate(gameTime);
             countdown -= gameTime.ElapsedGameTime.TotalMilliseconds;
-            MergeWithQueue();
+            MergeWithStack();
             if (player.health <= 0)
                 currentState = State.GameOver;
 
@@ -250,7 +250,7 @@ namespace te16mono
 
         }
 
-        public static void PauseDraw()
+        public static void PauseDraw()//Draw meny Filip
         {
 
             pauseMeny.Draw(spriteBatch);
@@ -299,15 +299,16 @@ namespace te16mono
         public static void Shoot(string type, Vector2 velocity, Vector2 position, int damage, int health, bool playerShooter)
         {
             if (type == "regular")
-                addQueue.Add(new RegularProjectile(health, damage, velocity, position, Content.Load<Texture2D>("RegularProjectile"),playerShooter));
+                projectileStack.Push(new RegularProjectile(health, damage, velocity, position, Content.Load<Texture2D>("RegularProjectile"),playerShooter));
             
         }
-        //Flyttar över alla objekt i addQueue till objects listan Anton
-        static void MergeWithQueue()
+        //Flyttar över alla objekt stacken till objects listan Anton
+        static void MergeWithStack()
         {
-            foreach (Projectiles projectile in addQueue)
-                objects.Add(projectile);
-            addQueue = new List<Projectiles>();
+            while (projectileStack.Count != 0)
+                objects.Add(projectileStack.Pop());
+
+            projectileStack = new Stack<Projectiles>();
         }
         //Laddar in en bana. Anton
         public static State LoadMap()
@@ -317,21 +318,22 @@ namespace te16mono
 
             //Återställer alla variabler tills nästa bana
             CreatePlayer();
-            objects = new List<ObjectsBase>();
-
+            Queue<ObjectsBase> mapQueue;
 
             try
             {
-                XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
+                mapQueue = XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
+                objects = DequeueMap(mapQueue);
                 return State.Run;
             }
             catch
             {
                 map = 1;
-                XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
+                mapQueue = XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
+                objects = DequeueMap(mapQueue);
                 return State.Meny;
             }
-          
+            
         }
         //Laddar in en bana. Anton
         public static State RetryMap()
@@ -345,21 +347,35 @@ namespace te16mono
             UI.Initialize(Content);
             player.points = tempStorage;
             objects = new List<ObjectsBase>();
-
+            Queue<ObjectsBase> mapQueue;
 
             try
             {
-                XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
+                mapQueue = XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
+                objects = DequeueMap(mapQueue);
                 return State.Run;
             }
+            //Laddar in första banan ifall ingen annan finns
             catch
             {
                 map = 1;
-                XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
+                mapQueue = XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
+                objects = DequeueMap(mapQueue);
                 return State.Meny;
             }
-          
 
+
+        }
+        //Går igenom en hel Queue<objectbase> och flyttar alla värdena in i en List<objectbase> Anton
+        private static List<ObjectsBase> DequeueMap(Queue<ObjectsBase> mapQueue)
+        {
+            List<ObjectsBase> toReturn = new List<ObjectsBase>();
+            //Loopar igenom mapQueue tills den är tom
+            while (mapQueue.Count != 0)
+            {
+                toReturn.Add(mapQueue.Dequeue());
+            }
+            return toReturn;
         }
     }
        
