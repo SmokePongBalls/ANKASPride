@@ -24,7 +24,7 @@ namespace te16mono
         static Song music;
         static double countdown = 0;
         public static ContentManager Content;
-        static List<Projectiles> addQueue;
+        static Stack<Projectiles> projectileStack;
         public static List<ObjectsBase> objects;
         
 
@@ -41,7 +41,7 @@ namespace te16mono
             
             Content = content;         
             objects = new List<ObjectsBase>();
-            addQueue = new List<Projectiles>();
+            projectileStack = new List<Projectiles>();
             CreatePlayer();
             UI.Initialize(content);
             Background.Initialize(content);
@@ -147,7 +147,7 @@ namespace te16mono
             player.Update(gameTime);
             ObjectsUpdate(gameTime);
             countdown -= gameTime.ElapsedGameTime.TotalMilliseconds;
-            MergeWithQueue();
+            MergeWithStack();
             if (player.health <= 0)
                 currentState = State.GameOver;
 
@@ -298,15 +298,16 @@ namespace te16mono
         public static void Shoot(string type, Vector2 velocity, Vector2 position, int damage, int health, bool playerShooter)
         {
             if (type == "regular")
-                addQueue.Add(new RegularProjectile(health, damage, velocity, position, Content.Load<Texture2D>("RegularProjectile"),playerShooter));
+                projectileStack.Push(new RegularProjectile(health, damage, velocity, position, Content.Load<Texture2D>("RegularProjectile"),playerShooter));
             
         }
-        //Flyttar över alla objekt i addQueue till objects listan Anton
-        static void MergeWithQueue()
+        //Flyttar över alla objekt stacken till objects listan Anton
+        static void MergeWithStack()
         {
-            foreach (Projectiles projectile in addQueue)
-                objects.Add(projectile);
-            addQueue = new List<Projectiles>();
+            while (projectileStack.Count != 0)
+                objects.Add(projectileStack.Pop());
+
+            projectileStack = new Stack<Projectiles>();
         }
         //Laddar in en bana. Anton
         public static State LoadMap()
