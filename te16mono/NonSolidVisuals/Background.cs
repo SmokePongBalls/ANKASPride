@@ -1,11 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace te16mono
 {
@@ -14,20 +11,37 @@ namespace te16mono
         static ContentManager Content;
         static Texture2D mountainTexture;
         static List<Vector2> backgroundPosition;
+        static Vector2 groundPosition, skyPosition;
         static Vector2 temp;
+        
+
+       
 
         static public void Initialize(ContentManager content)
         {
 
             Content = content;
             mountainTexture = Content.Load<Texture2D>("mountainBackground");
-           
+            
+            
+            
             backgroundPosition = new List<Vector2>();
-            backgroundPosition.Add(new Vector2(-mountainTexture.Width - mountainTexture.Width / 2, -100));
+            backgroundPosition.Add(new Vector2(-mountainTexture.Width - mountainTexture.Width / 2, -1000));
             backgroundPosition.Add(new Vector2(backgroundPosition[0].X + mountainTexture.Width, backgroundPosition[0].Y));
             backgroundPosition.Add(new Vector2(backgroundPosition[1].X + mountainTexture.Width, backgroundPosition[1].Y));
 
-            
+
+
+        }
+        static private Rectangle Ground(Vector2 position)
+        {
+
+            return new Rectangle((int)position.X, (int)position.Y, mountainTexture.Width, 5000);
+        }
+        static private Rectangle Sky(Vector2 position)
+        {
+
+            return new Rectangle((int)position.X, (int)position.Y, mountainTexture.Width, 5000);
         }
 
         static public void Draw(SpriteBatch spriteBatch, Player player)
@@ -35,7 +49,10 @@ namespace te16mono
             //ritar ut alla backgrunder.
             for (int i = 0; i < backgroundPosition.Count; i++)
             {
+                spriteBatch.Draw(Content.Load<Texture2D>("square"), Ground(new Vector2(backgroundPosition[i].X, backgroundPosition[i].Y - 5000)), new Color(0, 157, 236));
+                spriteBatch.Draw(Content.Load<Texture2D>("square"), Ground(new Vector2(backgroundPosition[i].X, backgroundPosition[i].Y + mountainTexture.Height)), new Color(81, 156, 0));
                 spriteBatch.Draw(mountainTexture, backgroundPosition[i], null, Color.White, 0f, Vector2.Zero, 1, SpriteEffects.None, 1f);
+               
             }
         }
 

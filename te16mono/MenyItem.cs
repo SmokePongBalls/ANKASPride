@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace te16mono
 {
 
-    // Klass för att spara olika meny Val   Filip
+    // Klass för att spara olika meny Val   gjord av filip 
 
     class MenyItem
     {
@@ -82,7 +82,7 @@ namespace te16mono
 
 
 
-            if (keyboardState.IsKeyDown(Keys.Down) && Game1.lastKeyboardstate.IsKeyUp(Keys.Down))
+            if (keyboardState.IsKeyDown(Keys.Down) && Game1.lastKeyboardstate.IsKeyUp(Keys.Down)) // kollar om man hart tryck på tangenten och där av byterer meny val 
             {
 
                 selected++;
@@ -92,7 +92,7 @@ namespace te16mono
 
             }
 
-            if (keyboardState.IsKeyDown(Keys.Up) && Game1.lastKeyboardstate.IsKeyUp(Keys.Up))
+            if (keyboardState.IsKeyDown(Keys.Up) && Game1.lastKeyboardstate.IsKeyUp(Keys.Up))// kollar om man hart tryck på tangenten och där av byterer meny val 
             {
                 selected--;
 
@@ -101,14 +101,14 @@ namespace te16mono
 
 
 
-            }
+            } 
 
             lastChange = gameTime.TotalGameTime.TotalMilliseconds;
 
-            if (keyboardState.IsKeyDown(Keys.Enter) && Game1.lastKeyboardstate.IsKeyUp(Keys.Enter))
+            if (keyboardState.IsKeyDown(Keys.Enter) && Game1.lastKeyboardstate.IsKeyUp(Keys.Enter)) // kollar om man hart tryck på tangenten och där av kör det menyvalet man har "Valt"
             {
                 if (selected == 1)
-                    Game1.gameSection = GameSection.LevelBuilding;
+                    Game1.gameSection = GameSection.LevelBuilding; // om man väljer detta menyvalet så kör den Level Editorn 
 
                 return meny[selected].State;
             }
@@ -125,11 +125,11 @@ namespace te16mono
         }
 
 
-        public virtual void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)  // målar ut texture 
         {
             spriteBatch.Begin();
 
-            for (int i = 0; i < meny.Count; i++)
+            for (int i = 0; i < meny.Count; i++)// om man i är selected så blir menyvalet färgad Rosybrown annars så blir den vit 
             {
 
                 if (i == selected)
@@ -141,7 +141,7 @@ namespace te16mono
 
             };
 
-            spriteBatch.Draw(logo,new Vector2((float)960-logo.Width/2,(float) 20), Color.White);
+            spriteBatch.Draw(logo,new Vector2((float)960-logo.Width/2,(float) 20), Color.White); // målar ut spel titeln och inte gör den som ett val 
 
             spriteBatch.End();
         }
@@ -174,7 +174,7 @@ namespace te16mono
         {
 
             KeyboardState keyboardState = Keyboard.GetState();
-            if (keyboardState.IsKeyDown(Keys.Down) && Game1.lastKeyboardstate.IsKeyUp(Keys.Down))
+            if (keyboardState.IsKeyDown(Keys.Down) && Game1.lastKeyboardstate.IsKeyUp(Keys.Down)) // kollar om man hart tryck på tangenten och där av byterer meny val 
             {
                 selected++;
 
@@ -185,7 +185,7 @@ namespace te16mono
 
             }
 
-            if (keyboardState.IsKeyDown(Keys.Up) && Game1.lastKeyboardstate.IsKeyUp(Keys.Up))
+            if (keyboardState.IsKeyDown(Keys.Up) && Game1.lastKeyboardstate.IsKeyUp(Keys.Up)) // kollar om man hart tryck på tangenten och där av byterer meny val 
             {
                 selected--;
 
@@ -198,14 +198,14 @@ namespace te16mono
 
             lastChange = gameTime.TotalGameTime.TotalMilliseconds;
 
-            if (keyboardState.IsKeyDown(Keys.Enter) && Game1.lastKeyboardstate.IsKeyUp(Keys.Enter))
+            if (keyboardState.IsKeyDown(Keys.Enter) && Game1.lastKeyboardstate.IsKeyUp(Keys.Enter)) // kollar om man hart tryck på tangenten och där av kör det menyvalet man har "Valt"
             {
 
                 return meny[selected].State;
 
             }
 
-            if (selected == 2)
+            if (selected == 2) // om valet är 2 så laddar man kartan . Med andra ord Retry valets position i listan XD
             {
                 Main.LoadMap();
 
@@ -255,7 +255,8 @@ namespace te16mono
             };
 
 
-            spriteBatch.DrawString(Main.pointFont, Convert.ToString(Main.player.points), new Vector2(1280 , 1080 / 2 - 250), Color.White);
+            spriteBatch.DrawString(Main.pointFont, Convert.ToString(Main.player.points), new Vector2(1280 , 1080 / 2 - 250), Color.White); // målar ut poängen man hade inan man dog  
+
 
             spriteBatch.End();
         }
@@ -265,7 +266,7 @@ namespace te16mono
         {
             KeyboardState keyboardState = Keyboard.GetState();
 
-            if (keyboardState.IsKeyDown(Keys.Down) && Game1.lastKeyboardstate.IsKeyUp(Keys.Down))
+            if (keyboardState.IsKeyDown(Keys.Down) && Game1.lastKeyboardstate.IsKeyUp(Keys.Down)) // kollar om man hart tryck på tangenten och där av byterer meny val 
             {
                 selected++;
 
@@ -276,7 +277,7 @@ namespace te16mono
 
             }
 
-            if (keyboardState.IsKeyDown(Keys.Up) && Game1.lastKeyboardstate.IsKeyUp(Keys.Up))
+            if (keyboardState.IsKeyDown(Keys.Up) && Game1.lastKeyboardstate.IsKeyUp(Keys.Up)) // kollar om man hart tryck på tangenten och där av byterer meny val 
             {
                 selected--;
 
@@ -290,7 +291,7 @@ namespace te16mono
 
             lastChange = gameTime.TotalGameTime.TotalMilliseconds;
 
-            if (keyboardState.IsKeyDown(Keys.Enter) && Game1.lastKeyboardstate.IsKeyUp(Keys.Enter))
+            if (keyboardState.IsKeyDown(Keys.Enter) && Game1.lastKeyboardstate.IsKeyUp(Keys.Enter)) // kollar om man hart tryck på tangenten och där av kör det menyvalet man har "Valt"
             {
 
                 return meny[selected].State;
@@ -335,7 +336,7 @@ namespace te16mono
 
 
             KeyboardState keyboardState = Keyboard.GetState();
-            if (keyboardState.IsKeyDown(Keys.Down) && Game1.lastKeyboardstate.IsKeyUp(Keys.Down))
+            if (keyboardState.IsKeyDown(Keys.Down) && Game1.lastKeyboardstate.IsKeyUp(Keys.Down)) // kollar om man hart tryck på tangenten och där av byterer meny val 
             {
                 selected++;
 
@@ -347,7 +348,7 @@ namespace te16mono
             }
 
 
-            if (keyboardState.IsKeyDown(Keys.Up) && Game1.lastKeyboardstate.IsKeyUp(Keys.Up))
+            if (keyboardState.IsKeyDown(Keys.Up) && Game1.lastKeyboardstate.IsKeyUp(Keys.Up)) // kollar om man hart tryck på tangenten och där av byterer meny val 
             {
                 selected--;
 
@@ -361,7 +362,7 @@ namespace te16mono
 
             lastChange = gameTime.TotalGameTime.TotalMilliseconds;
 
-            if (keyboardState.IsKeyDown(Keys.Enter) && Game1.lastKeyboardstate.IsKeyUp(Keys.Enter))
+            if (keyboardState.IsKeyDown(Keys.Enter) && Game1.lastKeyboardstate.IsKeyUp(Keys.Enter)) // kollar om man hart tryck på tangenten och där av kör det menyvalet man har "Valt"
             {
 
                 return meny[selected].State;
@@ -395,7 +396,7 @@ namespace te16mono
             };
 
 
-            spriteBatch.DrawString(Main.pointFont, Convert.ToString(Main.player.points), new Vector2(1280, 1080 / 2 - 250), Color.White);
+            spriteBatch.DrawString(Main.pointFont, Convert.ToString(Main.player.points), new Vector2(1280, 1080 / 2 - 250), Color.White); // målar ut poängen man har när man klarat banan 
 
             spriteBatch.End();
 

@@ -88,7 +88,7 @@ namespace te16mono
             pointFont = Content.Load<SpriteFont>("pointFont");
         }
 
-        private static void FinishMenyItems()
+        private static void FinishMenyItems() //filip
         {
             finishMeny = new FinishMeny((int)State.Finish);
             finishMeny.AddItem((int)State.LoadMap, Content.Load<Texture2D>("Next"));
@@ -96,7 +96,7 @@ namespace te16mono
             finishMeny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));
         }
 
-        private static void GameOverItems()
+        private static void GameOverItems()//filip
         {
             gameoverMeny = new GameOverMeny((int)State.GameOver);
             gameoverMeny.AddItem((int)GameSection.CoreGame, Content.Load<Texture2D>("Meny"));
@@ -104,7 +104,7 @@ namespace te16mono
             gameoverMeny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));
         }
 
-        private static void PauseMenyItems()
+        private static void PauseMenyItems() // filip
         {
             pauseMeny = new PauseMeny((int)State.Pause);
             pauseMeny.AddItem((int)GameSection.CoreGame, Content.Load<Texture2D>("Meny"));
@@ -113,7 +113,7 @@ namespace te16mono
             pauseMeny.AddItem((int)State.Quit, Content.Load<Texture2D>("Quit"));
         }
 
-        private static void MenuItems()
+        private static void MenuItems() //filip
         {
             meny = new Menyer((int)State.Meny);
             meny.AddItem((int)State.Run, Content.Load<Texture2D>("Start"));
@@ -123,7 +123,7 @@ namespace te16mono
         }
 
 
-        public static State MenyUpdate(GameTime gameTime)
+        public static State MenyUpdate(GameTime gameTime) //Updating menu Filip
         {
 
 
@@ -131,7 +131,7 @@ namespace te16mono
 
         }
 
-        public static void MenyDraw()
+        public static void MenyDraw() // Meny draw  Filip 
         {
             meny.Draw(spriteBatch);
         }
@@ -249,7 +249,7 @@ namespace te16mono
 
         }
 
-        public static void PauseDraw()
+        public static void PauseDraw()//Draw meny Filip
         {
 
             pauseMeny.Draw(spriteBatch);
