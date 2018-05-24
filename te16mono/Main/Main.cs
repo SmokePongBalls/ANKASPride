@@ -316,21 +316,22 @@ namespace te16mono
 
             //Återställer alla variabler tills nästa bana
             CreatePlayer();
-            objects = new List<ObjectsBase>();
-
+            Queue<ObjectsBase> mapQueue;
 
             try
             {
-                XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
+                mapQueue = XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
+                objects = DequeueMap(mapQueue);
                 return State.Run;
             }
             catch
             {
                 map = 1;
-                XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
+                mapQueue = XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
+                objects = DequeueMap(mapQueue);
                 return State.Meny;
             }
-          
+            
         }
         //Laddar in en bana. Anton
         public static State RetryMap()
@@ -344,21 +345,35 @@ namespace te16mono
             UI.Initialize(Content);
             player.points = tempStorage;
             objects = new List<ObjectsBase>();
-
+            Queue<ObjectsBase> mapQueue;
 
             try
             {
-                XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
+                mapQueue = XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
+                objects = DequeueMap(mapQueue);
                 return State.Run;
             }
+            //Laddar in första banan ifall ingen annan finns
             catch
             {
                 map = 1;
-                XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
+                mapQueue = XmlLoader.LoadMap(Content, "WorldLoading/" + map + ".xml");
+                objects = DequeueMap(mapQueue);
                 return State.Meny;
             }
-          
 
+
+        }
+        //Går igenom en hel Queue<objectbase> och flyttar alla värdena in i en List<objectbase> Anton
+        private static List<ObjectsBase> DequeueMap(Queue<ObjectsBase> mapQueue)
+        {
+            List<ObjectsBase> toReturn = new List<ObjectsBase>();
+            //Loopar igenom mapQueue tills den är tom
+            while (mapQueue.Count != 0)
+            {
+                toReturn.Add(mapQueue.Dequeue());
+            }
+            return toReturn;
         }
     }
        
